@@ -2,10 +2,10 @@ import {describe,it,expect} from 'vitest';
 import {cards,cardIds} from '../src/data/cards';
 import {createState,redeemCard} from '../src/domain';
 import {validateState,loadState,STORAGE_KEY,type StorageLike} from '../src/storage';
-const memoryWith=(state:ReturnType<typeof createState>):StorageLike=>{let raw=JSON.stringify({...state,revision:1});return{getItem:()=>raw,setItem:(_k,v)=>{raw=v}}};
+const memoryWith=(state:ReturnType<typeof createState>):StorageLike=>{let raw=JSON.stringify({...state,revision:1});return{getItem:(k)=>k===STORAGE_KEY?raw:null,setItem:(_k,v)=>{raw=v}}};
 describe('dynamic card slots',()=>{
   it('redeems catalog IDs and rejects missing IDs regardless of catalog size',()=>{
-    const state={...createState(),shells:20};
+    const state={...createState(),coins:20};
     if(cards.length)expect(redeemCard(state,cards[cards.length-1].id).owned).toContain(cards[cards.length-1].id);
     let absent=0;while(cardIds.has(absent))absent++;
     expect(()=>redeemCard(state,absent)).toThrow();

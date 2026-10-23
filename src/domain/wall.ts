@@ -1,0 +1,13 @@
+import { cardIds } from '../data/cards';
+export interface WallItem {cardId:number;x:number;y:number;width:number;rotation:number;z:number}
+export interface Wall {id:number;items:WallItem[]}
+export interface WallState {version:2;revision:number;walls:Wall[]}
+export interface LegacyWallState {version:1;revision:number;items:WallItem[]}
+export function createWall(wallCount=1):WallState{return {version:2,revision:0,walls:Array.from({length:Math.max(1,Math.min(10,wallCount))},(_,id)=>({id,items:[]}))};}
+function normalizeItems(items:WallItem[],owned:number[]):WallItem[]{const seen=new Set<number>();return items.filter(i=>owned.includes(i.cardId)&&cardIds.has(i.cardId)&&!seen.has(i.cardId)&&(seen.add(i.cardId),true)).map(i=>{if(![i.x,i.y,i.width,i.rotation,i.z].every(Number.isFinite))throw new Error('收藏墙数值无效');return {...i,x:Math.max(0,Math.min(1,i.x)),y:Math.max(0,Math.min(1,i.y)),width:Math.max(.08,Math.min(.8,i.width)),rotation:Math.max(-180,Math.min(180,i.rotation))};}).sort((a,b)=>a.z-b.z).map((i,z)=>({...i,z}));}
+export function normalizeWall(wall:WallState,owned:number[],wallCount=wall.walls.length):WallState {const count=Math.max(1,Math.min(10,wallCount));const byId=new Map(wall.walls.map(w=>[w.id,w]));return {...wall,version:2,walls:Array.from({length:count},(_,id)=>({id,items:normalizeItems(byId.get(id)?.items??[],owned)}))};}
+export function migrateLegacyWall(wall:LegacyWallState,owned:number[],wallCount=1):WallState{return normalizeWall({version:2,revision:wall.revision,walls:[{id:0,items:wall.items}]},owned,wallCount);}
+function patchWall(wall:WallState,wallId:number,update:(items:WallItem[])=>WallItem[]):WallState{if(!Number.isInteger(wallId)||wallId<0||wallId>=wall.walls.length)throw new Error('收藏墙不存在');return {...wall,walls:wall.walls.map(w=>w.id===wallId?{...w,items:update(w.items)}:w)};}
+export function placeOnWall(wall:WallState,wallId:number,cardId:number,owned:number[]):WallState {if(!owned.includes(cardId)||!cardIds.has(cardId))throw new Error('只能布置已购买卡片');const target=wall.walls.find(w=>w.id===wallId);if(!target)throw new Error('收藏墙不存在');if(target.items.some(i=>i.cardId===cardId))return wall;return normalizeWall(patchWall(wall,wallId,items=>[...items,{cardId,x:.5,y:.5,width:.25,rotation:0,z:items.length}]),owned,wall.walls.length);}
+export function updateWallItem(wall:WallState,wallId:number,cardId:number,patch:Partial<Omit<WallItem,'cardId'>>,owned:number[]):WallState{return normalizeWall(patchWall(wall,wallId,items=>items.map(i=>i.cardId===cardId?{...i,...patch}:i)),owned,wall.walls.length);}
+export function removeFromWall(wall:WallState,wallId:number,cardId:number):WallState{return patchWall(wall,wallId,items=>items.filter(i=>i.cardId!==cardId).map((i,z)=>({...i,z})))}

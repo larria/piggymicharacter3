@@ -1,0 +1,4510 @@
+{
+  "schemaVersion": 1,
+  "characterCount": 1292,
+  "missing": {
+    "graphics": [],
+    "dictionary": [],
+    "radical": []
+  },
+  "conflicts": [
+    {
+      "character": "丽",
+      "type": "radical",
+      "reference": "一",
+      "dictionary": "丶",
+      "chosen": "丶"
+    },
+    {
+      "character": "义",
+      "type": "radical",
+      "reference": "丶",
+      "dictionary": "丿",
+      "chosen": "丿"
+    },
+    {
+      "character": "也",
+      "type": "radical",
+      "reference": "乙",
+      "dictionary": "乚",
+      "chosen": "乚"
+    },
+    {
+      "character": "习",
+      "type": "radical",
+      "reference": "乙",
+      "dictionary": "冫",
+      "chosen": "冫"
+    },
+    {
+      "character": "乡",
+      "type": "radical",
+      "reference": "乡",
+      "dictionary": "幺",
+      "chosen": "幺"
+    },
+    {
+      "character": "书",
+      "type": "radical",
+      "reference": "乙",
+      "dictionary": "丨",
+      "chosen": "丨"
+    },
+    {
+      "character": "买",
+      "type": "radical",
+      "reference": "乙",
+      "dictionary": "大",
+      "chosen": "大"
+    },
+    {
+      "character": "乱",
+      "type": "radical",
+      "reference": "乙",
+      "dictionary": "乚",
+      "chosen": "乚"
+    },
+    {
+      "character": "亚",
+      "type": "radical",
+      "reference": "二",
+      "dictionary": "一",
+      "chosen": "一"
+    },
+    {
+      "character": "亲",
+      "type": "radical",
+      "reference": "亠",
+      "dictionary": "立",
+      "chosen": "立"
+    },
+    {
+      "character": "亿",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "什",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "仍",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "仔",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "他",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "代",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "们",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "件",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "份",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "仿",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "休",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "优",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "伙",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "伟",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "伤",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "伯",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "估",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "伴",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "伸",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "但",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "位",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "低",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "住",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "体",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "何",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "佛",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "作",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "你",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "使",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "便",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "保",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "信",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "俩",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "修",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "倒",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "候",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "借",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "假",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "偏",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "做",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "停",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "傍",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "傲",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "傻",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "像",
+      "type": "radical",
+      "reference": "人",
+      "dictionary": "亻",
+      "chosen": "亻"
+    },
+    {
+      "character": "兰",
+      "type": "radical",
+      "reference": "八",
+      "dictionary": "丷",
+      "chosen": "丷"
+    },
+    {
+      "character": "关",
+      "type": "radical",
+      "reference": "八",
+      "dictionary": "丷",
+      "chosen": "丷"
+    },
+    {
+      "character": "养",
+      "type": "radical",
+      "reference": "八",
+      "dictionary": "丷",
+      "chosen": "丷"
+    },
+    {
+      "character": "军",
+      "type": "radical",
+      "reference": "冖",
+      "dictionary": "车",
+      "chosen": "车"
+    },
+    {
+      "character": "冬",
+      "type": "radical",
+      "reference": "冫",
+      "dictionary": "⺀",
+      "chosen": "⺀"
+    },
+    {
+      "character": "划",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "列",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "刘",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "刚",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "创",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "刨",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "利",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "别",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "到",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "刷",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "刺",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "刻",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "前",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "割",
+      "type": "radical",
+      "reference": "刀",
+      "dictionary": "刂",
+      "chosen": "刂"
+    },
+    {
+      "character": "单",
+      "type": "radical",
+      "reference": "十",
+      "dictionary": "丷",
+      "chosen": "丷"
+    },
+    {
+      "character": "卫",
+      "type": "radical",
+      "reference": "卩",
+      "dictionary": "乛",
+      "chosen": "乛"
+    },
+    {
+      "character": "夹",
+      "type": "radical",
+      "reference": "大",
+      "dictionary": "一",
+      "chosen": "一"
+    },
+    {
+      "character": "寻",
+      "type": "radical",
+      "reference": "寸",
+      "dictionary": "彐",
+      "chosen": "彐"
+    },
+    {
+      "character": "将",
+      "type": "radical",
+      "reference": "寸",
+      "dictionary": "丬",
+      "chosen": "丬"
+    },
+    {
+      "character": "尝",
+      "type": "radical",
+      "reference": "小",
+      "dictionary": "⺌",
+      "chosen": "⺌"
+    },
+    {
+      "character": "居",
+      "type": "radical",
+      "reference": "尸",
+      "dictionary": "户",
+      "chosen": "户"
+    },
+    {
+      "character": "川",
+      "type": "radical",
+      "reference": "巛",
+      "dictionary": "川",
+      "chosen": "川"
+    },
+    {
+      "character": "州",
+      "type": "radical",
+      "reference": "巛",
+      "dictionary": "川",
+      "chosen": "川"
+    },
+    {
+      "character": "巨",
+      "type": "radical",
+      "reference": "工",
+      "dictionary": "匚",
+      "chosen": "匚"
+    },
+    {
+      "character": "巴",
+      "type": "radical",
+      "reference": "己",
+      "dictionary": "巳",
+      "chosen": "巳"
+    },
+    {
+      "character": "干",
+      "type": "radical",
+      "reference": "干",
+      "dictionary": "十",
+      "chosen": "十"
+    },
+    {
+      "character": "平",
+      "type": "radical",
+      "reference": "干",
+      "dictionary": "广",
+      "chosen": "广"
+    },
+    {
+      "character": "幼",
+      "type": "radical",
+      "reference": "乡",
+      "dictionary": "幺",
+      "chosen": "幺"
+    },
+    {
+      "character": "当",
+      "type": "radical",
+      "reference": "彐",
+      "dictionary": "⺌",
+      "chosen": "⺌"
+    },
+    {
+      "character": "忙",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "快",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "怕",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "性",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "怪",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "悄",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "情",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "惊",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "惜",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "慌",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "慢",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "懂",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "懒",
+      "type": "radical",
+      "reference": "心",
+      "dictionary": "忄",
+      "chosen": "忄"
+    },
+    {
+      "character": "户",
+      "type": "radical",
+      "reference": "戶",
+      "dictionary": "户",
+      "chosen": "户"
+    },
+    {
+      "character": "房",
+      "type": "radical",
+      "reference": "戶",
+      "dictionary": "户",
+      "chosen": "户"
+    },
+    {
+      "character": "所",
+      "type": "radical",
+      "reference": "戶",
+      "dictionary": "户",
+      "chosen": "户"
+    },
+    {
+      "character": "扁",
+      "type": "radical",
+      "reference": "戶",
+      "dictionary": "户",
+      "chosen": "户"
+    },
+    {
+      "character": "扇",
+      "type": "radical",
+      "reference": "戶",
+      "dictionary": "户",
+      "chosen": "户"
+    },
+    {
+      "character": "才",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扎",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扑",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "打",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扔",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "托",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扛",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扫",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扬",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扮",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "扶",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "找",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "技",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "把",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "抓",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "投",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "折",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "护",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "报",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "披",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "抬",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "抱",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "抽",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "担",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拉",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拍",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拐",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拔",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拖",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "招",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拥",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拦",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "拨",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "挂",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "指",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "按",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "挑",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "挖",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "捉",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "捕",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "捡",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "换",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "捧",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "据",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "掉",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "排",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "探",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "接",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "推",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "提",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "搬",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "搭",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "摆",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "摇",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "摘",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "摸",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "操",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "擦",
+      "type": "radical",
+      "reference": "手",
+      "dictionary": "扌",
+      "chosen": "扌"
+    },
+    {
+      "character": "收",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "改",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "攻",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "放",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "故",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "敌",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "舌",
+      "chosen": "舌"
+    },
+    {
+      "character": "救",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "教",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "敢",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "散",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "敬",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "数",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "整",
+      "type": "radical",
+      "reference": "攴",
+      "dictionary": "攵",
+      "chosen": "攵"
+    },
+    {
+      "character": "最",
+      "type": "radical",
+      "reference": "冂",
+      "dictionary": "曰",
+      "chosen": "曰"
+    },
+    {
+      "character": "母",
+      "type": "radical",
+      "reference": "毋",
+      "dictionary": "母",
+      "chosen": "母"
+    },
+    {
+      "character": "每",
+      "type": "radical",
+      "reference": "毋",
+      "dictionary": "母",
+      "chosen": "母"
+    },
+    {
+      "character": "民",
+      "type": "radical",
+      "reference": "氏",
+      "dictionary": "民",
+      "chosen": "民"
+    },
+    {
+      "character": "求",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氺",
+      "chosen": "氺"
+    },
+    {
+      "character": "汗",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "江",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "池",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "汤",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "汪",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "汽",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "沉",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "沙",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "沟",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "没",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "河",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "油",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "治",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "沿",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "泊",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "法",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "泡",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "波",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "泥",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "注",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "泪",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "洁",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "洋",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "洒",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "洗",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "洞",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "活",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "洼",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "流",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "浅",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "浇",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "浪",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "浮",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "海",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "消",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "涌",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "涛",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "淋",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "淡",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "深",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "淹",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "清",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "渐",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "温",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "渴",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "游",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "湖",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "湿",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "溪",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "滚",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "满",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "滩",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "滴",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "漂",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "漫",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "潮",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "澡",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "激",
+      "type": "radical",
+      "reference": "水",
+      "dictionary": "氵",
+      "chosen": "氵"
+    },
+    {
+      "character": "灵",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "彐",
+      "chosen": "彐"
+    },
+    {
+      "character": "点",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "热",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "然",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "照",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "熊",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "熟",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "燕",
+      "type": "radical",
+      "reference": "火",
+      "dictionary": "灬",
+      "chosen": "灬"
+    },
+    {
+      "character": "爱",
+      "type": "radical",
+      "reference": "爪",
+      "dictionary": "爫",
+      "chosen": "爫"
+    },
+    {
+      "character": "牙",
+      "type": "radical",
+      "reference": "㸦",
+      "dictionary": "牙",
+      "chosen": "牙"
+    },
+    {
+      "character": "牵",
+      "type": "radical",
+      "reference": "牛",
+      "dictionary": "大",
+      "chosen": "大"
+    },
+    {
+      "character": "狐",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "狗",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "独",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "狮",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "狸",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "狼",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "猛",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "猜",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "猫",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "猴",
+      "type": "radical",
+      "reference": "犬",
+      "dictionary": "犭",
+      "chosen": "犭"
+    },
+    {
+      "character": "玩",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "环",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "现",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "玲",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "珠",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "班",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "球",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "理",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "琴",
+      "type": "radical",
+      "reference": "玉",
+      "dictionary": "王",
+      "chosen": "王"
+    },
+    {
+      "character": "电",
+      "type": "radical",
+      "reference": "田",
+      "dictionary": "曰",
+      "chosen": "曰"
+    },
+    {
+      "character": "礼",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "礻",
+      "chosen": "礻"
+    },
+    {
+      "character": "祖",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "礻",
+      "chosen": "礻"
+    },
+    {
+      "character": "祝",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "礻",
+      "chosen": "礻"
+    },
+    {
+      "character": "神",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "礻",
+      "chosen": "礻"
+    },
+    {
+      "character": "禅",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "礻",
+      "chosen": "礻"
+    },
+    {
+      "character": "福",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "礻",
+      "chosen": "礻"
+    },
+    {
+      "character": "竿",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "笋",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "笑",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "笔",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "第",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "答",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "筷",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "算",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "管",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "篮",
+      "type": "radical",
+      "reference": "竹",
+      "dictionary": "⺮",
+      "chosen": "⺮"
+    },
+    {
+      "character": "网",
+      "type": "radical",
+      "reference": "䍏",
+      "dictionary": "网",
+      "chosen": "网"
+    },
+    {
+      "character": "肚",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "股",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "肥",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "胆",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "背",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "胖",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "胜",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "胡",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "能",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "脆",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "脑",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "脖",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "脚",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "脱",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "脸",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "腰",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "腿",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "膀",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "臂",
+      "type": "radical",
+      "reference": "肉",
+      "dictionary": "⺼",
+      "chosen": "⺼"
+    },
+    {
+      "character": "艺",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "节",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "芬",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "花",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "芳",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "芽",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "苏",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "苗",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "苦",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "英",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "苹",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "茂",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "茶",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "草",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "荡",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "荣",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "荷",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "莲",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "菜",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "萍",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "萝",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "萤",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "落",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "蓝",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "薄",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "藏",
+      "type": "radical",
+      "reference": "䒑",
+      "dictionary": "艹",
+      "chosen": "艹"
+    },
+    {
+      "character": "虎",
+      "type": "radical",
+      "reference": "虍",
+      "dictionary": "虎",
+      "chosen": "虎"
+    },
+    {
+      "character": "补",
+      "type": "radical",
+      "reference": "衣",
+      "dictionary": "衤",
+      "chosen": "衤"
+    },
+    {
+      "character": "被",
+      "type": "radical",
+      "reference": "衣",
+      "dictionary": "衤",
+      "chosen": "衤"
+    },
+    {
+      "character": "裙",
+      "type": "radical",
+      "reference": "衣",
+      "dictionary": "衤",
+      "chosen": "衤"
+    },
+    {
+      "character": "西",
+      "type": "radical",
+      "reference": "襾",
+      "dictionary": "西",
+      "chosen": "西"
+    },
+    {
+      "character": "要",
+      "type": "radical",
+      "reference": "襾",
+      "dictionary": "覀",
+      "chosen": "覀"
+    },
+    {
+      "character": "视",
+      "type": "radical",
+      "reference": "示",
+      "dictionary": "见",
+      "chosen": "见"
+    },
+    {
+      "character": "边",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "迁",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "过",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "迈",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "迎",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "运",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "近",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "还",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "这",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "进",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "远",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "连",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "迟",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "迷",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "迹",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "追",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "送",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "逃",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "选",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "透",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "通",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "速",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "造",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "遇",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "遍",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "道",
+      "type": "radical",
+      "reference": "辵",
+      "dictionary": "辶",
+      "chosen": "辶"
+    },
+    {
+      "character": "邓",
+      "type": "radical",
+      "reference": "邑",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "那",
+      "type": "radical",
+      "reference": "邑",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "邻",
+      "type": "radical",
+      "reference": "邑",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "郊",
+      "type": "radical",
+      "reference": "邑",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "部",
+      "type": "radical",
+      "reference": "邑",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "都",
+      "type": "radical",
+      "reference": "邑",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "队",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "阳",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "阴",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "阵",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "阿",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "际",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "陆",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "陈",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "降",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "院",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "除",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "隐",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "隔",
+      "type": "radical",
+      "reference": "阜",
+      "dictionary": "阝",
+      "chosen": "阝"
+    },
+    {
+      "character": "难",
+      "type": "radical",
+      "reference": "隹",
+      "dictionary": "又",
+      "chosen": "又"
+    },
+    {
+      "character": "青",
+      "type": "radical",
+      "reference": "靑",
+      "dictionary": "青",
+      "chosen": "青"
+    },
+    {
+      "character": "静",
+      "type": "radical",
+      "reference": "靑",
+      "dictionary": "青",
+      "chosen": "青"
+    },
+    {
+      "character": "黄",
+      "type": "radical",
+      "reference": "黃",
+      "dictionary": "黄",
+      "chosen": "黄"
+    }
+  ],
+  "radicalFills": [
+    {
+      "character": "王",
+      "radical": "王",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "红",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "约",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "级",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "纯",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "纱",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "纷",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "纸",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "纹",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "纺",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "线",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "练",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "细",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "织",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "终",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "经",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "结",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "绕",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "给",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "绝",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "绳",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "绿",
+      "radical": "纟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "见",
+      "radical": "见",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "观",
+      "radical": "见",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "规",
+      "radical": "见",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "觉",
+      "radical": "见",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "计",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "认",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "让",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "议",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "记",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "讲",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "许",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "论",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "评",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "识",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "诉",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "词",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "诗",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "诚",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "话",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "该",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "详",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "语",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "说",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "请",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "读",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "课",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "谁",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "谢",
+      "radical": "讠",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "贝",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "质",
+      "radical": "厂",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "贫",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "贴",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "贵",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "贺",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "赛",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "赞",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "赢",
+      "radical": "贝",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "车",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "转",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "轮",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "软",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "轰",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "轻",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "辆",
+      "radical": "车",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "辉",
+      "radical": "⺌",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "针",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "钉",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "钓",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "钟",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "钢",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "钩",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "钱",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "铁",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "铃",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "铅",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "铜",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "银",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "锋",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "错",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "锦",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "锻",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "镜",
+      "radical": "钅",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "长",
+      "radical": "长",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "门",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "闪",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "闭",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "问",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "间",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "闷",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "闹",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "闻",
+      "radical": "门",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "顶",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "顺",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "须",
+      "radical": "彡",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "顾",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "领",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "颗",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "题",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "颜",
+      "radical": "页",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "风",
+      "radical": "风",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "飘",
+      "radical": "风",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "飞",
+      "radical": "飞",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "饥",
+      "radical": "饣",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "饭",
+      "radical": "饣",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "饱",
+      "radical": "饣",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "饿",
+      "radical": "饣",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "马",
+      "radical": "马",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "驶",
+      "radical": "马",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "骄",
+      "radical": "马",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "骗",
+      "radical": "马",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鱼",
+      "radical": "鱼",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鲜",
+      "radical": "鱼",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鸟",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鸡",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鸣",
+      "radical": "口",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鸥",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鸦",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鸭",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鹃",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "鹰",
+      "radical": "鸟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "麦",
+      "radical": "麦",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "齐",
+      "radical": "齐",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "龄",
+      "radical": "齿",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "龙",
+      "radical": "龙",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    },
+    {
+      "character": "龟",
+      "radical": "龟",
+      "source": "dictionary",
+      "reason": "reference-radical-empty"
+    }
+  ],
+  "unknownStructure": [
+    {
+      "character": "丁",
+      "decomposition": "一",
+      "reason": "no-complete-explicit-ids-tree"
+    },
+    {
+      "character": "万",
+      "decomposition": "⿱一？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "不",
+      "decomposition": "⿱一？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "与",
+      "decomposition": "⿹？一",
+      "reason": "placeholder"
+    },
+    {
+      "character": "专",
+      "decomposition": "⿻？一",
+      "reason": "placeholder"
+    },
+    {
+      "character": "世",
+      "decomposition": "⿻廿？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "业",
+      "decomposition": "⿱？一",
+      "reason": "placeholder"
+    },
+    {
+      "character": "丝",
+      "decomposition": "⿱⿰？？一",
+      "reason": "placeholder"
+    },
+    {
+      "character": "久",
+      "decomposition": "⿻勹？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "之",
+      "decomposition": "⿱丶？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "乌",
+      "decomposition": "⿱丿？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "乎",
+      "decomposition": "⿻丿⿻？丷",
+      "reason": "placeholder"
+    },
+    {
+      "character": "乐",
+      "decomposition": "⿻⿱丿？小",
+      "reason": "placeholder"
+    },
+    {
+      "character": "也",
+      "decomposition": "⿻？乚",
+      "reason": "placeholder"
+    },
+    {
+      "character": "习",
+      "decomposition": "⿹？冫",
+      "reason": "placeholder"
+    },
+    {
+      "character": "乡",
+      "decomposition": "幺",
+      "reason": "no-complete-explicit-ids-tree"
+    },
+    {
+      "character": "书",
+      "decomposition": "⿻？丨",
+      "reason": "placeholder"
+    },
+    {
+      "character": "互",
+      "decomposition": "⿴二？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "五",
+      "decomposition": "⿴二？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "井",
+      "decomposition": "⿻二？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "人",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "今",
+      "decomposition": "⿱人？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "介",
+      "decomposition": "⿱人？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "令",
+      "decomposition": "⿱人？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "以",
+      "decomposition": "⿰？人",
+      "reason": "placeholder"
+    },
+    {
+      "character": "伞",
+      "decomposition": "⿱人？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "伤",
+      "decomposition": "⿰亻⿱？力",
+      "reason": "placeholder"
+    },
+    {
+      "character": "先",
+      "decomposition": "⿱⿰？土儿",
+      "reason": "placeholder"
+    },
+    {
+      "character": "入",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "八",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "农",
+      "decomposition": "⿻冖？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "刀",
+      "decomposition": "⿹？丿",
+      "reason": "placeholder"
+    },
+    {
+      "character": "力",
+      "decomposition": "⿻丿？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "劲",
+      "decomposition": "⿰？力",
+      "reason": "placeholder"
+    },
+    {
+      "character": "北",
+      "decomposition": "⿰？匕",
+      "reason": "placeholder"
+    },
+    {
+      "character": "升",
+      "decomposition": "⿻十？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "单",
+      "decomposition": "⿱丷？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "印",
+      "decomposition": "⿰？卩",
+      "reason": "placeholder"
+    },
+    {
+      "character": "即",
+      "decomposition": "⿰？卩",
+      "reason": "placeholder"
+    },
+    {
+      "character": "厂",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "又",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "及",
+      "decomposition": "⿻？又",
+      "reason": "placeholder"
+    },
+    {
+      "character": "友",
+      "decomposition": "⿸？又",
+      "reason": "placeholder"
+    },
+    {
+      "character": "发",
+      "decomposition": "⿸？又",
+      "reason": "placeholder"
+    },
+    {
+      "character": "右",
+      "decomposition": "⿸？口",
+      "reason": "placeholder"
+    },
+    {
+      "character": "司",
+      "decomposition": "⿹？口",
+      "reason": "placeholder"
+    },
+    {
+      "character": "后",
+      "decomposition": "⿸？口",
+      "reason": "placeholder"
+    },
+    {
+      "character": "向",
+      "decomposition": "⿵？口",
+      "reason": "placeholder"
+    },
+    {
+      "character": "垂",
+      "decomposition": "⿻⿱？士卄",
+      "reason": "placeholder"
+    },
+    {
+      "character": "士",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "声",
+      "decomposition": "⿱士？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "女",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "寒",
+      "decomposition": "⿱宀⿱？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "寸",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "展",
+      "decomposition": "⿸尸⿻？衣",
+      "reason": "placeholder"
+    },
+    {
+      "character": "州",
+      "decomposition": "⿻川？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "左",
+      "decomposition": "⿸？工",
+      "reason": "placeholder"
+    },
+    {
+      "character": "巨",
+      "decomposition": "⿷匚？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "己",
+      "decomposition": "⿱？乚",
+      "reason": "placeholder"
+    },
+    {
+      "character": "已",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "巴",
+      "decomposition": "⿻巳？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "布",
+      "decomposition": "⿸？巾",
+      "reason": "placeholder"
+    },
+    {
+      "character": "年",
+      "decomposition": "⿻干？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "弓",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "弟",
+      "decomposition": "⿱丷⿻弓？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "归",
+      "decomposition": "⿰？彐",
+      "reason": "placeholder"
+    },
+    {
+      "character": "往",
+      "decomposition": "⿰彳⿱？王",
+      "reason": "placeholder"
+    },
+    {
+      "character": "心",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "扁",
+      "decomposition": "⿸户？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "手",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "才",
+      "decomposition": "⿻扌？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "探",
+      "decomposition": "⿰扌⿱？木",
+      "reason": "placeholder"
+    },
+    {
+      "character": "敢",
+      "decomposition": "⿰⿱？耳攵",
+      "reason": "placeholder"
+    },
+    {
+      "character": "散",
+      "decomposition": "⿰⿱？⺼攵",
+      "reason": "placeholder"
+    },
+    {
+      "character": "斗",
+      "decomposition": "⿻十？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "断",
+      "decomposition": "⿰⿺？米斤",
+      "reason": "placeholder"
+    },
+    {
+      "character": "方",
+      "decomposition": "⿱亠？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "旅",
+      "decomposition": "⿰方⿱？氏",
+      "reason": "placeholder"
+    },
+    {
+      "character": "族",
+      "decomposition": "⿰方⿱？矢",
+      "reason": "placeholder"
+    },
+    {
+      "character": "旗",
+      "decomposition": "⿰方⿱？其",
+      "reason": "placeholder"
+    },
+    {
+      "character": "春",
+      "decomposition": "⿱？日",
+      "reason": "placeholder"
+    },
+    {
+      "character": "曹",
+      "decomposition": "⿱？日",
+      "reason": "placeholder"
+    },
+    {
+      "character": "有",
+      "decomposition": "⿸？月",
+      "reason": "placeholder"
+    },
+    {
+      "character": "步",
+      "decomposition": "⿱止？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "母",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "每",
+      "decomposition": "⿱？母",
+      "reason": "placeholder"
+    },
+    {
+      "character": "氏",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "气",
+      "decomposition": "⿱亻？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "水",
+      "decomposition": "⿻亅？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "永",
+      "decomposition": "⿱？水",
+      "reason": "placeholder"
+    },
+    {
+      "character": "灰",
+      "decomposition": "⿸？火",
+      "reason": "placeholder"
+    },
+    {
+      "character": "片",
+      "decomposition": "⿸？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "牙",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "牛",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "瓜",
+      "decomposition": "⿵？厶",
+      "reason": "placeholder"
+    },
+    {
+      "character": "瓦",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "用",
+      "decomposition": "⿵冂？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "由",
+      "decomposition": "田",
+      "reason": "no-complete-explicit-ids-tree"
+    },
+    {
+      "character": "甲",
+      "decomposition": "⿻冂？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "白",
+      "decomposition": "⿻？日",
+      "reason": "placeholder"
+    },
+    {
+      "character": "皮",
+      "decomposition": "⿸？攴",
+      "reason": "placeholder"
+    },
+    {
+      "character": "竹",
+      "decomposition": "⿰？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "经",
+      "decomposition": "⿰纟⿱？工",
+      "reason": "placeholder"
+    },
+    {
+      "character": "羊",
+      "decomposition": "⿱丷？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "而",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "耳",
+      "decomposition": "⿻？二",
+      "reason": "placeholder"
+    },
+    {
+      "character": "自",
+      "decomposition": "⿻目？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "舟",
+      "decomposition": "⿻？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "节",
+      "decomposition": "⿱艹？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "虫",
+      "decomposition": "⿱中？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "衣",
+      "decomposition": "⿱亠？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "赛",
+      "decomposition": "⿱宀⿱？贝",
+      "reason": "placeholder"
+    },
+    {
+      "character": "赢",
+      "decomposition": "⿱吂⿲⺼贝？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "足",
+      "decomposition": "⿱口？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "身",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "那",
+      "decomposition": "⿰⿹？？阝",
+      "reason": "placeholder"
+    },
+    {
+      "character": "长",
+      "decomposition": "⿻？一",
+      "reason": "placeholder"
+    },
+    {
+      "character": "门",
+      "decomposition": "⿰⿱丶丨？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "雨",
+      "decomposition": "⿻帀？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "非",
+      "decomposition": "⿰？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "面",
+      "decomposition": "⿱？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "革",
+      "decomposition": "⿱廿？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "飞",
+      "decomposition": "⿻？？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "马",
+      "decomposition": "⿹？一",
+      "reason": "placeholder"
+    },
+    {
+      "character": "鬼",
+      "decomposition": "⿸？⿺乚厶",
+      "reason": "placeholder"
+    },
+    {
+      "character": "鸟",
+      "decomposition": "？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "鹿",
+      "decomposition": "⿸广⿱？比",
+      "reason": "placeholder"
+    },
+    {
+      "character": "黄",
+      "decomposition": "⿱？⿱由八",
+      "reason": "placeholder"
+    },
+    {
+      "character": "黑",
+      "decomposition": "⿱？灬",
+      "reason": "placeholder"
+    },
+    {
+      "character": "鼠",
+      "decomposition": "⿱臼？",
+      "reason": "placeholder"
+    },
+    {
+      "character": "齐",
+      "decomposition": "⿱文？",
+      "reason": "placeholder"
+    }
+  ],
+  "curated": {
+    "characterCount": 45,
+    "characters": [
+      "爸",
+      "妈",
+      "爷",
+      "外",
+      "牌",
+      "书",
+      "笔",
+      "课",
+      "篮",
+      "球",
+      "投",
+      "魔",
+      "方",
+      "转",
+      "水",
+      "饭",
+      "洗",
+      "人",
+      "手",
+      "耳",
+      "目",
+      "日",
+      "月",
+      "山",
+      "田",
+      "木",
+      "火",
+      "土",
+      "大",
+      "小",
+      "上",
+      "下",
+      "天",
+      "雨",
+      "门",
+      "米",
+      "口",
+      "足",
+      "鸟",
+      "鱼",
+      "车",
+      "花",
+      "牛",
+      "羊",
+      "狗"
+    ],
+    "missing": [],
+    "unknownStructure": [
+      "书",
+      "方",
+      "水",
+      "人",
+      "手",
+      "耳",
+      "雨",
+      "门",
+      "足",
+      "鸟",
+      "牛",
+      "羊"
+    ]
+  },
+  "audio": {
+    "prerecordedAvailable": 0,
+    "prerecordedMissing": 1292,
+    "existingTts": "Existing browser TTS remains unchanged; prerecorded audio is not required by the current app, and browser voice availability is device-dependent."
+  },
+  "selected": [
+    {
+      "schemaVersion": 1,
+      "character": "丁",
+      "strokeCount": 2,
+      "radical": "一",
+      "structure": "未知",
+      "decomposition": "一",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "unknown"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "七",
+      "strokeCount": 2,
+      "radical": "一",
+      "structure": "重叠",
+      "decomposition": "⿻一乚",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "包",
+      "strokeCount": 5,
+      "radical": "勹",
+      "structure": "右上包围",
+      "decomposition": "⿹勹巳",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "区",
+      "strokeCount": 4,
+      "radical": "匸",
+      "structure": "左三包围",
+      "decomposition": "⿷匸乂",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "口",
+      "strokeCount": 3,
+      "radical": "口",
+      "structure": "上下",
+      "decomposition": "⿱冂一",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "句",
+      "strokeCount": 5,
+      "radical": "口",
+      "structure": "右上包围",
+      "decomposition": "⿹勹口",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "同",
+      "strokeCount": 6,
+      "radical": "口",
+      "structure": "上三包围",
+      "decomposition": "⿵凡口",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "品",
+      "strokeCount": 9,
+      "radical": "口",
+      "structure": "上下",
+      "decomposition": "⿱口⿰口口",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "国",
+      "strokeCount": 8,
+      "radical": "囗",
+      "structure": "全包围",
+      "decomposition": "⿴囗玉",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "圆",
+      "strokeCount": 10,
+      "radical": "囗",
+      "structure": "全包围",
+      "decomposition": "⿴囗员",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "床",
+      "strokeCount": 7,
+      "radical": "广",
+      "structure": "左上包围",
+      "decomposition": "⿸广木",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "心",
+      "strokeCount": 4,
+      "radical": "心",
+      "structure": "未知",
+      "decomposition": "？",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "unknown"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "树",
+      "strokeCount": 9,
+      "radical": "木",
+      "structure": "左右",
+      "decomposition": "⿰木对",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "森",
+      "strokeCount": 12,
+      "radical": "木",
+      "structure": "上下",
+      "decomposition": "⿱木⿰木木",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "水",
+      "strokeCount": 4,
+      "radical": "水",
+      "structure": "未知",
+      "decomposition": "⿻亅？",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "unknown"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "牌",
+      "strokeCount": 12,
+      "radical": "片",
+      "structure": "左右",
+      "decomposition": "⿰片卑",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "近",
+      "strokeCount": 7,
+      "radical": "辶",
+      "structure": "左下包围",
+      "decomposition": "⿺辶斤",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "character": "魔",
+      "strokeCount": 20,
+      "radical": "鬼",
+      "structure": "左上包围",
+      "decomposition": "⿸麻鬼",
+      "source": {
+        "graphics": "makemeahanzi",
+        "dictionary": "makemeahanzi",
+        "radical": "dictionary",
+        "structure": "ids"
+      }
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "before": {
+      "/Users/larkin_1/Downloads/piggymicharacter3/src/data/source.json": "901518c824f3b1821c32f49f47ba0ea17227058cd39b66a280652b39011d7069",
+      "/Users/larkin_1/Downloads/piggymicharacter3/src/data/practice.ts": "58919fdf080e6df36633b23a7035c5c2130b010feef25f6dab0485e942e28a9f",
+      "/Users/larkin_1/Downloads/piggymicharacter3/src/data/catalog.ts": "0109597c6ecb96fa4d9eff7b3a9a9c1008552f1e5f55cf00ad04aafff482d48e",
+      "/Users/larkin_1/Downloads/汉字学习资源/data/makemeahanzi/graphics.txt": "a28c478b5178e98f67f510b2d52fde08a69dc664654ef43498253b9b764d46ee",
+      "/Users/larkin_1/Downloads/汉字学习资源/data/makemeahanzi/dictionary.txt": "744bb05d5b0742e9ee35c37791f94d56a173349b3367569e7ca11e510364d203",
+      "/Users/larkin_1/Downloads/汉字学习资源/data/字库-融合拼音笔画部首.json": "ee72992a4c649736b8ea1e894eceeb8f5cc3d24e046066af401f6cf38d9e7ffb"
+    },
+    "after": {
+      "/Users/larkin_1/Downloads/piggymicharacter3/src/data/source.json": "901518c824f3b1821c32f49f47ba0ea17227058cd39b66a280652b39011d7069",
+      "/Users/larkin_1/Downloads/piggymicharacter3/src/data/practice.ts": "58919fdf080e6df36633b23a7035c5c2130b010feef25f6dab0485e942e28a9f",
+      "/Users/larkin_1/Downloads/piggymicharacter3/src/data/catalog.ts": "0109597c6ecb96fa4d9eff7b3a9a9c1008552f1e5f55cf00ad04aafff482d48e",
+      "/Users/larkin_1/Downloads/汉字学习资源/data/makemeahanzi/graphics.txt": "a28c478b5178e98f67f510b2d52fde08a69dc664654ef43498253b9b764d46ee",
+      "/Users/larkin_1/Downloads/汉字学习资源/data/makemeahanzi/dictionary.txt": "744bb05d5b0742e9ee35c37791f94d56a173349b3367569e7ca11e510364d203",
+      "/Users/larkin_1/Downloads/汉字学习资源/data/字库-融合拼音笔画部首.json": "ee72992a4c649736b8ea1e894eceeb8f5cc3d24e046066af401f6cf38d9e7ffb"
+    },
+    "unchanged": true
+  },
+  "license": {
+    "status": "pending-public-release-verification",
+    "note": "Local Make Me a Hanzi license full text unavailable. No network used. See THIRD_PARTY_NOTICES.md."
+  }
+}

@@ -1,1 +1,18 @@
-{"name":"咪猪头识字探险岛","short_name":"咪猪头识字","lang":"zh-CN","start_url":"/","display":"standalone","background_color":"#faf7ef","theme_color":"#21695f","icons":[{"src":"/app.png","sizes":"744x744","type":"image/png","purpose":"any"}]}
+{
+  "name": "咪猪头识字成长记",
+  "short_name": "咪猪头识字",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#faf7ef",
+  "theme_color": "#21695f",
+  "icons": [
+    {
+      "src": "./app.png",
+      "sizes": "744x744",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "scope": "./"
+}

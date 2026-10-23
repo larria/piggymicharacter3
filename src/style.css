@@ -1264,7 +1264,7 @@ a {
   margin-top:28px;
 }
 
-/* Child-facing guidance stays readable within the original island design. */
+/* Child-facing guidance stays readable within the original warm-paper design. */
 .child-help,.question>p,.session>.offline {
   font-size:16px;
   line-height:1.8;
@@ -1440,3 +1440,167 @@ a {
   }
 }
 
+
+/* The player collection system uses the same warm paper and green ink. */
+.player-header{gap:20px;font-size:13px}.player-identity,.player-rank,.wallet{display:flex;align-items:center;gap:12px}.player-identity strong{font-size:17px}.title-trigger{display:block;background:none;padding:2px 0;text-align:left;color:#657968;font-size:12px}.player-rank strong{display:block}.rank-stars{display:block;color:#9c7333;letter-spacing:3px;font-size:16px}.wallet{animation:reward-arrive .35s ease-out}.wallet strong{font-size:19px}.title-options{display:flex;flex-wrap:wrap;gap:12px}.growth-current{display:flex;align-items:center;gap:28px}.growth-current>svg{flex-shrink:0}.growth-current h2{margin-top:0}.growth-current p,.exam-panel p,.achievement p{font-size:14px;line-height:1.8;color:#637969}.growth-current .rank-stars{display:inline-block}.rank-track{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:24px 0}.rank-stop{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px 8px;border:1px solid var(--line);border-radius:16px;background:#f4f3e9;gap:8px}.rank-stop.current{background:#edf3e7;border-color:#8fac91;box-shadow:0 4px 16px #3257440d}.rank-stop strong{font-size:13px}.rank-stop small,.rank-stop>span{font-size:11px;color:#687c6b}.exam-panel{margin-bottom:24px}.exam-top{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.exam-options{display:grid;grid-template-columns:1fr 1fr;gap:24px}.exam-options>div{padding:20px;background:#f4f4e9;border-radius:14px}.exam-question{max-width:620px;margin:24px auto;text-align:center}.exam-question h3{font-size:26px;line-height:1.8}.exam-question .choices{gap:24px}.exam-result{padding:20px;margin-bottom:24px;border-radius:14px;background:#faf0df;animation:reward-arrive .4s ease-out}.exam-result.passed{background:#eaf2e1}.achievement-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.achievement{position:relative}.achievement.unlocked{border-color:#c3d2b6}.achievement h3{font-size:17px}.achievement p svg{vertical-align:middle}.achievement-mark{font-size:26px;color:#aa814a}.achievement.unlocked .achievement-mark{color:#b58535}.rank-badge{filter:drop-shadow(0 4px 3px #584c3520)}
+@keyframes reward-arrive{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1050px){.rank-track{grid-template-columns:repeat(3,minmax(0,1fr))}.achievement-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.player-header{gap:12px}.player-identity{gap:8px}.player-identity>svg{width:46px;height:46px}.player-rank{gap:5px}.player-rank>svg{width:36px;height:42px}.player-rank strong{font-size:12px}.player-rank .rank-stars{font-size:12px;letter-spacing:1px}.wallet{margin-left:auto}.wallet>span{font-size:10px}.growth-current{align-items:flex-start;gap:15px}.growth-current>svg{width:78px}.growth-current h2{font-size:19px}.exam-options{grid-template-columns:1fr}.rank-stop{padding:14px 7px}.achievement-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.player-header .wallet{padding:6px 9px;gap:5px}.player-header .wallet>span{display:none}.player-identity strong{font-size:15px}.title-trigger{font-size:11px}.player-rank{margin-left:auto}.achievement-grid{grid-template-columns:1fr}.growth-current{flex-wrap:wrap}.rank-track{gap:7px}.rank-stop strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.wallet,.exam-result{animation:none}}
+
+/* Shared native XP progress and avatar entry point. */
+.avatar-trigger{padding:0;background:transparent;border-radius:50%;min-width:58px;min-height:58px;display:grid;place-items:center;flex-shrink:0}
+.avatar-trigger .avatar-frame{width:58px;height:58px;display:block}
+.player-header .player-rank{display:grid;grid-template-columns:48px minmax(0,1fr);gap:4px 10px;flex:1 1 220px;max-width:360px;min-width:0}
+.player-rank>.rank-badge{grid-row:1;align-self:center}
+.player-rank .xp-progress{grid-column:1/-1}
+.xp-progress{width:100%;min-width:0;margin:16px 0;color:#416651}
+.xp-progress-label{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;line-height:1.6;margin-bottom:8px}
+.xp-progress progress{display:block;width:100%;height:18px;appearance:none;border:1px solid #c4d3c3;border-radius:20px;overflow:hidden;background:#e4ebde;color:#246b5e;accent-color:#246b5e}
+.xp-progress progress::-webkit-progress-bar{background:#e4ebde;border-radius:20px}
+.xp-progress progress::-webkit-progress-value{background:#246b5e;border-radius:20px}
+.xp-progress progress::-moz-progress-bar{background:#246b5e;border-radius:20px}
+.xp-progress-compact{margin:5px 0 0}
+.xp-progress-compact .xp-progress-label{font-size:11px;gap:4px;margin-bottom:4px}
+.xp-progress-compact progress{height:9px}
+.growth-current>div{flex:1;min-width:0}
+.coin-amount{display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.coin-icon{flex-shrink:0}
+.player-header .wallet{animation:none}
+@media(max-width:480px){.player-header .player-rank{max-width:none;flex-basis:100%;order:3;grid-template-columns:36px minmax(0,1fr)}.player-header .wallet{margin-left:auto}.avatar-trigger,.avatar-trigger .avatar-frame{width:48px;height:48px;min-width:48px;min-height:48px}.growth-current>div{flex-basis:100%}.xp-progress-label{font-size:12px}}
+@media(prefers-reduced-motion:reduce){button:hover{transform:none}}
+
+
+.achievement-progress { margin: 12px 0; }
+.achievement-progress-label { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; font-size:13px; color:var(--muted); margin-bottom:10px; }
+.achievement-progress-label strong { color:#586e57; font-variant-numeric:tabular-nums; }
+.achievement-progress progress { display:block; appearance:none; -webkit-appearance:none; width:100%; height:9px; border:0; border-radius:12px; overflow:hidden; background:#e8eddf; }
+.achievement-progress progress::-webkit-progress-bar { background:#e8eddf; border-radius:12px; }
+.achievement-progress progress::-webkit-progress-value { background:linear-gradient(90deg,#b3cd9c,#43826e); border-radius:12px; transition:width .35s ease; }
+.achievement-progress progress::-moz-progress-bar { background:linear-gradient(90deg,#b3cd9c,#43826e); border-radius:12px; }
+.achievement.unlocked progress::-webkit-progress-value { background:linear-gradient(90deg,#edcf84,#b88a44); }
+@media(prefers-reduced-motion:reduce){.achievement-progress progress::-webkit-progress-value{transition:none;}}
+
+.rarity-common{--rarity:#78818a;--rarity-soft:#edf0f1;--rarity-line:#d3d8dc;}
+.rarity-uncommon{--rarity:#44775b;--rarity-soft:#eaf2e8;--rarity-line:#bfd4bd;}
+.rarity-rare{--rarity:#386f9c;--rarity-soft:#eaf1f8;--rarity-line:#b6cde2;}
+.rarity-epic{--rarity:#7a579d;--rarity-soft:#f1ebf7;--rarity-line:#cdbbe0;}
+.rarity-legendary{--rarity:#9a6c22;--rarity-soft:#fbf1d9;--rarity-line:#dec28a;}
+.achievement[class*=rarity-]{border-color:var(--rarity-line);background:linear-gradient(150deg,var(--rarity-soft),#fffef9 65%);}
+.achievement .rarity-label{display:inline-block;padding:4px 10px;border-radius:20px;background:var(--rarity-soft);color:var(--rarity);border:1px solid var(--rarity-line);font-size:12px;margin-left:10px;}
+.achievement[class*=rarity-] h3,.achievement[class*=rarity-] .achievement-mark{color:var(--rarity);}
+.achievement[class*=rarity-] progress::-webkit-progress-value{background:var(--rarity);}
+.achievement[class*=rarity-] progress::-moz-progress-bar{background:var(--rarity);}
+.title-trigger[class*=rarity-]{color:var(--rarity);background:transparent;border:0;box-shadow:none;padding:8px 0;border-radius:0;line-height:1.4;}
+.title-trigger:hover{transform:none;background:transparent;}
+.title-trigger .title-name{white-space:nowrap;}
+.title-trigger svg.title-chevron{width:14px;height:14px;display:block;flex-shrink:0;}
+.title-options button[class*=rarity-]:not(.primary){border-color:var(--rarity-line);color:var(--rarity);background:var(--rarity-soft);}
+
+/* Small keepsakes: shared icons, compact achievement cards, gentle growth copy. */
+.game-icon{display:block;flex-shrink:0;overflow:visible}
+.icon-amount{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;white-space:nowrap;font-variant-numeric:tabular-nums}
+.icon-amount>span,.coin-amount>span{display:inline-flex;align-items:center}
+.rank-stars,.growth-current .rank-stars{display:inline-flex;align-items:center;gap:3px;vertical-align:middle;letter-spacing:0}
+.rank-stars>span{display:flex}
+.title-trigger[class*=rarity-]{display:flex;align-items:center;gap:6px}
+.title-trigger .achievement-icon{width:24px;height:26px}
+.growth-current{background:linear-gradient(125deg,#edf3e7,#fffef9 70%);box-shadow:0 8px 24px #294b4305}
+.growth-current h2{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.growth-current p{margin:8px 0}
+.growth-current .growth-total{display:flex;align-items:center;gap:10px;font-size:13px}
+.growth-total strong{font-size:20px;color:#3f735e}
+.growth-current .growth-reward{font-size:13px;color:#61765e}
+.rank-step{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap}
+.rank-step-divider{color:#b2bbab}
+.xp-progress-label{align-items:center}
+.xp-progress-label strong{font-weight:650;font-variant-numeric:tabular-nums}
+.xp-progress progress{height:13px;border-color:#c5d5bf;background:#e5eddf;box-shadow:inset 0 1px 3px #294b430a}
+.xp-progress progress::-webkit-progress-value{background:linear-gradient(90deg,#8dbb86,#397b65)}
+.xp-progress progress::-moz-progress-bar{background:linear-gradient(90deg,#8dbb86,#397b65)}
+.xp-progress-compact progress{height:8px}
+.achievement-grid{gap:12px;align-items:start}
+.achievement.panel{padding:16px;border-radius:16px;box-shadow:0 3px 12px #294b4304}
+.achievement-heading{display:flex;align-items:center;gap:8px;min-width:0}
+.achievement-heading>span:first-child{display:flex;flex-shrink:0}
+.achievement-heading h3{margin:0;flex:1;min-width:0;font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.achievement .rarity-label{margin:0;padding:3px 7px;font-size:10px;white-space:nowrap;flex-shrink:0}
+.achievement-progress-label{font-size:12px;gap:4px;margin-bottom:6px;line-height:1.5}
+.achievement-progress progress{height:6px}
+.achievement-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:#657765}
+.achievement-status{display:inline-flex;align-items:center;gap:4px;color:var(--rarity)}
+.achievement-meta .coin-amount{gap:4px}
+.achievement-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--rarity-line)}
+.achievement-footer small{font-size:11px;color:#7c8877}
+.achievement-footer button{min-height:44px;padding:8px 12px;font-size:12px;border-radius:9px;box-shadow:none}
+.achievement .achievement-hint{margin:8px 0 0;font-size:11px;line-height:1.6;color:#7c8877}
+.growth-rules{margin-top:24px;border-top:1px solid var(--line);padding:16px 0;color:#6b7d6b;font-size:12px;line-height:1.9}
+.growth-rules summary{cursor:pointer;min-height:44px;display:list-item;padding:10px 0;font-weight:600;color:#617560}
+.growth-rules summary:focus-visible{outline:3px solid #cf8a3e;outline-offset:4px}
+.growth-rules p{margin:8px 0;max-width:780px}
+@media(max-width:760px){.achievement.panel{padding:14px}.achievement-heading{gap:6px}.achievement-heading h3{font-size:14px}.rank-stars{gap:2px}.player-rank .star-icon{width:14px;height:14px}}
+@media(max-width:540px){.achievement-grid{grid-template-columns:minmax(0,1fr)}.achievement.panel{padding:14px 16px}.achievement-heading{min-height:34px}.achievement-heading h3{font-size:15px}.achievement .rarity-label{font-size:11px;padding:3px 8px}}
+@media(max-width:480px){.growth-current h2{gap:8px}.achievement-heading h3{font-size:15px}}
+
+
+
+/* Player header: large identity portrait plus one organized status column. */
+.player-header{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:22px;padding:14px 0 16px;font-size:13px}
+.player-profile{display:grid;place-items:center;flex-shrink:0}
+.avatar-trigger{width:88px;height:88px;min-width:88px;min-height:88px;padding:0;background:transparent;border:0;border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.avatar-trigger .avatar-frame{width:88px;height:88px;display:block}
+.player-overview{min-width:0;display:grid;gap:9px}
+.player-overview-top{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.title-trigger{min-width:0;max-width:100%;background:none;padding:7px 0;text-align:left;color:#657968;font-size:13px}
+.title-trigger .title-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-header .wallet{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;padding:7px 13px;border-radius:999px;background:#f8f0d8;color:#6f582d;animation:none}
+.player-header .wallet strong{font-size:18px;font-variant-numeric:tabular-nums}
+.player-growth-summary{min-width:0;display:grid;grid-template-columns:34px auto minmax(100px,1fr);align-items:center;gap:8px 11px}
+.player-rank-mark{height:35px;display:grid;place-items:center;overflow:visible}
+.player-rank-mark .rank-badge{width:32px;height:36px;filter:drop-shadow(0 3px 2px #584c3520)}
+.player-growth-summary .rank-stars{white-space:nowrap}
+.player-growth-summary .xp-progress{min-width:100px}
+.xp-progress-visual{display:grid;grid-template-columns:20px minmax(70px,1fr);align-items:center;gap:7px;margin:0}
+.xp-progress-visual .xp-progress-mark{display:flex;align-items:center}
+.xp-progress-visual progress{height:9px}
+@media(max-width:760px){
+  .player-header{gap:15px;padding:12px 0 14px}
+  .avatar-trigger,.avatar-trigger .avatar-frame{width:76px;height:76px;min-width:76px;min-height:76px}
+  .player-overview{gap:7px}
+  .player-overview-top{gap:9px}
+  .player-header .wallet{padding:6px 10px;gap:5px}
+  .player-header .wallet .coin-icon{width:23px;height:23px}
+  .player-header .wallet strong{font-size:16px}
+  .player-growth-summary{grid-template-columns:29px auto minmax(76px,1fr);gap:6px 8px}
+  .player-rank-mark .rank-badge{width:27px;height:31px}
+  .player-growth-summary .star-icon{width:14px;height:14px}
+  .player-growth-summary .rank-stars{gap:1px}
+  .xp-progress-visual{grid-template-columns:17px minmax(58px,1fr);gap:5px}
+  .xp-progress-visual .xp-icon{width:16px;height:16px}
+}
+@media(max-width:480px){
+  .player-header{grid-template-columns:68px minmax(0,1fr);gap:10px}
+  .avatar-trigger,.avatar-trigger .avatar-frame{width:68px;height:68px;min-width:68px;min-height:68px}
+  .title-trigger{font-size:11px;gap:4px;padding:5px 0}
+  .title-trigger .achievement-icon{width:21px;height:23px}
+  .title-trigger svg.title-chevron{width:12px;height:12px}
+  .player-header .wallet{padding:5px 8px}
+  .player-header .wallet .coin-icon{width:21px;height:21px}
+  .player-header .wallet strong{font-size:15px}
+  .player-growth-summary{grid-template-columns:25px auto minmax(58px,1fr);gap:4px 6px}
+  .player-rank-mark .rank-badge{width:24px;height:28px}
+  .player-growth-summary .star-icon{width:12px;height:12px}
+  .xp-progress-visual{grid-template-columns:15px minmax(44px,1fr);gap:4px}
+  .xp-progress-visual .xp-icon{width:14px;height:14px}
+  .xp-progress-visual progress{height:7px}
+}
+@media(max-width:340px){
+  .player-header{grid-template-columns:62px minmax(0,1fr);gap:7px}
+  .avatar-trigger,.avatar-trigger .avatar-frame{width:62px;height:62px;min-width:62px;min-height:62px}
+  .player-overview-top{gap:4px}
+  .player-header .wallet{padding:4px 6px}
+  .player-growth-summary{grid-template-columns:22px auto minmax(44px,1fr);gap:3px 4px}
+  .player-rank-mark .rank-badge{width:21px;height:25px}
+  .player-growth-summary .star-icon{width:11px;height:11px}
+}
