@@ -1,0 +1,21 @@
+import {describe,it,expect,vi} from 'vitest';
+import {acceptTracingStroke,advanceDemo,advancePracticeTime,PRACTICE_SKIP_AFTER_MS,createTracingStatus,demoSpeed,isTracingComplete} from './strokeGate';
+import {createHanziLoader} from './data/hanzi';
+describe('task-bound tracing gate',()=>{
+  it('requires all strokes and exact task and character',()=>{let s=createTracingStatus('task','口',3);expect(isTracingComplete(s,'task','口')).toBe(false);for(let i=0;i<2;i++){s=acceptTracingStroke(s);expect(isTracingComplete(s,'task','口')).toBe(false);}s=acceptTracingStroke(s);expect(isTracingComplete(s,'task','口')).toBe(true);expect(isTracingComplete(s,'other','口')).toBe(false);expect(isTracingComplete(s,'task','日')).toBe(false);expect(acceptTracingStroke(s)).toEqual(s);});
+  it('reset and unavailable data always close the gate',()=>{const completed=acceptTracingStroke(createTracingStatus('a','一',1));expect(completed.complete).toBe(true);expect(createTracingStatus('a','一',1).complete).toBe(false);expect(createTracingStatus('b','一',1).acceptedStrokes).toBe(0);for(const count of [0,-1,NaN,Infinity])expect(acceptTracingStroke(createTracingStatus('a','一',count)).complete).toBe(false);expect(isTracingComplete(null,'a','一')).toBe(false);});
+});
+describe('foreground practice clock',()=>{
+  it('reaches the skip boundary only after credited active time',()=>{expect(PRACTICE_SKIP_AFTER_MS).toBe(180000);expect(advancePracticeTime(179000,999,true)).toBe(179999);expect(advancePracticeTime(179000,1000,true)).toBe(PRACTICE_SKIP_AFTER_MS);});
+  it('excludes loading, hidden, paused and completed phases and bounds sleep',()=>{expect(advancePracticeTime(1200,60000,false)).toBe(1200);expect(advancePracticeTime(1200,60000,true)).toBe(2700);expect(advancePracticeTime(1200,-100,true)).toBe(1200);expect(advancePracticeTime(NaN,Infinity,true)).toBe(0);});
+});
+describe('loop clock',()=>{
+  it('holds for a full three seconds after completion',()=>{let c=advanceDemo({position:0,waitingMs:0},1000,1,1);expect(c).toEqual({position:1,waitingMs:0});c=advanceDemo(c,2999,1,1);expect(c.position).toBe(1);expect(advanceDemo(c,1,1,1)).toEqual({position:0,waitingMs:0});});
+  it('uses a fake clock and no progress while paused/manual',()=>{vi.useFakeTimers();let c={position:0,waitingMs:0};const timer=setInterval(()=>{c=advanceDemo(c,100,1,1);},100);vi.advanceTimersByTime(1000);expect(c.position).toBe(1);vi.advanceTimersByTime(2900);expect(c.position).toBe(1);vi.advanceTimersByTime(100);expect(c.position).toBe(0);clearInterval(timer);c={position:1,waitingMs:0};vi.advanceTimersByTime(10000);expect(c).toEqual({position:1,waitingMs:0});vi.useRealTimers();});
+  it('caps complex-character acceleration and handles bad elapsed values',()=>{expect(demoSpeed(1)).toBe(1);expect(demoSpeed(64)).toBe(2.5);expect(demoSpeed(1000)).toBe(2.5);expect(advanceDemo({position:0,waitingMs:0},NaN,1,3).position).toBe(0);expect(advanceDemo({position:3,waitingMs:0},-100,1,3).waitingMs).toBe(0);});
+});
+describe('failed hanzi requests are retryable',()=>{
+  it('deduplicates inflight but evicts HTTP failures',async()=>{const fetcher=vi.fn().mockResolvedValue({ok:false});const loader=createHanziLoader(fetcher);const first=loader('一');expect(loader('一')).toBe(first);expect(await first).toBeNull();expect(await loader('一')).toBeNull();expect(fetcher).toHaveBeenCalledTimes(2);});
+  it('evicts rejected fetches and malformed resources, caches valid data',async()=>{const data={character:'一',strokes:['M 0 0 L 100 100'],medians:[[[0,0],[100,100]]],strokeCount:1,radical:null,structure:''};const fetcher=vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({ok:true,json:async()=>({})}).mockResolvedValue({ok:true,json:async()=>data});const loader=createHanziLoader(fetcher);expect(await loader('一')).toBeNull();expect(await loader('一')).toBeNull();expect(await loader('一')).toEqual(data);expect(await loader('一')).toEqual(data);expect(fetcher).toHaveBeenCalledTimes(3);});
+  it('does not request invalid characters',async()=>{const fetcher=vi.fn();expect(await createHanziLoader(fetcher)('../a')).toBeNull();expect(fetcher).not.toHaveBeenCalled();});
+});

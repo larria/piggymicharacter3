@@ -17,7 +17,7 @@ export function masteredCount(s:State):number {
 }
 const cardIds = new Set(cards.map(card=>card.id));
 function measures(s:State,date:string){
- const valid=s.logs.filter(l=>l.correct&&!l.hinted&&l.kind!=='correction'&&(l.kind!=='assessment'||l.advanced));
+ const valid=s.logs.filter(l=>l.correct&&!l.hinted&&l.pairComplete!==false&&l.kind!=='correction'&&(l.kind!=='assessment'||l.advanced));
  const days=new Set(valid.map(l=>l.date));
  let best=0;
  for(const d of days){let count=0,at=d;while(days.has(at)){count++;at=addDays(at,-1);}best=Math.max(best,count);}

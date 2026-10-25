@@ -1,4 +1,8 @@
 import {describe,it,expect} from 'vitest';
+import {createElement} from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import {AvatarFrame,RankBadge} from '../src/components/GameIcons';
+import {GrowthPage} from '../src/components/GrowthPage';
 import {catalog} from '../src/data/catalog';
 import {createState,growth,RANKS,grantReward,rewardQuota,startExam,answerExam,pauseExam,resumeExam,currentExamQuestion,examEligibility,settleAchievements,achievementProgress,ACHIEVEMENTS,masteredCount,MASTERY_RULE,addDays,equipTitle,createWall,placeOnWall,normalizeWall,unlockNextWall,WALL_COSTS,stats,startPractice,answerTask,currentTask,type State} from '../src/domain';
 import {loadState,saveState,loadWall,saveWall,exportBackup,importBackup,LEGACY_KEY,STORAGE_KEY,MIGRATION_BACKUP_KEY,WALL_KEY,RESTORE_TRANSACTION_KEY,restoreBackup,type StorageLike} from '../src/storage';
@@ -6,6 +10,31 @@ import {cards} from '../src/data/cards';
 function eligible(){const s=createState();for(const w of catalog.slice(0,40))s.progress[w.id]={stage:0,due:'2026-10-24',firstSeen:'2026-10-23',lastAdvanced:'2026-10-23',lastStudied:'2026-10-23',failures:0};s.xp=300;settleAchievements(s,'2026-10-23',true);return s;}
 function memory(){const data=new Map<string,string>();return {data,getItem:(k:string)=>data.get(k)??null,setItem:(k:string,v:string)=>{data.set(k,v);}};}
 describe('v2 growth and reward rules',()=>{
+ it('uses the six requested ranks without changing positional XP or saved gates',()=>{
+  expect(RANKS.map(r=>r.name)).toEqual(['青铜','白银','黄金','钻石','星曜','咪猪头']);
+  expect(RANKS.map(r=>r.step)).toEqual([100,150,200,250,300,400]);
+  const bases=[0,300,750,1550,2550,4050];
+  for(let index=0;index<6;index++){
+   const s=createState();s.xp=bases[index];s.passedGates=Array.from({length:index},(_,i)=>i+1);
+   const m=memory();m.setItem(STORAGE_KEY,JSON.stringify(s));
+   for(const restored of [loadState(m,catalog),importBackup(exportBackup(s),catalog)]){
+    expect(restored.xp).toBe(s.xp);expect(restored.passedGates).toEqual(s.passedGates);
+    expect(growth(restored)).toMatchObject({index,name:RANKS[index].name,base:bases[index],stars:1});
+   }
+   if(index<5){s.xp=bases[index+1]-1;expect(growth(s).gateReady).toBe(false);s.xp++;expect(growth(s)).toMatchObject({index,gateReady:true});s.passedGates.push(index+1);expect(growth(s).index).toBe(index+1);}
+  }
+ });
+ it('renders matching rank names and accessible badge/frame labels with diamond and star palettes',()=>{
+  for(const [tier,rank] of RANKS.entries()){
+   expect(renderToStaticMarkup(createElement(RankBadge,{tier}))).toContain(`aria-label="${rank.name}段位"`);
+   expect(renderToStaticMarkup(createElement(AvatarFrame,{tier}))).toContain(`aria-label="${rank.name}段位头像框"`);
+  }
+  expect(renderToStaticMarkup(createElement(RankBadge,{tier:3}))).toContain('#80b5de');
+  expect(renderToStaticMarkup(createElement(RankBadge,{tier:4}))).toContain('#ba97da');
+  const markup=renderToStaticMarkup(createElement(GrowthPage,{state:createState(),onCommit:()=>true,onError:()=>{},onExamStart:()=>{}}));
+  expect(markup).not.toContain('白金');
+  for(const rank of RANKS)expect(markup).toContain(`<strong>${rank.name}</strong>`);
+ });
  it('has six star counts and never skips gates despite XP overflow',()=>{expect(RANKS.map(r=>r.stars)).toEqual([3,3,4,4,5,5]);const s=createState();s.xp=10000;expect(growth(s)).toMatchObject({index:0,stars:3,gateReady:true});s.passedGates=[1];expect(growth(s)).toMatchObject({index:1,stars:3,gateReady:true});s.passedGates=[1,2,3,4,5];expect(growth(s)).toMatchObject({index:5,stars:5,gateReady:false});});
  it('shares two daily independent rewards, caps assets, and grants effort once',()=>{const s=createState(),date='2026-10-23';for(let i=0;i<3;i++)grantReward(s,{key:`p${i}`,date,wordId:'x',source:i===1?'quiz':'practice',xp:i===1?8:5,coins:i===1?2:1});expect(s).toMatchObject({xp:13,coins:3});for(let i=0;i<100;i++)grantReward(s,{key:`q${i}`,date,wordId:String(i),source:'quiz',xp:8,coins:2});expect(s).toMatchObject({xp:150,coins:30});expect(rewardQuota(s,date).xp).toBe(0);const t=createState();for(let i=0;i<12;i++)grantReward(t,{key:`e${i}`,date,wordId:String(i),source:'effort',xp:1,coins:0});grantReward(t,{key:'repeat',date,wordId:'0',source:'effort',xp:1,coins:0});expect(t.xp).toBe(10);});
  it('marks migrated achievement baselines with no retroactive coins or titles',()=>{const s=eligible();s.owned=[cards[0].id];settleAchievements(s,'2026-10-23',true);expect(s.achievements['collection-1'].baseline).toBe(true);expect(s.coins).toBe(0);expect(()=>equipTitle(s,'collection-1')).toThrow();const t=eligible();t.owned=[cards[0].id];t.achievements={};settleAchievements(t,'2026-10-23');const coins=t.coins;settleAchievements(t,'2026-10-23');expect(t.coins).toBe(coins);expect(equipTitle(t,'collection-1').equippedTitle).toBe('collection-1');});
@@ -41,6 +70,11 @@ describe('progressive idiom achievements',()=>{
   for(const [date,stage] of [['2026-10-03',1],['2026-10-06',2],['2026-10-13',3]] as const){answer(date);expect(s.progress[w.id].stage).toBe(stage);expect(masteredCount(s)).toBe(stage===3?1:0);}
   s.logs=[];expect(masteredCount(s)).toBe(1);s.progress[w.id].lastAdvanced=null;expect(masteredCount(s)).toBe(0);expect(MASTERY_RULE).toContain('同日纠错');
  });
+ it('excludes first pair successes from effective days and streak awards while keeping legacy logs',()=>{
+  const s=createState();for(let i=0;i<3;i++)s.logs.push({id:`first${i}`,date:addDays('2026-10-01',i),wordId:catalog[0].id,kind:'review',correct:true,hinted:false,advanced:false,pairComplete:false});
+  expect(progress(s,'days-20').progress).toBe(0);expect(progress(s,'streak-3').progress).toBe(0);settleAchievements(s,'2026-10-03');expect(s.achievements['streak-3']).toBeUndefined();expect(stats(s,'2026-10-03').today).toBe(0);
+  for(const log of s.logs)delete log.pairComplete;expect(progress(s,'streak-3').progress).toBe(3);settleAchievements(s,'2026-10-03');expect(s.achievements['streak-3']).toBeDefined();
+ });
  it('assigns explicit progressive rarity without duplicate titles',()=>{
   expect(new Set(ACHIEVEMENTS.map(a=>a.title)).size).toBe(ACHIEVEMENTS.length);
   const levels=['common','uncommon','rare','epic','legendary'];
@@ -65,7 +99,7 @@ describe('migration and independent wall persistence',()=>{
   for(const normalized of [loadState(m,catalog),importBackup(JSON.stringify(s),catalog)]){expect(normalized.equippedTitle).toBeNull();expect(normalized.coins).toBe(23);expect(normalized.xp).toBe(45);expect(normalized.achievements[id]).toBeUndefined();expect(normalized.achievements['learned-100']).toEqual(s.achievements['learned-100']);expect(normalized.rewardLedger).toEqual(s.rewardLedger);expect(()=>equipTitle(normalized,id)).toThrow();}
  });
  it('journals original data when rollback also fails and retries recovery on load',()=>{const m=memory(),current=saveState(createState(),m);let writes=0;const broken:StorageLike={getItem:m.getItem,setItem:(k,v)=>{writes++;if(writes>=3)throw new Error('full');m.setItem(k,v);}};expect(()=>restoreBackup(exportBackup({...createState(),coins:99}),current,broken)).toThrow(/混合状态/);expect(JSON.parse(m.getItem(STORAGE_KEY)!).coins).toBe(99);expect(m.getItem(RESTORE_TRANSACTION_KEY)).not.toBe('null');expect(()=>loadState(broken)).toThrow(/回滚失败/);expect(loadState(m)).toEqual(current);expect(m.getItem(RESTORE_TRANSACTION_KEY)).toBe('null');});
- it('unlimited practice bypasses daily queue but keeps shared reward limits and same-day stage',()=>{let s=eligible();const w=catalog[0];s.progress= {[w.id]:s.progress[w.id]};for(let i=0;i<3;i++){s=startPractice(s,catalog,'2026-10-23',()=>0);expect(currentTask(s)).not.toBeNull();s=answerTask(s,{correct:true,submissionId:`practice${i}`},'2026-10-23');}expect(s.xp).toBe(310);expect(s.coins).toBe(2);expect(s.progress[w.id].stage).toBe(0);});
+ it('unlimited practice bypasses daily queue but keeps shared reward limits and same-day stage',()=>{let s=eligible();const w=catalog[0];s.progress= {[w.id]:s.progress[w.id]};for(let i=0;i<3;i++){s=startPractice(s,catalog,'2026-10-23',()=>0);expect(currentTask(s)).not.toBeNull();s=answerTask(s,{correct:true,submissionId:`practice${i}:a`},'2026-10-23');expect(s.xp).toBe(300+Math.min(i,2)*5);expect(s.progress[w.id].stage).toBe(0);expect(currentTask(s)?.questionKind).toBe('word');s=answerTask(s,{correct:true,submissionId:`practice${i}:b`},'2026-10-23');}expect(s.xp).toBe(310);expect(s.coins).toBe(2);expect(s.progress[w.id].stage).toBe(0);});
 
  it('requires legacy restore confirmation and rolls back state when wall storage fails',()=>{const m=memory();const current=saveState(createState(),m);const old=JSON.stringify({...createState(),version:1,shells:10});expect(()=>restoreBackup(old,current,m)).toThrow(/确认/);const before=m.getItem(STORAGE_KEY);const broken:StorageLike={getItem:m.getItem,setItem:(k,v)=>{if(k===WALL_KEY&&JSON.parse(v).revision!==0)throw new Error('full');m.setItem(k,v);}};expect(()=>restoreBackup(exportBackup({...createState(),coins:5}),current,broken)).toThrow(/收藏墙/);expect(m.getItem(STORAGE_KEY)).toBe(before);});
 

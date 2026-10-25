@@ -1,6 +1,6 @@
 import type { State } from '../domain';
 export const RANKS = [
- {name:'青铜猪头',stars:3,step:100},{name:'白银猪头',stars:3,step:150},{name:'黄金猪头',stars:4,step:200},{name:'白金猪头',stars:4,step:250},{name:'钻石猪头',stars:5,step:300},{name:'咪猪头',stars:5,step:400},
+ {name:'青铜',stars:3,step:100},{name:'白银',stars:3,step:150},{name:'黄金',stars:4,step:200},{name:'钻石',stars:4,step:250},{name:'星曜',stars:5,step:300},{name:'咪猪头',stars:5,step:400},
 ] as const;
 export function growth(state: Pick<State,'xp'|'passedGates'>) {
  let index=0, base=0;

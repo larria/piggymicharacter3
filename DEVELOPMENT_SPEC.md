@@ -31,6 +31,8 @@ npm run deploy
 | `src/storage.ts` | 版本化本地存储、校验、兼容格式、修订冲突、导入导出 |
 | `src/parentGate.ts` | 防误触数学确认题生成 |
 | `src/components/CharacterLearning.tsx`、`StrokePlayer.tsx` | 学习呈现及 SVG 笔顺播放器 |
+| `src/components/SessionProgress.tsx` | `sessionSummary(state)` 驱动的紧凑题数进度环、帮助与暂停 |
+| `src/components/TaskProgressRing.tsx`、`task-progress.css` | 学习和考试共用可访问数字 SVG 题数环与局部样式 |
 | `src/components/ExamPanel.tsx`、`GrowthPage.tsx` | 考试与成长视图 |
 | `src/components/CollectionPage.tsx`、`CardWall.tsx` | 卡片目录、购买与自由墙 |
 | `src/components/AvatarEditor.tsx`、`src/avatarCrop.ts` | 共用头像编辑器与本地裁剪 |
@@ -46,11 +48,15 @@ npm run deploy
 
 `src/data/practice.ts` 提供 45 个不同字的自编精选视觉验证题。每字具有字符题和完整词题两个不同情境及干扰项；`characterSentence` 用于字符题，词题使用 `wordSentence ?? sentence`。domain 生成结构化遮罩并移除题干残留目标字，朗读使用遮罩片段而不再次拆分目标字。题库导出 `practice`、`practiceByCharacter`、`PRACTICE_VERSION`。
 
-非精选字即使存在词句或笔顺也只能进入辅助练习。结构测试可以验证不同字、目标词、选项唯一和遮罩，不替代人工语义审查。加入独立题需要人工确认句意和替换后答案唯一合理，不能只靠通过自动测试。
+`src/pinyin.ts` 提供单音节拼音规范化、校验、声调比较、目录读音对应的人工小型词境覆盖及赠币文本解析。新建学习、日常复习、自由复习及认领复用 `createTaskPair`，固定 `:a` pinyin → `:b` word；pair 身份用于首题反馈，不靠 TaskKind 判断。普通双题只有第二题且首题独立正确证据存在才结算掌握和答题预算。结构化 `resolvePinyinContext` 返回目标字、核验词境和读音，题面与答案使用同一条记录；未知词境不从首个随机例词推断读音。buildPinyinAnswer 校验不带调单音节，接受 ü/v/u:，拒绝原始数字与声调符号，并拼接规范音节与所选 0–4 声调。selectedTone 初始 null，与轻声 0 严格区分；五个 aria-pressed 按钮恰好五项（可见为 ˉ、ˊ、ˇ、ˋ、轻声；aria-label 为一声、二声、三声、四声、轻声），不预选答案，触控区域至少 44px，窄屏换行。输入支持 Enter 并阻止输入法组合期间提交，空白/格式错误/未选声调不调用 answerTask；合法答题使用规范化 correct 与现有 hinted、independent、submissionId、奖励和回教逻辑。任务变化或离页清空输入及声调选择，拼音题的 speechText/segments 为空且没有题目朗读按钮，操作帮助仅解释拼音输入与声调选择，不展示目标答案。Session 可选 `flowVersion: 2` 只标记新建双题流程，Task 可选 `pair`、`teachingOrigin`、`retry: 0 | 1` 关联教学状态和原跟写账本；失败／提示最多一次补学双题。普通教学 2+3 XP、普通复习 5 XP 不翻倍，认领奖励预算保留。存档严格校验题序、pair关联、通过日志与来源，版本缺失的旧队列按旧路径恢复，ID、日志、顺序和历史奖励不改；考试校验仍仅允许 character/word，10／30题不变。
+
+`giftCoins(state, amount)` 校验正安全整数及余额溢出，并为待兑现奖励预留安全整数余额空间，只返回增加 coins 的状态，不调用奖励或成就结算。爸爸赠币处理再次检查已解锁且在爸爸页，经 commit/saveState 保存后才清空输入并显示专用赠送提示；失败保留原状态。目标字 CSS 仅 #B86643、透明背景、继承字重，无边框/下划线/阴影/padding，forced-colors 使用 LinkText；intro 显示 char 不显示拼音，session-top 保留进度和暂停但移除重复标签。
+
+非精选字第二道词题即使存在词句或笔顺也只能进入辅助练习。结构测试可以验证不同字、目标词、选项唯一和遮罩，不替代人工语义审查。加入独立题需要人工确认句意和替换后答案唯一合理，不能只靠通过自动测试。
 
 ### 学习与成长实现约束
 
-使用本地日历及可注入日期，而不是简单按 24 小时滚动打卡。学习、考试互斥；持久化任务、试卷、选项、正确答案和题库版本，恢复不能重新抽卷。奖励唯一键防止重复提交和重复结算；XP 与消费币分离，成就币与每日答题奖励分别记账。各段星数、奖励额度、晋级分数见产品规格，以 domain 模块为实际实现依据。掌握计数直接判断 `stage >= 3 && lastAdvanced !== null`，初识判断有效进阶日期，考试资格再要求题库覆盖；不回溯日志证明次数。有效学习日筛选答对、无提示、非 correction，assessment 还需 advanced；普通 review（含小测）不要求进阶。成就连续指标取历史最长，而 stats 取当前连续。rarity 是配置枚举 common/uncommon/rare/epic/legendary，不按币值或达成率推算。
+使用本地日历及可注入日期，而不是简单按 24 小时滚动打卡。学习、考试互斥；持久化任务、试卷、选项、正确答案和题库版本，恢复不能重新抽卷。奖励唯一键防止重复提交和重复结算；XP 与消费币分离，成就币与每日答题奖励分别记账。各段星数、奖励额度、晋级分数见产品规格，以 domain 模块为实际实现依据。掌握计数直接判断 `stage >= 3 && lastAdvanced !== null`，初识判断有效进阶日期，考试资格再要求题库覆盖；不回溯日志证明次数。有效学习日筛选答对、无提示、非 correction，assessment 还需 advanced；旧版普通 review（含小测）不要求进阶；新双题日志 `pairComplete: false` 的首题不计有效学习日或成就，只有整字有效配对通过才计入，字段缺失保留旧日志口径。成就连续指标取历史最长，而 stats 取当前连续。rarity 是配置枚举 common/uncommon/rare/epic/legendary，不按币值或达成率推算。
 
 普通队列按当日全部日志排除已学字，与成就有效日志口径不同。无限练习从已核实字随机取最多 10 字；选字会话去重后要求 1–10 个有效 ID，每字双题。二者不通过普通每日队列配额筛选，但仍受奖励与进阶规则限制。小测十题、晋级三十题分别取不同字，字符/词题各半，试卷不更新 progress。
 
@@ -64,6 +70,8 @@ npm run deploy
 
 写入先比较 revision，成功后加一；检查与写入不是原子 compare-and-swap，仍可能有同时提交竞争。App 仅监听主状态键：停止播放、退出学习并提示刷新，不自动加载新状态或锁死全部按钮，也不处理 key 为 null 的 clear 通知。墙监听墙键和 clear 通知，阻止保存并提示下载草稿、载入最新；不监听主状态键。因此跨标签更新不是实时合并或完整并发隔离。提交、购买与结算具有幂等标识。浏览器禁止存储、容量不足、异常数据或修订冲突必须显示错误，不静默覆盖。墙拖动使用节流草稿保存，结束立即保存；写入失败保留可导出的内存布局，不报告为已保存。localStorage 和多个键之间不构成数据库事务，实际使用应避免多标签同时操作。
 
+新建状态的 dailyGoal/newLimit/weeklyGoal 为 30/20/5；加载、备份导入及 v1 迁移保留原合法设置，不用默认值覆盖。Session 可带可选 `learningRequired: string[]`，持久化主动进入教学的任务 ID；校验要求唯一且指向当前会话中的 learn 任务，缺失兼容旧数据。`markKnown` 不允许把标记任务转成 assessment。跟写轨迹仅组件内存，完成／跳过／教学阶段与累计前台时间由 `session.practice` 持久化；`teachingOrigin` 保留补学关联的原跟写奖励，第二题 ready 不重复教学。`sessionSummary` 从全部任务及 cursor 后待做任务的不同 wordId 计算总字/完成字/剩余字，补学、双题和延迟纠错均不会虚增完成字；SessionProgress 使用 totalTasks - remainingTasks 作为已完成题数，TaskProgressRing 显示 done/total，空任务显示真实 0/0；role=progressbar 的 max 最小为 1、value 为 0，SVG 为装饰且数值有可访问文本。输入数值归一为有限非负整数，done 不超过 total；组件独立 CSS 支持 forced-colors，不依赖动画。
+
 ### 当前支持的备份格式
 
 - **v2**：校验后恢复完整支持状态；恢复替换当前数据前需要确认。
@@ -73,13 +81,13 @@ npm run deploy
 
 完整备份封装为 `mizhupig-backup` v2，包含 state 和 wall；JSON 文本上限为 10000000 字符，不是按字节的 10 MB。恢复先记录原主状态和墙，再依次替换，成功后把恢复键写成字符串 `null`。异常尝试回滚；回滚失败保留恢复记录并告知可能混合状态，应停止学习购买。下次 loadState 会尝试恢复记录，仍不构成跨键事务或多标签隔离。
 
-导入校验版本、设置范围、字库 ID、日期、唯一记录和任务结构。设置允许 dailyGoal 整数 1–30、newLimit 整数 0–10、weeklyGoal 整数 1–7，sound/music 为布尔值，合法范围比 UI 选项更宽。资产需为非负安全整数，晋级门需连续、去重、范围 1–5 且 XP 达到门槛；奖励校验键唯一、按来源金额与每日/同字次数限额，但不从账本重算全部余额，也不从日志重证掌握。
+导入校验版本、设置范围、字库 ID、日期、唯一记录和任务结构。设置允许 dailyGoal 整数 1–30、newLimit 整数 0–20、weeklyGoal 整数 1–7，sound/music 为布尔值，合法范围比 UI 选项更宽。资产需为非负安全整数，晋级门需连续、去重、范围 1–5 且 XP 达到门槛；奖励校验键唯一、按来源金额与每日/同字次数限额，但不从账本重算全部余额，也不从日志重证掌握。
 
 v2 可兼容含 `learned-10`、`learned-30`、`promotion-1` 至 `promotion-6` 的记录：这些不是当前成就项，读取时清理对应成就和佩戴引用，既有币/XP 不回收、账本保留。这是支持格式的归一化行为。
 
-App 完整备份读取已存墙，不含墙组件未保存 draft；保存失败后应使用墙自己的下载按钮。墙的“载入最新 / 重试”实际重新加载存储布局，有草稿时确认放弃，不是重试保存草稿。墙布局在同一个 `mizhupig.wall.v1` 键内使用 collection v2 形状 `{version:2, revision, walls:[{id,items}]}`；旧 wall v1 `{version:1, revision, items}` 读取为第 1 面墙，保留 revision，并按 `unlockedWallCount` 补齐空墙。墙布局导入上限 1 MiB，只替换布局、不获得卡，导入 revision 不直接用于保存。collection v2 的墙 ID 必须从 0 连续到 `unlockedWallCount - 1`；布局约束为 x/y 0–1、width 0.08–0.8、rotation 绝对值不超过 180、z 整数 0–10000。卡号必须存在于已购卡与当前目录，并在单面墙内唯一；不同墙之间允许复用同一张已购卡。完整备份、恢复日志和回滚均兼容 wall v1 与 collection v2，并保留各自 revision 冲突保护。
+App 完整备份通过共享墙草稿控制器包含当前有效内存草稿；草稿冲突或无效时拒绝导出并提示，不静默遗漏。保存失败也可使用墙自己的下载按钮。墙的“载入最新 / 重试”实际重新加载存储布局，有草稿时确认放弃，不是重试保存草稿。墙布局在同一个 `mizhupig.wall.v1` 键内使用 collection v2 形状 `{version:2, revision, walls:[{id,items}]}`；旧 wall v1 `{version:1, revision, items}` 读取为第 1 面墙，保留 revision，并按 `unlockedWallCount` 补齐空墙。墙布局导入上限 1 MiB，只替换布局、不获得卡，导入 revision 不直接用于保存。collection v2 的墙 ID 必须从 0 连续到 `unlockedWallCount - 1`；布局约束为 x/y 0–1、width 0.08–0.8、rotation 绝对值不超过 180、z 整数 0–10000。卡号必须存在于已购卡与当前目录，并在单面墙内唯一；不同墙之间允许复用同一张已购卡。完整备份、恢复日志和回滚均兼容 wall v1 与 collection v2，并保留各自 revision 冲突保护。
 
-初始读取失败会显示错误并以空状态渲染，不代表读到了用户进度；已有坏状态后续保存仍因校验拒绝。导出函数没有完整异常捕获，异常墙或未完成恢复记录可能使导出抛错，不能承诺所有错误均可一键导出。备份是用户控制的数据，不用于防作弊；清理浏览器、隐私模式结束、换设备不会自动恢复，应定期导出。
+初始读取失败会显示错误并以空状态渲染，不代表读到了用户进度；已有坏状态后续保存仍因校验拒绝。App 下载入口捕获导出异常并显示错误；异常墙、冲突草稿或未完成恢复记录仍可能拒绝导出，不能承诺所有错误均可一键导出。备份是用户控制的数据，不用于防作弊；清理浏览器、隐私模式结束、换设备不会自动恢复，应定期导出。
 
 ## 5. 奖励卡片资产工具
 
@@ -127,7 +135,7 @@ npm run hanzi:import -- --reference /path/to/汉字学习资源
 
 笔画数取真实路径长度。SVG 坐标系是 1024 单位，展示需要翻转 Y 轴。部首优先 Make Me a Hanzi，其次参考，仍缺失为字符串空值。IDS 只推导完整明确的组合结构；半角/全角问号、缺失或裸部件为“未知”，不猜测独体结构。
 
-`public/hanzi/manifest.json` 含 `characterCount`、`characters` 和以汉字索引的 `entries`，其中 `file` 为相对目录文件名。应用读取由 `src/data/hanzi.ts` 管理，只接受单个 Han 字，按 BASE_URL 请求单字文件，超时 10 秒。请求或校验失败返回 null，Promise 缓存也保留失败结果，因此同一页面生命周期再次打开不会自动重试。UI 换字/卸载防止过期响应覆盖；降级保留汉字、拼音和词句。播放器使用 SVG 轮廓与中线路径裁切，跟写点单条最多 10000 个，仅组件内存，无评分或保存；卸载和减少动态设置停止动画。导入校验弱于运行时路径/坐标验证，导入成功不能替代前端数据契约核对。
+`public/hanzi/manifest.json` 含 `characterCount`、`characters` 和以汉字索引的 `entries`，其中 `file` 为相对目录文件名。应用读取由 `src/data/hanzi.ts` 管理，只接受单个 Han 字，按 BASE_URL 请求单字文件，超时 10 秒。请求或校验失败返回 null，失败 Promise 会从缓存移除，允许组件明确重试；并发请求及成功数据仍复用缓存。UI 换字/卸载防止过期响应覆盖；降级保留汉字、拼音和词句。播放器使用 SVG 轮廓与中线路径裁切，自动演示由 strokeGate 纯时钟驱动，完整展示后等待 3 秒循环，自动速度按笔画数设置。跟写点单条最多 10000 个，仅组件内存；strokeMatching 核对当前笔的起终点、方向、距离及路径形状，不是书法评分。TracingStatus 绑定 taskId/character，每笔成功才推进 acceptedStrokes；全部完成才允许教学继续，重写、换字及重入会话重置。跟写完成不直接发奖励或建立独立掌握证据；卸载、隐藏页面和减少动态设置停止相关动画。导入校验弱于运行时路径/坐标验证，导入成功不能替代前端数据契约核对。
 
 `reports/hanzi-import.json` 记录缺失、笔画数与部首冲突、参考空部首填补、未知结构原因、精选样本及输入与 source/practice/catalog 前后 SHA-256。
 
@@ -145,15 +153,15 @@ npm run hanzi:import -- --reference /path/to/汉字学习资源
 
 生产环境注册 Service Worker，开发服务器不注册。首次使用需要联网；HTTPS 或 localhost 才能使用 Service Worker，安装能力依浏览器而异。
 
-worker 当前缓存名为 `piggy-learning-v6`，按 Service Worker scope 相对路径预缓存入口、构建资源、图标、webmanifest、卡片清单、清晰卡片、音频及 `hanzi/manifest.json`；不枚举预缓存全部单字 JSON。同源 GET 使用 cache-first，成功网络响应按需加入缓存，所以已访问单字可能离线可用，未访问单字不能保证。
+worker 缓存名由注册 scope 和全部构建产物内容 SHA-256 组成（源码占位版本 v9，构建时替换）；同名卡片、音频或笔顺内容变更也触发新 worker，按 Service Worker scope 相对路径预缓存入口、构建资源、图标、webmanifest、卡片清单、清晰卡片、音频及 `hanzi/manifest.json`；不枚举预缓存全部单字 JSON。同源 GET 使用 cache-first，成功网络响应按需加入缓存，所以已访问单字可能离线可用，未访问单字不能保证。
 
-App 的离线提示实际只检查卡清单和当前全部清晰卡片，不检查入口、脚本、样式、声音或全部笔顺，不能当作所有资源离线就绪的证明，更不能当作资源许可核验。缓存可能被回收，不承诺永久离线。新 worker 使用默认等待生命周期，没有 skipWaiting，不在学习途中强制接管；activate 会删除名称不等于当前 CACHE 的缓存，不只限定旧 piggy 缓存。
+App 的离线提示实际只检查卡清单和当前全部清晰卡片，不检查入口、脚本、样式、声音或全部笔顺，不能当作所有资源离线就绪的证明，更不能当作资源许可核验。缓存可能被回收，不承诺永久离线。新 worker 使用默认等待生命周期，没有 skipWaiting，不在学习途中强制接管；activate 仅删除同一 scope 前缀的旧缓存；fetch 仅查当前版本缓存并限定应用子路径。旧版未按 scope 命名的缓存保留，不参与 worker 查找，避免影响同源其他安装。
 
 应用资产路径统一基于 Vite `base`（`src/data/cards.ts` 的 `assetUrl`/`cardUrl`、`hanziUrl`、SW 注册），Service Worker 内部以 `self.registration.scope` 解析相对路径。当前 base 为 `/piggymicharacter3/`，面向 GitHub Pages 子路径部署；改回站点根部署时移除 `base` 配置即可，代码不需要改动。
 
 `vite.config.ts` 的 build 插件读取卡片清单 SHA-256 并附加到 `dist/sw.js`，使卡目录变化反映到 worker 文件。更新资产后需要重新构建部署。
 
-`speechSynthesis` 由点击触发，失败给出提示而不阻塞学习；音效及背景音乐也只由用户操作启动。暂停或离开页面停止播放。自动化测试不能证明真实设备发声，也不能保证设备离线中文语音。
+`speechSynthesis` 仅在明确用户操作后启用；保存成功后，实际渲染的会话/考试题目按任务身份朗读一次，刷新恢复不能绕过激活。选字/选词题使用与屏幕一致的安全题干与空格停顿；拼音题只读固定无答案操作说明，不读取目标字或词境。SpeechQueue 保留取消句柄，通过 owner、generation 和片段身份可观察真实播放状态，迟到的取消/结束事件不能覆盖新播放。共享轻量 SpeakerButton 只在自身内容播放时动画，完成、取消、失败或卸载后静止，支持重听与减少动态效果。学习自动序列与单条字/词/句按钮使用相同片段身份。HelpPopover 的关闭回调通过 ref 更新，不因内联回调重新安装生命周期或误取消朗读；保留 Escape、外部点击及焦点归还。失败不阻塞学习，暂停或离开停止播放；音效、背景音乐和朗读激活仍独立。自动化测试不能证明真实设备发声，也不能保证设备离线中文语音。
 
 ## 8. 测试命令与覆盖
 
@@ -172,7 +180,46 @@ npm run build
 | `tests/avatar.test.ts` | 头像裁剪及数据校验 |
 | `tests/hanzi.test.ts` | 笔顺数据与展示用契约 |
 | `tests/parentGate.test.ts` | 数学确认题 |
+| `tests/taskProgress.test.tsx` | 数字环语义/边界、实际题数、考试暂停/身份及同步提交防重/失败重试 |
+| `tests/audio.test.ts` | 语音取消句柄、owner/generation 快照、过期事件、播放片段与失败重试 |
+| `tests/speakerButton.test.tsx` | 小喇叭 owner/片段隔离、停止/失败静态、手动重听 |
+| `tests/helpPopover.test.tsx` | 内联关闭回调重渲染、Escape/外部点击、焦点与卸载清理 |
+| `tests/appNarration.test.tsx` / `tests/renderedNarration.test.ts` | 无答案拼音说明、实际题干选择、共享渲染生命周期的一次播放/刷新静默/过期请求/保存失败/考试暂停恢复 |
+| `tests/pinyin.test.ts` | 拼音格式、完整目录读音、词境覆盖、direct 双题、旧任务备份兼容、赠币边界/持久化/冲突 |
 | `scripts/import-cards.node-test.mjs` | 空缺 ID、格式、方向、尺寸、透明度、无效输入、回滚、预演、同步 |
 | `tests/hanzi-import.node-test.mjs` | 笔顺导入与输出/失败处理 |
 
 `npm test` 是 Vitest；`test:cards` 与 `test:hanzi` 分别运行 Node 测试文件。卡片导入测试使用独立临时目录，不触碰现有卡。构建检查不等于浏览器实际运行验证；人工语义、设备声音、浏览器安装与真实缓存行为有各自验证边界。
+
+## 当前短笔与完整备份约定
+
+短笔判定捕获起笔时 CSS 画板尺度与 pointerType，鼠标目标14px、触控目标20px，转换为画板单位并受笔长 40%/56 单位上限约束，屏幕笔长 80–140px 平滑退出补偿。直短笔以整体正向与有效净位移拒绝点击、反向、半笔，长笔和折钩保留有序路径及首尾转弯校验。完成练习需要全部笔画通过，错误仅重试当前笔；180秒前台出口或资料故障可跳过，不伪造完成。
+
+音量图标控制音乐与音效，不关闭朗读；页头操作紧凑，进度标题的帮助与退出并保存属于同一容器。课堂仅一个“字 · 笔画小课堂”标题及所属帮助。墙的移动/尺寸/旋转/层级操作为具可访问名称的 44px 图标，保留方向键移动。
+
+墙无独立文件下载或导入：统一在爸爸空间导出/恢复完整备份。App 的 useWallDraft 保留有效快照、dirty/blocked/loaded，切页不会销毁故障草稿；有效内存草稿优先导出，读取损坏且无草稿时报告错误，不假造空墙。草稿仅当前会话，刷新或关闭仍可能丢失。载入最新与完整恢复覆盖草稿需确认，取消或失败保留草稿；完整恢复沿用跨 key 事务/回滚，检查主状态与墙 revision，成功同步共享快照，旧墙文件不作为完整备份。
+
+## 当前界面细节
+
+准备认领按 `wordId` 保留首次出现顺序去重，计数、全选及单字切换使用同一集合；双题任务不重复显示汉字。拼音首题保留真实输入、IME 与 `buildPinyinAnswer` 校验，输入居中于目标字上方且无框；五个声调按钮使用 `aria-pressed`，轻声不预选。成功提示改为固定底部六秒自动消失的轻提示，经验仅显示 `XpIcon` 与数值；错误仍为持久 `role="alert"`。跟写庆祝由 `completePractice` 保存成功后的任务键驱动，只装饰对应练习框，尊重减少动态效果偏好，不因重写或刷新重复奖励。
+
+卡片缩略图统一居中 3:4 `object-fit: cover` 与单层精简边框/阴影，横图无留白；详情仍完整显示原图。待兑换选中态提供短暂动画与高亮，兑换保存成功后才揭示；确认交易保留，仅去掉编号揭晓问句。段位依次为青铜、白银、黄金、钻石、星曜、咪猪头，星位 `[3,3,4,4,5,5]`、各档 XP 步长及累计门槛均不变，保存数据无需迁移。
+
+## 沉浸会话与数据扩展
+
+`dailyPlans`按日期保存新字/复习字预约，旧v2缺失字段兼容，不补发历史奖励。Session可选`preparation`持久化认领和确认；`practice[taskId]`保存teaching/ready、activeMs、completed/skipped以及timeout/load-error原因。domain纯helper控制确认、限增时间、完成、跳过和进入试题门槛，storage严格验证任务链接与账本、配额及完整备份。
+
+trace来源同字同日幂等2XP/0币，practice通过taskId关联奖励拆分为3XP/1币，不扣既有认领奖励，关联提示题不叠加努力经验。保存成功才展示庆祝。计时在CharacterLearning已加载、前台、未暂停时以受限心跳累计并持久化，完整练习恢复不重新发回调。
+
+语音独立手势激活，generation-scoped playback handles支持替换及陈旧清理，页面隐藏终止语音；音乐场景不取消新语音。App统一考试和学习沉浸场景，GrowthPage只提供考试入口，ExamPanel负责保存暂停后退出。离线缓存升级v8。
+
+学习的无提示独立正确答案在 commit 保存成功后立即前进，不设置阻塞式成功反馈；首题仍不独立结算整字。错误、提示、辅助练习以及准备、教学和结果页保留原流程。ExamPanel 复用 TaskProgressRing（cursor/questions.length），同步提交 gate 在调用 onCommit 前锁住 exam.id/cursor，保存失败释放以便重试；回调对比最新已渲染题身份并核对选项，题组按身份重建，阻止双击 detail>1、重复 Enter/Space 与 IME 组合激活。服务端渲染与纯 gate 测试不等于真实浏览器输入事件验证。
+
+## 入场朗读、奖励交接与最终掌握（当前规则）
+
+- 移除帮助问号与解释弹层。所有目标汉字高亮水平居中。教学顺序为汉字三遍、实际字库例词一遍、例句一遍；裸字不充当例词。
+- 每个遮罩按题型朗读：停顿 500ms、哪个字／哪个词、停顿 500ms；不访问遮罩答案。拼音题仍只朗读无答案的填写说明。
+- 首次入场朗读不可被重播、答案或普通播放控制打断；退出／暂停可以取消。刷新与取消后保留待兑现奖励，完整重试后才兑现一次；设备失败时允许重试或明确确认自行阅读，不将计时或故障冒充播放完成。
+- 答案与学习证据立即保存；经验、猪头币及提示须等待完整目的题首次朗读结束。奖励账本 pending 元数据持久保存来源、会话、目的题与朗读标识，预占每日额度，幂等兑现。没有下一题的有效完成即时兑现。跟写奖励同样等待首次教学朗读。
+- 已完成跟写可以本地再次练习，不清除存档完成、不重新计时、不重复奖励。
+- 1、3、7、14、30 天复习后，30 天间隔到期的独立双题复习通过才完全掌握；旧版阶段 4 不自动升级。完全掌握不再自动排期，仍可自愿练习；提示、错误与不完整双题不是最终通过证据。

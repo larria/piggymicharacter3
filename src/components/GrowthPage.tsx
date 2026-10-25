@@ -2,9 +2,10 @@ import type {State} from '../domain';
 import {growth,RANKS} from '../domain/growth';
 import {achievementProgress,equipTitle,MASTERY_RULE} from '../domain/achievements';
 import {AchievementIcon,CoinIcon,LockIcon,RankBadge,StarIcon,XpIcon} from './GameIcons';
-import {ExamPanel} from './ExamPanel';
+import {catalog} from '../data/catalog';
+import {examEligibility,type ExamKind} from '../domain/exams';
 import {XpProgress} from './XpProgress';
-export function GrowthPage({state,onCommit,onError}:{state:State;onCommit:(next:State)=>boolean;onError:(message:string)=>void}) {
+export function GrowthPage({state,onCommit,onError,onExamStart}:{state:State;onCommit:(next:State)=>boolean;onError:(message:string)=>void;onExamStart:(kind:ExamKind|'resume')=>void}) {
   const rank=growth(state);
   return <>
     <div className="page-head"><div><div className="eyebrow">每一点努力，都有回响</div><h1>我的成长档案</h1><p>经验陪你慢慢长大，猪头币帮你收藏喜欢的卡片。</p></div></div>
@@ -18,7 +19,7 @@ export function GrowthPage({state,onCommit,onError}:{state:State;onCommit:(next:
       </div>
     </section>
     <div className="rank-track" aria-label="六段成长轨道">{RANKS.map((r,i)=><div key={r.name} className={'rank-stop '+(i===rank.index?'current':i<rank.index?'reached':'')}><RankBadge tier={i} size={78}/><strong>{r.name}</strong><small className="rank-step"><span className="icon-amount" role="img" aria-label={`${r.stars}星`}><span aria-hidden="true"><StarIcon size={15}/></span>{r.stars}</span><span className="rank-step-divider">·</span><span className="icon-amount" role="img" aria-label={`每步${r.step}经验`}>每步 <span aria-hidden="true"><XpIcon size={16}/></span>{r.step}</span></small><span>{i===rank.index?'当前段位':i<rank.index?'已抵达':'未来的纪念'}</span></div>)}</div>
-    <ExamPanel state={state} onCommit={onCommit} onError={onError}/>
+    <section className="panel exam-panel"><div className="panel-title"><h2>从记忆里，独立试试</h2><small>准备好了，就独立试一试</small></div>{state.exam&&!state.exam.completed?<><p>原卷和已提交答案已保存，继续时不会改变题目或选项。</p><button className="primary" onClick={()=>onExamStart('resume')}>继续原卷</button></>:<div className="exam-options">{(['quiz','promotion'] as const).map(kind=>{const e=examEligibility(state,catalog,kind);const busy=!!state.session&&!state.session.completed;return <div key={kind}><h3>{kind==='quiz'?'10 题识字小测':'30 题晋级测试'}</h3><p>{kind==='quiz'?'从已初识的字里独立作答，每题答对收获 8 经验和 2 猪头币，与日常练习共用每日奖励额度。':'答对至少 27 题即可晋级，不额外发放题目奖励，没通过也不减少经验或段位。'}</p><p>适合测试的已初识字：{Math.min(e.learned,e.required)} / {e.required}。{!e.xpReady?'还需积累经验到晋级门。':''}</p>{busy&&<p>先完成进行中的学习任务，再开始考试。</p>}<button className="primary" disabled={!e.eligible||busy} onClick={()=>onExamStart(kind)}>开始{kind==='quiz'?'小测':'晋级测试'}</button></div>})}</div>}</section>
     <div className="page-head"><div><h2>成就与称号</h2><p>把认真学习的小日子，变成属于你的纪念。</p></div></div>
     <div className="achievement-grid">{achievementProgress(state).map(a=><section className={'panel achievement rarity-'+a.rarity+' '+(a.unlocked&&!a.unlocked.baseline?'unlocked':'')} key={a.id}>
       <div className="achievement-heading"><span aria-hidden="true"><AchievementIcon rarity={a.rarity} size={34}/></span><h3>{a.title}</h3><span className="rarity-label">{{common:'朴素',uncommon:'进阶',rare:'珍稀',epic:'卓越',legendary:'传说'}[a.rarity]}</span></div>

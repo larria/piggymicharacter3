@@ -1,0 +1,12 @@
+.task-progress-ring { position: relative; flex: 0 0 64px; width: 64px; height: 64px; color: #315c50; }
+.task-progress-ring svg { display: block; width: 100%; height: 100%; fill: none; stroke-width: 4; }
+.task-progress-track { stroke: #d9e6df; }
+.task-progress-fill { stroke: currentColor; }
+.task-progress-ring > span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.task-progress-ring small { font-size: 12px; font-weight: 500; }
+.session-progress.session-progress-compact { padding: 0; background: transparent; border: 0; box-shadow: none; }
+.session-progress-compact .session-progress-heading { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.session-progress-compact .session-pause { margin-left: auto; }
+.exam-panel .exam-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.exam-panel .exam-top > button { margin-left: auto; }
+@media (forced-colors: active) { .task-progress-ring { color: Highlight; } .task-progress-track { stroke: GrayText; } }

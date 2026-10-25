@@ -22,6 +22,7 @@ export function validateHanzi(value: unknown, character: string): HanziData {
   if (!value || typeof value !== 'object') throw new Error('笔画数据无效');
   const d = value as HanziData;
   if (d.character !== character || !Array.isArray(d.strokes) || d.strokes.length < 1 || d.strokes.length > 64 || d.strokeCount !== d.strokes.length || !d.strokes.every(isSafeStrokePath) || !Array.isArray(d.medians) || d.medians.length !== d.strokes.length || !d.medians.every(line => Array.isArray(line) && line.length >= 2 && line.length <= 1000 && line.every(p => Array.isArray(p) && p.length === 2 && p.every(n => typeof n === 'number' && Number.isFinite(n) && n >= -2048 && n <= 4096))) || (d.radical !== null && (typeof d.radical !== 'string' || d.radical.length > 20)) || typeof d.structure !== 'string' || d.structure.length > 40) throw new Error('笔画数据无效');
+  if (d.medians.some(line => medianLength(line) < 1)) throw new Error('笔画中线无效');
   return d;
 }
 export function createHanziLoader(fetcher: typeof fetch = (...args) => fetch(...args)) {
@@ -34,7 +35,9 @@ export function createHanziLoader(fetcher: typeof fetch = (...args) => fetch(...
       try { const response = await fetcher(url, {signal:controller.signal}); if (!response.ok) return null; return validateHanzi(await response.json(), character); }
       catch { return null; } finally { clearTimeout(timeout); }
     })();
-    cache.set(character, request); return request;
+    cache.set(character, request);
+    void request.then(data => { if (!data && cache.get(character) === request) cache.delete(character); });
+    return request;
   };
 }
 export const loadHanzi = createHanziLoader();
