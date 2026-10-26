@@ -1,4 +1,4 @@
-const RELEASE='03bf7772248f497f9c4355b8b3d33830fff7eb906e5fcd52d72eadb9e01b15b3';
+const RELEASE='ee67eda0471e2aa16e7309aa11219b7d89681d92778b0426d21d4f7309dde511';
 const PREFIX=`piggy-learning-${encodeURIComponent(self.registration.scope)}-`;
 const CACHE=PREFIX+RELEASE;
 // Resolve app assets relative to the service worker scope so the app works both at the domain root and under a sub-path (e.g. GitHub Pages).
