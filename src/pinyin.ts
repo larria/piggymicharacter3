@@ -47,6 +47,16 @@ export function matchesPinyin(input:string, expected:string):boolean {const a=no
 export interface PinyinContext { char: string; word: string; pinyin: string }
 /** Reviewed lexical readings only; containing a character is not pronunciation evidence. */
 export const verifiedPinyinContexts: readonly PinyinContext[] = Object.freeze([
+ // Explicitly reviewed learning vocabulary; do not derive these from arbitrary examples.
+ ['爸','爸爸','bà'],['妈','妈妈','mā'],['爷','爷爷','yé'],['外','外婆','wài'],
+ ['牌','扑克牌','pái'],['书','书包','shū'],['笔','铅笔','bǐ'],['课','课本','kè'],
+ ['篮','篮球','lán'],['球','篮球','qiú'],['投','投篮','tóu'],['魔','魔方','mó'],['方','魔方','fāng'],
+ ['水','喝水','shuǐ'],['饭','米饭','fàn'],['洗','洗手','xǐ'],['人','人们','rén'],['手','双手','shǒu'],
+ ['耳','耳朵','ěr'],['目','双目','mù'],['日','日出','rì'],['月','月亮','yuè'],['山','山顶','shān'],
+ ['田','稻田','tián'],['木','木头','mù'],['火','火苗','huǒ'],['土','泥土','tǔ'],['小','小麦','xiǎo'],
+ ['上','上楼','shàng'],['下','下楼','xià'],['天','天空','tiān'],['雨','雨伞','yǔ'],['门','大门','mén'],
+ ['米','大米','mǐ'],['口','口腔','kǒu'],['足','足球','zú'],['鸟','小鸟','niǎo'],['鱼','金鱼','yú'],
+ ['车','汽车','chē'],['花','花瓣','huā'],['牛','奶牛','niú'],['羊','绵羊','yáng'],['狗','小狗','gǒu'],
  ['乐','快乐','lè'],['乐','音乐','yuè'],['长','长江','cháng'],['长','长大','zhǎng'],
  ['行','行走','xíng'],['行','银行','háng'],['重','重量','zhòng'],['重','重新','chóng'],
  ['朝','朝霞','zhāo'],['朝','朝向','cháo'],['还','还有','hái'],['还','归还','huán'],

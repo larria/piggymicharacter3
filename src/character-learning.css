@@ -9,15 +9,32 @@
   box-shadow: 0 8px 24px #294b4306;
 }
 .compact-pinyin { display:flex; flex-direction:column; align-items:center; gap:16px; }
-.compact-pinyin #pinyin-syllable { width:min(100%,320px); min-height:48px; margin:0; padding:8px; border:0; border-radius:0; box-shadow:none; background:transparent; text-align:center; font-size:30px; color:#294b43; caret-color:#294b43; }
-.compact-pinyin #pinyin-syllable:focus-visible { outline:2px solid #cf8a3e; outline-offset:4px; border-radius:8px; }
 .compact-pinyin h2 { margin:0; }
-.compact-pinyin .pinyin-tone-options { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
-.compact-pinyin .pinyin-tone { min-width:48px; min-height:48px; font-size:30px; }
-.compact-pinyin .pinyin-tone:last-child { font-size:18px; }
-.tracing-celebration .stroke-board { animation:tracing-success 900ms ease-out; }
+.compact-pinyin { min-width:0; width:100%; }
+.compact-pinyin:focus-visible,.compact-pinyin button:focus-visible { outline:3px solid #cf8a3e; outline-offset:3px; }
+.pinyin-answer-display { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px; box-sizing:border-box; width:min(100%,480px); min-height:68px; padding:12px; border:1px solid #cddbc8; border-radius:16px; background:#fffdf6; }
+.pinyin-answer-syllable { font-size:30px; overflow-wrap:anywhere; min-width:0; }
+.pinyin-answer-tone { font-size:16px; color:#496c5f; }
+.pinyin-keyboard { box-sizing:border-box; width:min(100%,540px); min-width:0; margin:0; padding:14px 10px; border:1px solid #dce4d5; border-radius:20px; background:#edf3e7; box-shadow:0 4px 12px #294b4308; }
+.pinyin-keyboard .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.pinyin-key-row { display:flex; justify-content:center; gap:5px; margin-bottom:8px; }
+.compact-pinyin .pinyin-letter { flex:0 1 44px; min-width:0; min-height:44px; padding:8px 0; font-size:20px; border:1px solid #cddbc8; background:#fffdf6; color:#294b43; border-radius:9px; box-shadow:0 2px 2px #294b4310; }
+.compact-pinyin .pinyin-tone-options { display:flex; justify-content:center; gap:6px; margin-top:12px; }
+.compact-pinyin .pinyin-tone { flex:1; min-width:0; min-height:48px; padding:6px 0; font-size:30px; }
+.compact-pinyin .pinyin-tone:last-child { font-size:16px; }
+.compact-pinyin .pinyin-tone.selected { border:2px solid #246b5e; background:#dcebd3; box-shadow:inset 0 -3px #246b5e; }
+.pinyin-key-actions { display:flex; gap:10px; margin-top:12px; }
+.pinyin-key-actions button { flex:1; min-height:48px; }
+.pinyin-key-actions .primary { flex:2; background:#246b5e; color:#fffdf6; }
+.pinyin-keyboard:disabled { opacity:.55; }
+.pinyin-keyboard:disabled button { cursor:default; }
+.pinyin-inline-feedback { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; margin-top:16px; font-size:16px; color:#496c5f; }
+.pinyin-inline-feedback.correct { color:#246b5e; }
+.pinyin-inline-feedback svg { flex-shrink:0; }
+@media(max-width:360px) { .pinyin-keyboard { padding:12px 5px; } .pinyin-key-row { gap:3px; } .compact-pinyin .pinyin-letter { font-size:18px; } }
+.tracing-celebration .stroke-board.stroke-writing { animation:tracing-success 900ms ease-out; }
 @keyframes tracing-success { 35% { box-shadow:0 0 0 6px #e6ba68,0 0 28px #e6ba6866; } }
-@media(prefers-reduced-motion:reduce) { .tracing-celebration .stroke-board { animation:none; border-color:#c38a2f; } }
+@media(prefers-reduced-motion:reduce) { .tracing-celebration .stroke-board.stroke-writing { animation:none; border-color:#c38a2f; } }
 .character-learning-heading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
 .character-learning-heading h3 { margin:0; font-size:18px; }
 .character-metadata { display:flex; gap:12px; flex-wrap:wrap; margin:18px 0; }
@@ -26,6 +43,7 @@
 .character-metadata dd { margin:0; font-weight:700; }
 .stroke-canvases { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
 .stroke-canvases>div { min-width:0; }
+.stroke-canvases-locked { grid-template-columns:minmax(0,360px); justify-content:center; }
 .stroke-canvases h4 { margin:4px 0 12px; font-size:15px; }
 .stroke-board { display:block; width:100%; max-width:360px; margin-inline:auto; aspect-ratio:1; background:#fffef9; border:1px solid #dce4d5; border-radius:16px; overflow:hidden; }
 .stroke-writing { touch-action:none; user-select:none; cursor:crosshair; }

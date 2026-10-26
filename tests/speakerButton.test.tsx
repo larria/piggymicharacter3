@@ -4,6 +4,12 @@ vi.mock('react',async original=>({...await original<typeof import('react')>(),us
 import {SpeakerButton} from '../src/components/SpeakerButton';
 afterEach(()=>{store.snapshot={owner:null,status:'idle',generation:0,identity:null}});
 describe('owned speaker feedback',()=>{
+ it('keeps playback animation while disabled and blocks replay until unlocked',()=>{
+  const play=vi.fn();store.snapshot={owner:'app',status:'speaking',generation:1,identity:'character'};
+  const locked=SpeakerButton({owner:'app',identity:'character',label:'朗读汉字',onPlay:play,disabled:true});
+  expect(locked.props.disabled).toBe(true);expect(locked.props.className).toContain('is-speaking');locked.props.onClick();expect(play).not.toHaveBeenCalled();
+  const unlocked=SpeakerButton({owner:'app',identity:'character',label:'朗读汉字',onPlay:play,disabled:false});unlocked.props.onClick();expect(play).toHaveBeenCalledOnce();
+ });
  it('animates only the matching owner and learning segment',()=>{
   store.snapshot={owner:'learning',status:'speaking',generation:2,identity:'word'};
   expect(SpeakerButton({owner:'learning',identity:'word',label:'听词语',onPlay:()=>{}}).props['aria-pressed']).toBe(true);

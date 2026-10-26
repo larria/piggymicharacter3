@@ -1,0 +1,19 @@
+.masked-text .blank-slot {
+  display:inline-block;
+  width:1em;
+  height:1em;
+  margin-inline:.08em;
+  vertical-align:-.12em;
+  color:#B86643;
+  line-height:1;
+}
+
+.masked-text .blank-slot svg {
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+@media (forced-colors:active) {
+  .masked-text .blank-slot { color:CanvasText; }
+}

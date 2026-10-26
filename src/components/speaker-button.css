@@ -1,5 +1,6 @@
 .speaker-button{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:36px;height:36px;padding:6px;border:0;border-radius:50%;background:transparent;color:var(--green,#47766a);cursor:pointer;vertical-align:middle;box-shadow:none}
-.speaker-button:hover{background:rgba(71,118,106,.07)}
+.speaker-button:not(:disabled):hover{background:rgba(71,118,106,.07)}
+.speaker-button:disabled{opacity:1;cursor:default}
 .speaker-button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .speaker-button.is-speaking .speaker-wave{animation:speaker-pulse .9s ease-in-out infinite}
 .speaker-button.is-speaking .speaker-wave-far{animation-delay:.15s}

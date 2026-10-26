@@ -28,4 +28,8 @@ export function advanceDemo(clock: DemoClock, elapsedMs: number, speed: number, 
   const position = advanceStroke(clock.position, elapsed, speed, count);
   return {position: count - position < 1e-9 ? count : position, waitingMs: 0};
 }
+/** Only an active, forward animation transition can open the demonstration gate. */
+export function completesDemonstration(before: DemoClock, after: DemoClock, count: number): boolean {
+  return count > 0 && before.position >= 0 && before.position < count && after.position >= count;
+}
 export function demoSpeed(count: number): number { return Math.min(2.5, Math.max(1, 1 + (count - 5) / 15)); }

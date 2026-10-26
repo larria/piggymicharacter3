@@ -1,6 +1,6 @@
 import { cardIds } from './data/cards';
 import { isAvatarDataUrl } from './avatarCrop';
-import { createState, localDate, updateSettings, settleAchievements, ACHIEVEMENTS, RANKS, createWall, normalizeWall, migrateLegacyWall, type LegacyWallState, type WallState, type State, type Word } from './domain';
+import { createState, localDate, updateSettings, settleAchievements, ACHIEVEMENTS, RANKS, createWall, normalizeWall, migrateLegacyWall, learningPageKey, type LegacyWallState, type WallState, type State, type Word } from './domain';
 export const LEGACY_KEY = 'mizhupig.expedition.v1';
 export const STORAGE_KEY = 'mizhupig.growth.v2';
 export const WALL_KEY = 'mizhupig.wall.v1';
@@ -36,6 +36,7 @@ export function validateState(value:unknown,catalog?:Word[]):State {
  const session=value.session;
  if(object(session)&&Array.isArray(session.tasks)){
   if(session.flowVersion!==undefined&&session.flowVersion!==2)return fail();
+  if(session.xpVersion!==undefined&&(session.xpVersion!==2||session.flowVersion!==2))return fail();
   if(session.flowVersion===2){
    const tasks=session.tasks as any[],cursor=Number(session.cursor),submissions=session.submissions as string[],passed=session.assessmentPassed as string[];
    if(submissions.length!==cursor||passed.some(id=>!tasks.slice(0,cursor).some(t=>t.id===id&&t.pair))||submissions.some((id,i)=>!(value.logs as any[]).some((l:any)=>l.id===id&&l.wordId===tasks[i].wordId&&l.kind===tasks[i].kind)))return fail();
@@ -57,12 +58,17 @@ export function validateState(value:unknown,catalog?:Word[]):State {
  }
  if(value.dailyPlans!==undefined){if(!Array.isArray(value.dailyPlans)||!unique(value.dailyPlans.map(p=>object(p)?p.date:null)))return fail();for(const p of value.dailyPlans){if(!object(p)||!date(p.date)||!Array.isArray(p.newWordIds)||!Array.isArray(p.reviewWordIds))return fail();const ids=[...p.newWordIds,...p.reviewWordIds];if(!unique(ids)||ids.some(id=>!text(id)||['__proto__','constructor','prototype'].includes(id)||(catalog&&!catalog.some(w=>w.id===id))))return fail();}}
  const gates=value.passedGates.slice().sort();if(gates.some((n:number,i:number)=>n!==i+1))return fail();if(gates.length&&value.xp<RANKS.slice(0,gates.length).reduce((n,r)=>n+r.stars*r.step,0))return fail();
- for(const e of value.rewardLedger){if(!object(e)||!text(e.key)||!date(e.date)||!['practice','quiz','effort','achievement','trace'].includes(String(e.source))||!integer(e.xp)||!integer(e.coins)||(e.wordId!==undefined&&(!text(e.wordId)||(catalog&&!catalog.some(w=>w.id===e.wordId)))))return fail();}
+ for(const e of value.rewardLedger){if(!object(e)||!text(e.key)||!date(e.date)||!['practice','quiz','effort','achievement','trace','learning-page'].includes(String(e.source))||!integer(e.xp)||!integer(e.coins)||(e.wordId!==undefined&&(!text(e.wordId)||(catalog&&!catalog.some(w=>w.id===e.wordId)))))return fail();}
+ for(const e of value.rewardLedger){
+  if(e.source!=='learning-page'){if(['sessionId','teachingOrigin','page','outcome','targetXp'].some(k=>e[k]!==undefined))return fail();continue;}
+  if(!text(e.sessionId)||!text(e.teachingOrigin)||e.taskId!==e.teachingOrigin||!['intro','trace','pinyin','word'].includes(String(e.page))||!['success','failure'].includes(String(e.outcome))||e.targetXp!==(e.page==='trace'&&e.outcome==='success'?2:1)||e.xp>e.targetXp||e.coins!==0||e.pending!==undefined||e.key!==learningPageKey(e.sessionId,e.teachingOrigin,e.page))return fail();
+  if(object(session)&&e.sessionId===session.id){const origin=(session.tasks as any[]).find(t=>t.id===e.teachingOrigin);if(session.xpVersion!==2||!origin||origin.kind!=='learn'||origin.questionKind!=='pinyin'||origin.wordId!==e.wordId||origin.teachingOrigin!==origin.id)return fail();if(e.page==='trace'&&e.outcome==='success'&&(!object(session.practice)||!(session.tasks as any[]).some(t=>t.kind==='learn'&&t.questionKind==='pinyin'&&t.teachingOrigin===origin.id&&object((session.practice as Record<string,unknown>)[t.id])&&((session.practice as Record<string,any>)[t.id]).completed===true)))return fail();}
+ }
  for(const balance of ['xp','coins'] as const){let reserved=Number(value[balance]);for(const e of value.rewardLedger)if(e.pending){reserved+=Number(e[balance]);if(!Number.isSafeInteger(reserved))return fail();}}
  for(const e of value.rewardLedger){if(e.source==='trace'&&object(session)&&Array.isArray(session.tasks)){const task=(session.tasks as any[]).find(t=>t.id===e.taskId);if(task&&(task.kind!=='learn'||task.wordId!==e.wordId||!object(session.practice)||!object(session.practice[String(e.taskId)])||(session.practice[String(e.taskId)] as Record<string,unknown>).completed!==true))return fail();}if(e.source==='practice'&&e.taskId!==undefined&&value.rewardLedger.some(t=>t.source==='trace'&&t.taskId===e.taskId)&&(e.xp>3||value.rewardLedger.find(t=>t.source==='trace'&&t.taskId===e.taskId)?.wordId!==e.wordId))return fail();}
  for(const e of value.rewardLedger)if(e.pending!==undefined){const p=e.pending;if((Array.isArray(value.completedNarrations)&&value.completedNarrations.includes(String(object(p)?p.narrationId:null)))||!object(p)||Object.keys(p).length!==4||!['sourceId','sessionId','destination','narrationId'].every(k=>text(p[k]))||!String(p.destination).startsWith(`${p.sessionId}|`)||String(p.destination).length<=String(p.sessionId).length+1||![`${p.destination}|teach`,`${p.destination}|quiz`].includes(String(p.narrationId)))return fail();}
  if(!unique(value.rewardLedger.map(e=>e.key)))return fail();
- for(const e of value.rewardLedger){if(e.taskId!==undefined&&!text(e.taskId))return fail();if(e.source==='trace'&&(!text(e.taskId)||e.key!==`trace:${e.date}:${e.wordId}`))return fail();const max=e.source==='practice'?[5,1]:e.source==='quiz'?[8,2]:e.source==='effort'?[1,0]:e.source==='trace'?[2,0]:[0,200];if(e.xp>max[0]||e.coins>max[1]||(e.source!=='achievement'&&!text(e.wordId)))return fail();}
+ for(const e of value.rewardLedger){if(e.taskId!==undefined&&!text(e.taskId))return fail();if(e.source==='trace'&&(!text(e.taskId)||e.key!==`trace:${e.date}:${e.wordId}`))return fail();const max=e.source==='practice'?[5,1]:e.source==='quiz'?[8,2]:e.source==='effort'?[1,0]:e.source==='trace'||e.source==='learning-page'?[2,0]:[0,200];if(e.xp>max[0]||e.coins>max[1]||(e.source!=='achievement'&&!text(e.wordId)))return fail();}
  for(const d of new Set(value.rewardLedger.map(e=>e.date))){const entries=value.rewardLedger.filter(e=>e.date===d&&e.source!=='achievement');if(entries.reduce((n,e)=>n+e.xp,0)>150||entries.reduce((n,e)=>n+e.coins,0)>30||entries.filter(e=>e.source==='effort').length>10)return fail();for(const id of new Set(entries.map(e=>e.wordId))){const word=entries.filter(e=>e.wordId===id);if(word.filter(e=>e.source==='practice'||e.source==='quiz').length>2||word.filter(e=>e.source==='effort').length>1||word.filter(e=>e.source==='trace').length>1)return fail();}}
 
  for(const [id,a] of Object.entries(value.achievements))if((!ACHIEVEMENTS.some(x=>x.id===id)&&!retiredAchievements.has(id))||!object(a)||!date(a.date)||typeof a.baseline!=='boolean')return fail();

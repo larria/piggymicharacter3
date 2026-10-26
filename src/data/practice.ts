@@ -20,7 +20,7 @@ export const practice: Practice[] = [
  {char:'球',pinyin:'qiú',word:'篮球',sentence:'篮球比赛时，投进篮筐就能得分。',characterSentence:'足球是用脚踢的圆形运动器材。',characters:['书','饭','水'],words:['书包','米饭','水杯'],theme:'篮球'},
  {char:'投',pinyin:'tóu',word:'投篮',sentence:'打篮球时，把球扔向篮筐叫投篮。',characterSentence:'我把篮球投进篮筐，得了两分。',characters:['读','吃','睡'],words:['读书','吃饭','睡觉'],theme:'篮球'},
  {char:'魔',pinyin:'mó',word:'魔方',sentence:'我转动魔方，把每一面还原成同一种颜色。',characterSentence:'三阶魔方的每一面有九个小色块。',characters:['书','水','饭'],words:['书包','水杯','米饭'],theme:'魔方'},
- {char:'方',pinyin:'fāng',word:'魔方',sentence:'我转动魔方，把每一面还原成同一种颜色。',characterSentence:'正方形有四条一样长的边和四个直角。',characters:['水','饭','树'],words:['水杯','米饭','树叶'],theme:'魔方'},
+ {char:'方',pinyin:'fāng',word:'魔方',sentence:'魔方的每一面都是正方形。',characterSentence:'正方形有四条一样长的边和四个直角。',characters:['水','饭','树'],words:['水杯','米饭','树叶'],theme:'魔方'},
  {char:'转',pinyin:'zhuǎn',word:'转身',sentence:'听见身后有人叫我，我转身看向他。',characterSentence:'我转过身，原来在背后的门就到了眼前。',characters:['吃','睡','喝'],words:['吃饭','睡觉','喝水'],theme:'魔方'},
  {char:'水',pinyin:'shuǐ',word:'喝水',sentence:'口渴了，我拿起水杯喝水。',characterSentence:'水龙头打开后，清凉的液体流进杯子。',characters:['书','球','树'],words:['读书','投篮','扫地'],theme:'生活'},
  {char:'饭',pinyin:'fàn',word:'米饭',sentence:'煮熟的大米变成了米饭。',characterSentence:'电饭锅里正在煮大米。',characters:['水','书','球'],words:['水杯','书包','篮球'],theme:'生活'},

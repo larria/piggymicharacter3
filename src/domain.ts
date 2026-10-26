@@ -1,4 +1,4 @@
-import { grantReward, deferRewardEntitlements, type RewardOptions, type RewardEntry } from './domain/rewards';
+import { grantReward, grantLearningPage, learningPageKey, deferRewardEntitlements, type LearningPage, type RewardOptions, type RewardEntry } from './domain/rewards';
 import { settleAchievements } from './domain/achievements';
 import type { ExamSession } from './domain/exams';
 export * from './domain/growth';
@@ -22,7 +22,7 @@ export type TaskKind = 'assessment' | 'learn' | 'review' | 'correction';
 export interface Task { id: string; wordId: string; kind: TaskKind; questionKind: 'character' | 'word' | 'pinyin'; pair?: string; teachingOrigin?: string; retry?: 0 | 1; notBefore?: number }
 export interface TaskPractice { phase: 'teaching' | 'ready'; activeMs: number; completed: boolean; skipped: boolean; skipReason?: 'timeout' | 'load-error' }
 export interface DailyPlan { date: string; newWordIds: string[]; reviewWordIds: string[] }
-export interface Session { flowVersion?: 2; id: string; date: string; tasks: Task[]; cursor: number; completed: boolean; submissions: string[]; assessmentPassed: string[]; learningRequired?: string[]; preparation?: { confirmed: boolean; claimedWordIds: string[] }; practice?: Record<string, TaskPractice> }
+export interface Session { xpVersion?: 2; flowVersion?: 2; id: string; date: string; tasks: Task[]; cursor: number; completed: boolean; submissions: string[]; assessmentPassed: string[]; learningRequired?: string[]; preparation?: { confirmed: boolean; claimedWordIds: string[] }; practice?: Record<string, TaskPractice> }
 export interface Log { id: string; date: string; wordId: string; kind: TaskKind; correct: boolean; hinted: boolean; advanced: boolean; pairComplete?: boolean }
 export interface Avatar { cardId: number; dataUrl: string }
 export interface State { completedNarrations?:string[]; dailyPlans?: DailyPlan[]; avatar: Avatar | null; version: 2; xp:number; coins:number; unlockedWallCount:number; passedGates:number[]; rewardLedger:RewardEntry[]; achievements:Record<string,{date:string;baseline:boolean}>; equippedTitle:string|null; exam:ExamSession|null; revision: number; settings: Settings; progress: Record<string, Progress>; logs: Log[]; rewards: string[]; owned: number[]; session: Session | null }
@@ -84,36 +84,53 @@ export function updatePracticeTime(state:State,taskId:string,deltaMs:number):Sta
  const p=state.session?.practice?.[taskId];if(currentTask(state)?.id!==taskId||!p||p.phase!=='teaching'||!Number.isFinite(deltaMs)||deltaMs<=0)return state;
  const s=copy(state);s.session!.practice![taskId].activeMs+=Math.min(5000,Math.floor(deltaMs));return s;
 }
+export function usesPageXp(state:State,task:Task):boolean {
+ if(state.session?.xpVersion!==2||task.kind!=='learn')return false;
+ const origin=task.teachingOrigin??`${task.pair}:a`;
+ const original=state.session.tasks.find(t=>t.id===origin);
+ return !!original&&original.kind==='learn'&&!(original.retry===1&&state.session.tasks.some(t=>t.kind==='assessment'&&original.pair===`${t.pair}:teach`));
+}
+function awardPage(s:State,task:Task,page:LearningPage,outcome:'success'|'failure',value:Date|string):void {
+ if(!usesPageXp(s,task))return;
+ const origin=task.teachingOrigin??`${task.pair}:a`,targetXp=page==='trace'&&outcome==='success'?2:1;
+ grantLearningPage(s,{key:learningPageKey(s.session!.id,origin,page),date:effectiveDate(s,value),source:'learning-page',sessionId:s.session!.id,teachingOrigin:origin,taskId:origin,wordId:task.wordId,page,outcome,targetXp,xp:targetXp,coins:0});
+}
+/** Call only for a completed/failed real event; canceled or missing resources are not results. */
+export function recordLearningPage(state:State,taskId:string,page:LearningPage,outcome:'success'|'failure',value:Date|string=new Date()):State {
+ const task=currentTask(state);
+ if(!task||task.id!==taskId||!usesPageXp(state,task)||(state.session?.preparation&&!state.session.preparation.confirmed)||!['intro','trace'].includes(page)||!['success','failure'].includes(outcome)||task.questionKind!=='pinyin'||state.session?.practice?.[taskId]?.phase!=='teaching'||(page==='trace'&&outcome==='success'))return state;
+ const s=copy(state);awardPage(s,task,page,outcome,value);return JSON.stringify(s)===JSON.stringify(state)?state:s;
+}
 export function completePractice(state:State,taskId:string,value:Date|string=new Date(),options:RewardOptions={}):State {
  state=ensureSessionPractice(state);
  const p=state.session?.practice?.[taskId],task=currentTask(state);if(state.session?.preparation&&!state.session.preparation.confirmed)return state; if(!p||task?.id!==taskId||p.completed||p.skipped||p.phase!=='teaching')return state;
  const s=copy(state);s.session!.practice![taskId].completed=true;
- grantReward(s,{key:`trace:${effectiveDate(s,value)}:${task.wordId}`,date:effectiveDate(s,value),source:'trace',wordId:task.wordId,taskId,xp:2,coins:0});return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s;
+ if(usesPageXp(s,task))awardPage(s,task,'trace','success',value);else grantReward(s,{key:`trace:${effectiveDate(s,value)}:${task.wordId}`,date:effectiveDate(s,value),source:'trace',wordId:task.wordId,taskId,xp:2,coins:0});return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s;
 }
-export function skipPractice(state:State,taskId:string,reason:'timeout'|'load-error'='timeout'):State {
+export function skipPractice(state:State,taskId:string,reason:'timeout'|'load-error'='timeout',value:Date|string=new Date()):State {
  state=ensureSessionPractice(state);
  const p=state.session?.practice?.[taskId];if(currentTask(state)?.id!==taskId||!p||p.completed||p.skipped||(reason==='timeout'&&p.activeMs<180000))return state;
- const s=copy(state);Object.assign(s.session!.practice![taskId],{skipped:true,skipReason:reason});return s;
+ const s=copy(state);Object.assign(s.session!.practice![taskId],{skipped:true,skipReason:reason});if(reason==='timeout')awardPage(s,currentTask(s)!,'trace','failure',value);return s;
 }
 export function finishTeaching(state:State,taskId=currentTask(state)?.id):State {
  const p=taskId?state.session?.practice?.[taskId]:undefined;if(!p||currentTask(state)?.id!==taskId||(!p.completed&&!p.skipped)||p.phase==='ready')return state;
  const s=copy(state);s.session!.practice![taskId!].phase='ready';return s;
 }
-export function startSession(state: State, words: Word[], value: Date | string = new Date()): State { if(state.exam&&!state.exam.completed) throw new Error('请先完成考试，再开始学习'); if (state.session && !state.session.completed) return state; const date = effectiveDate(state, value); const tasks = buildQueue(state, words, date).flatMap(createTaskPair); const s = copy(state); s.session = { flowVersion:2, id: `${date}:session:${state.logs.length}`, date, tasks, cursor: 0, completed: tasks.length === 0, submissions: [], assessmentPassed: [] }; return prepareSession(s); }
+export function startSession(state: State, words: Word[], value: Date | string = new Date()): State { if(state.exam&&!state.exam.completed) throw new Error('请先完成考试，再开始学习'); if (state.session && !state.session.completed) return state; const date = effectiveDate(state, value); const tasks = buildQueue(state, words, date).flatMap(createTaskPair); const s = copy(state); s.session = { xpVersion:2,flowVersion:2, id: `${date}:session:${state.logs.length}`, date, tasks, cursor: 0, completed: tasks.length === 0, submissions: [], assessmentPassed: [] }; return prepareSession(s); }
 export function startSelectedSession(state: State, words: Word[], selectedIds: string[], value: Date | string = new Date()): State {
  if(state.exam&&!state.exam.completed) throw new Error('请先完成考试，再开始学习'); if (state.session && !state.session.completed) return state;
  const ids = [...new Set(selectedIds)];
  if (!ids.length || ids.length > 10 || ids.some(id => !words.some(w => w.id === id))) throw new Error('请选择字库中的1至10个字');
  const date = effectiveDate(state,value); const s = copy(state);
  const tasks: Task[] = ids.map(wordId=>({id:`${date}:selected:${state.logs.length}:${wordId}`,wordId,kind:'learn' as const,questionKind:'character' as const})).flatMap(createTaskPair);
- s.session = {flowVersion:2,id:`${date}:selected:${state.logs.length}`,date,tasks,cursor:0,completed:false,submissions:[],assessmentPassed:[]}; return prepareSession(s);
+ s.session = {xpVersion:2,flowVersion:2,id:`${date}:selected:${state.logs.length}`,date,tasks,cursor:0,completed:false,submissions:[],assessmentPassed:[]}; return prepareSession(s);
 }
 /** Unlimited independent review, sharing ordinary daily rewards without advancing same-day stages. */
 export function startPractice(state:State,words:Word[],value:Date|string=new Date(),rng:()=>number=Math.random):State {
  if(state.exam&&!state.exam.completed)throw new Error('请先完成考试，再开始学习');if(state.session&&!state.session.completed)return state;
  const pool=words.filter(w=>state.progress[w.id]?.lastAdvanced!=null);if(!pool.length)throw new Error('请先学习至少一个字');
  for(let i=pool.length-1;i>0;i--){const j=Math.min(i,Math.max(0,Math.floor(rng()*(i+1))));[pool[i],pool[j]]=[pool[j],pool[i]];}
- const date=effectiveDate(state,value),id=`${date}:practice:${state.logs.length}`;return {...state,session:{flowVersion:2,id,date,tasks:pool.slice(0,10).flatMap((w,i)=>createTaskPair({id:`${id}:${i}`,wordId:w.id,kind:'review',questionKind:'pinyin'})),cursor:0,completed:false,submissions:[],assessmentPassed:[]}};
+ const date=effectiveDate(state,value),id=`${date}:practice:${state.logs.length}`;return {...state,session:{xpVersion:2,flowVersion:2,id,date,tasks:pool.slice(0,10).flatMap((w,i)=>createTaskPair({id:`${id}:${i}`,wordId:w.id,kind:'review',questionKind:'pinyin'})),cursor:0,completed:false,submissions:[],assessmentPassed:[]}};
 }
 export function sessionSummary(state: State) {
  const session = state.session; const tasks = session?.tasks ?? []; const pending = tasks.slice(session?.cursor ?? 0);
@@ -159,14 +176,15 @@ function answerPairTask(state:State,input:{correct:boolean;hinted?:boolean;indep
   if(!task.retry){const origin=task.teachingOrigin;const retry=createTaskPair({id:`${task.pair}:teach`,wordId:task.wordId,kind:'learn',questionKind:'pinyin',retry:1,teachingOrigin:origin});session.tasks.splice(session.cursor+1,0,...retry);session.practice??={};const previous=origin?session.practice[origin]:undefined;for(const t of retry)session.practice[t.id]=previous?.phase==='ready'?{...previous,phase:t.questionKind==='word'?'ready':'teaching'}:{phase:t.questionKind==='word'?'ready':'teaching',activeMs:0,completed:t.questionKind==='word',skipped:false};}
   if(hinted&&!p)s.progress[task.wordId]={stage:0,due:addDays(date,1),firstSeen:date,lastAdvanced:null,lastStudied:date,failures:0};
  }
- const origin=task.teachingOrigin??task.id,linkedTrace=s.rewardLedger.some(e=>e.source==='trace'&&e.taskId===origin);
- if(valid&&(task.kind==='assessment'||complete))grantReward(s,{taskId:linkedTrace?origin:task.id,key:`practice:${input.submissionId}`,date,source:'practice',wordId:task.wordId,xp:linkedTrace?3:5,coins:1});
- else if(input.correct&&!valid&&!linkedTrace)grantReward(s,{key:`effort:${date}:${task.wordId}`,date,source:'effort',wordId:task.wordId,xp:1,coins:0});
+ const origin=task.teachingOrigin??task.id,pageXp=usesPageXp(s,task),linkedTrace=pageXp?s.session!.tasks.some(t=>t.kind==='learn'&&t.questionKind==='pinyin'&&t.teachingOrigin===origin&&s.session!.practice?.[t.id]?.completed):s.rewardLedger.some(e=>e.source==='trace'&&e.taskId===origin);
+ if(pageXp)awardPage(s,task,task.questionKind==='pinyin'?'pinyin':'word',valid?'success':'failure',value);
+ if(valid&&(task.kind==='assessment'||complete))grantReward(s,{taskId:linkedTrace?origin:task.id,key:`practice:${input.submissionId}`,date,source:'practice',wordId:task.wordId,xp:pageXp?0:linkedTrace?3:5,coins:1});
+ else if(input.correct&&!valid&&!linkedTrace)grantReward(s,{key:`effort:${date}:${task.wordId}`,date,source:'effort',wordId:task.wordId,xp:pageXp?0:1,coins:0});
  s.logs.push({id:input.submissionId,date,wordId:task.wordId,kind:task.kind,correct:input.correct,hinted,advanced,pairComplete:complete});session.submissions.push(input.submissionId);session.cursor++;session.completed=session.cursor>=session.tasks.length;settleAchievements(s,date);return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s;
 }
 export function makeQuestion(task: Task, words: Word[], rng: () => number = Math.random): Question {
  const target = words.find(w => w.id === task.wordId); if (!target) throw new Error('字库中找不到该字');
- if(task.questionKind==='pinyin'){const context=resolvePinyinContext(target);const prompt=`输入「${context.word}」中「${target.char}」的不带声调拼音，并选择声调`;return {kind:'pinyin',prompt,options:[],answer:context.pinyin,independent:true,maskedText:prompt,speechText:'',segments:[]};}
+ if(task.questionKind==='pinyin'){const context=resolvePinyinContext(target);const prompt=context.word===target.char?`请写出「${target.char}」的拼音并选择声调`:`请写出「${context.word}」中「${target.char}」的拼音，并选择声调`;return {kind:'pinyin',prompt,options:[],answer:context.pinyin,independent:true,maskedText:prompt,speechText:'',segments:[]};}
  const curated = practiceByCharacter.get(target.char);
  const isWord = task.questionKind === 'word' && (!!curated || target.words.some(w => w.includes(target.char)));
  const context = resolvePinyinContext(target);

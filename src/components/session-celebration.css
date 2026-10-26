@@ -1,0 +1,25 @@
+.session-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  background: radial-gradient(ellipse at top, #fff4d9, #fffaf3 65%);
+  color: #704b36;
+}
+.session-celebration-content { width: min(100%, 620px); margin: auto; text-align: center; }
+.session-celebration-emblem { position: relative; display: grid; place-items: center; width: 144px; height: 144px; margin: 0 auto 28px; border: 3px solid #ecd6ae; border-radius: 50%; background: #fff8e7; color: #8c6640; box-shadow: 0 12px 40px #ba82551a; }
+.session-celebration-stars { position: absolute; top: -10px; right: -10px; color: #ba8255; }
+.session-celebration-eyebrow { font-size: 1.15rem; font-weight: 700; }
+.session-celebration h1 { margin: 12px 0 24px; font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1.35; }
+.session-celebration-summary { padding: 20px; border: 1px solid #ecd6ae; border-radius: 24px; background: #ffffffb8; font-size: 1.1rem; line-height: 1.8; overflow-wrap: anywhere; }
+.session-celebration-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 30px; }
+.session-celebration-actions button { min-height: 52px; min-width: 150px; font-size: 1.1rem; }
+.session-celebration-actions button:focus-visible { outline: 3px solid #8c6640; outline-offset: 5px; }
+.session-celebration-confetti { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .session-celebration *, .session-celebration *::before, .session-celebration *::after { animation: none !important; transition: none !important; }
+  .session-celebration-confetti { display: none; }
+}

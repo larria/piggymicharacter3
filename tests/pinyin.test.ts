@@ -3,6 +3,13 @@ import {normalizePinyin,buildPinyinAnswer,type PinyinTone,matchesPinyin,parseCoi
 import {createState,startSession,startSelectedSession,markKnown,currentTask,makeQuestion,answerTask,giftCoins,redeemCard} from '../src/domain';
 import {catalog} from '../src/data/catalog';
 import {exportBackup,importBackup,saveState,STORAGE_KEY,type StorageLike} from '../src/storage';
+it('uses distinct teaching and masked word sentences for 魔 and 方',()=>{
+ const words=['魔','方'].map(char=>catalog.find(word=>word.char===char)!);
+ expect(words[0].sentences[0]).not.toBe(words[1].sentences[0]);
+ const prompts=words.map(word=>{const state=startSelectedSession(createState(),catalog,[word.id]);return makeQuestion(state.session!.tasks.find(task=>task.questionKind==='word')!,catalog)});
+ expect(prompts[0].maskedText).not.toBe(prompts[1].maskedText);
+ expect(prompts[1].answer).toBe('魔方');expect(prompts[1].maskedText).toBe('□的每一面都是正方形。');
+});
 describe('explicit pinyin tone answers',()=>{
  it('builds all five tones for the existing matcher',()=>{for(const [tone,expected] of [[1,'mā'],[2,'má'],[3,'mǎ'],[4,'mà'],[0,'ma']] as const){const answer=buildPinyinAnswer(' MA ',tone);expect(answer).toBe(`ma${tone}`);expect(matchesPinyin(answer!,expected)).toBe(true)}});
  it('requires selection, including explicit neutral zero',()=>{expect(buildPinyinAnswer('zhe',null)).toBeNull();expect(buildPinyinAnswer('zhe',undefined as unknown as PinyinTone)).toBeNull();expect(buildPinyinAnswer('zhe',0)).toBe('zhe0');for(const tone of [-1,5,1.5,NaN])expect(buildPinyinAnswer('ma',tone as PinyinTone)).toBeNull()});
@@ -16,6 +23,14 @@ describe('single syllable pinyin',()=>{
  it('uses context matching catalog reading',()=>{expect(pinyinContext({char:'薄',pinyin:'bó',words:['薄荷']})).toBe('单薄');expect(pinyinContext({char:'觉',pinyin:'jiào',words:['觉得']})).toBe('睡觉')});
 });
 describe('verified pronunciation contexts',()=>{
+ it('uses reviewed hand vocabulary and non-repetitive safe fallback prompts without answer speech',()=>{
+  const hand=catalog.find(word=>word.char==='手')!;
+  expect(getVerifiedPinyinContext('手','shou3')).toEqual({char:'手',word:'双手',pinyin:'shǒu'});
+  const task={id:'pinyin',wordId:hand.id,kind:'learn' as const,questionKind:'pinyin' as const};
+  expect(makeQuestion(task,[hand]).prompt).toBe('请写出「双手」中「手」的拼音，并选择声调');
+  const fallback=makeQuestion({...task,wordId:'unknown'},[{id:'unknown',char:'未',pinyin:'wèi',words:['未知'],sentences:[]}]);
+  expect(fallback.prompt).toBe('请写出「未」的拼音并选择声调');expect(fallback.speechText).toBe('');expect(fallback.prompt).not.toContain(fallback.answer);
+ });
  it('distinguishes planting/seeds and quantity/measuring',()=>{
   for(const [char,pinyin,word] of [['种','zhong4','种花'],['种','zhong3','种子'],['量','liang4','数量'],['量','liang2','测量']]){
    const context=resolvePinyinContext({char,pinyin,words:['任意'+char]});

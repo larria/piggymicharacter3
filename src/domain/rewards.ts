@@ -1,12 +1,21 @@
 import type { State } from '../domain';
 export interface RewardDestination { sourceId:string; sessionId:string; destination:string; narrationId:string }
 export interface RewardOptions { deferRewards?:RewardDestination }
-export interface RewardEntry { key:string; date:string; source:'practice'|'quiz'|'effort'|'achievement'|'trace'; wordId?:string; taskId?:string; xp:number; coins:number; pending?:RewardDestination }
+export type LearningPage = 'intro'|'trace'|'pinyin'|'word';
+export interface RewardEntry { key:string; date:string; source:'practice'|'quiz'|'effort'|'achievement'|'trace'|'learning-page'; wordId?:string; taskId?:string; xp:number; coins:number; pending?:RewardDestination; sessionId?:string; teachingOrigin?:string; page?:LearningPage; outcome?:'success'|'failure'; targetXp?:number }
+export function learningPageKey(sessionId:string,origin:string,page:LearningPage):string { return `learning-page:${JSON.stringify([sessionId,origin,page])}`; }
+/** Results reserve their logical award even at the cap; only trace failure can upgrade. */
+export function grantLearningPage(s:State,entry:RewardEntry):void {
+ const previous=s.rewardLedger.find(e=>e.key===entry.key);
+ if(previous){if(previous.source!=='learning-page'||previous.page!=='trace'||previous.targetXp!==1||entry.targetXp!==2)return;
+ const delta=Math.min(1,rewardQuota(s,previous.date).xp);if(!Number.isSafeInteger(s.xp+delta+s.rewardLedger.filter(e=>e.pending).reduce((n,e)=>n+e.xp,0)))throw new Error('奖励余额超出安全范围');previous.xp+=delta;previous.targetXp=2;previous.outcome='success';s.xp+=delta;return;}
+ grantReward(s,entry);
+}
 /** Reserve ledger quotas now, but release balances only after the destination narration. */
 export function deferRewardEntitlements(before:State,next:State,metadata:RewardDestination):State {
  if(!metadata||Object.keys(metadata).length!==4||Object.values(metadata).some(v=>typeof v!=='string'||!v.length||v.length>=500)||!['sourceId','sessionId','destination','narrationId'].every(k=>k in metadata))throw new Error('奖励交接信息无效');
  if(before.completedNarrations?.includes(metadata.narrationId))return next;
- const keys=new Set(before.rewardLedger.map(e=>e.key)),fresh=next.rewardLedger.filter(e=>!keys.has(e.key)&&!e.pending);
+ const keys=new Set(before.rewardLedger.map(e=>e.key)),fresh=next.rewardLedger.filter(e=>!keys.has(e.key)&&!e.pending&&e.source!=='learning-page');
  if(!fresh.length)return next;
  const deferred=new Set(fresh.map(e=>e.key));return {...next,xp:next.xp-fresh.reduce((n,e)=>n+e.xp,0),coins:next.coins-fresh.reduce((n,e)=>n+e.coins,0),rewardLedger:next.rewardLedger.map(e=>deferred.has(e.key)?{...e,pending:{...metadata}}:e)};
 }
