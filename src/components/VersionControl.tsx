@@ -1,0 +1,4 @@
+import {useSyncExternalStore} from 'react';
+import {pwaUpdate,type UpdateStatus} from '../pwaUpdate';
+const labels:Record<UpdateStatus,string>={idle:'',checking:'检查中',downloading:'下载中',waiting:'有更新',latest:'已是最新',offline:'离线，稍后重试',unsupported:'此浏览器不支持更新',failed:'检查失败，重试',applying:'正在更新'};
+export function VersionControl({prepare}:{prepare:()=>boolean}){const snapshot=useSyncExternalStore(pwaUpdate.subscribe,()=>`${pwaUpdate.status}|${pwaUpdate.detail}`);const status=snapshot.split('|')[0] as UpdateStatus;return <button type="button" className="version-control" disabled={status==='applying'||status==='checking'||status==='downloading'} onClick={()=>status==='waiting'?void pwaUpdate.apply(prepare):void pwaUpdate.check()} title={pwaUpdate.detail||'检查应用更新，不会清除设备数据'}>v{__APP_VERSION__}{labels[status]&&` · ${labels[status]}`}{pwaUpdate.detail&&<span className="version-detail" role="status">{pwaUpdate.detail}</span>}</button>}

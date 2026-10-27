@@ -172,13 +172,17 @@ npm run hanzi:import -- --reference /path/to/汉字学习资源
 
 生产环境注册 Service Worker，开发服务器不注册。首次使用需要联网；HTTPS 或 localhost 才能使用 Service Worker，安装能力依浏览器而异。
 
-worker 缓存名由注册 scope 和全部构建产物内容 SHA-256 组成（源码占位版本 v9，构建时替换）；同名卡片、音频或笔顺内容变更也触发新 worker，按 Service Worker scope 相对路径预缓存入口、构建资源、图标、webmanifest、卡片清单、清晰卡片、音频及 `hanzi/manifest.json`；不枚举预缓存全部单字 JSON。同源 GET 使用 cache-first，成功网络响应按需加入缓存，所以已访问单字可能离线可用，未访问单字不能保证。
+显示版本始终且仅从 `package.json.version` 读取，由 Vite 编译期注入 `__APP_VERSION__`，界面不手填版本，每次构建自动同步。显示 semver 与 worker 发布身份不同：相同 semver 的代码或资源更新仍产生新 hash。worker 缓存名由注册 scope 和全部构建产物内容 SHA-256 组成（包含 canonical worker 源码；源码必须且仅包含一次 `const RELEASE='v9';` 占位符，缺失／重复时构建失败，构建时替换）；同名卡片、音频或笔顺内容变更也触发新 worker，按 Service Worker scope 相对路径预缓存入口、构建资源、图标、webmanifest、卡片清单、清晰卡片、音频及 `hanzi/manifest.json`；不枚举预缓存全部单字 JSON。同源 GET 使用 cache-first，成功网络响应按需加入缓存，所以已访问单字可能离线可用，未访问单字不能保证。
 
-App 的离线提示实际只检查卡清单和当前全部清晰卡片，不检查入口、脚本、样式、声音或全部笔顺，不能当作所有资源离线就绪的证明，更不能当作资源许可核验。缓存可能被回收，不承诺永久离线。新 worker 使用默认等待生命周期，没有 skipWaiting，不在学习途中强制接管；activate 仅删除同一 scope 前缀的旧缓存；fetch 仅查当前版本缓存并限定应用子路径。旧版未按 scope 命名的缓存保留，不参与 worker 查找，避免影响同源其他安装。
+App 的离线提示实际只检查卡清单和当前全部清晰卡片，不检查入口、脚本、样式、声音或全部笔顺，不能当作所有资源离线就绪的证明，更不能当作资源许可核验。缓存可能被回收，不承诺永久离线。新 worker 安装后等待，不自动 skipWaiting，不在学习途中强制接管；首页版本入口检查更新，仅在用户明确点击、持久化与修订号检查成功且同 scope 无其他窗口后请求激活。点击更新不会清除设备数据、学习进度或备份；课堂／考试／导入／保存冲突期间不应用更新。激活保留当前与上一发行缓存，只有版本化资产可回退上一缓存，HTML 与未版本化资源不跨版本回退；安全单窗口时才清理更老发行。旧版未按 scope 命名的缓存保留，不参与 worker 查找，避免影响同源其他安装。
 
 应用资产路径统一基于 Vite `base`（`src/data/cards.ts` 的 `assetUrl`/`cardUrl`、`hanziUrl`、SW 注册），Service Worker 内部以 `self.registration.scope` 解析相对路径。当前 base 为 `/piggymicharacter3/`，面向 GitHub Pages 子路径部署；改回站点根部署时移除 `base` 配置即可，代码不需要改动。
 
-`vite.config.ts` 的 build 插件读取卡片清单 SHA-256 并附加到 `dist/sw.js`，使卡目录变化反映到 worker 文件。更新资产后需要重新构建部署。
+`vite.config.ts` 的 build 插件对排序后的全部输出路径与内容（含尚未 stamp 的 worker 源码）计算 SHA-256，再写入 `dist/sw.js`；不读取已 stamp 的 worker 或自引用 release metadata。更新资产或 worker 后需要重新构建部署。
+
+图标原图完整保存在非 public 的 `assets/icon-source/piggy-original.png`（1254×1254），不删除用户原文件。`node scripts/generate-icons.mjs` 用 Sharp 等比缩小、白底合成及优化 PNG 生成 `public/app.png`（512）、`app-192.png`（192）、`apple-touch-icon.png`（180）、`favicon.png`（32）；不裁切角色，manifest 仅 `purpose:any`，未处理安全区域前不宣称 maskable。HTML 用 `%BASE_URL%`，manifest 用相对路径，原图不进入 dist。
+
+隔离生产 A/B 验证：先 `npm run build`，再 `node scripts/pwa-ab-fixture.mjs capture A` 和 `capture B`，最后 `node scripts/pwa-ab-fixture.mjs serve A`（localhost:4178，应用子路径不变）。A/B 使用相同 package semver，复制构建后仅增加隔离 fixture HTML／worker 标记形成不同发布 hash，不修改运行源码。已保留的 `reports/browser-verification/pwa-ab/legacy` 是改动前 dist。浏览器由主验证线程运行；用 `POST /__fixture/swap?build=B` 原地切换当前目录而不更改 origin 或重启服务，`GET /__fixture/status` 查当前版本。fixture 脚本拒绝覆盖已捕获 A/B，不清浏览器存储。验证 waiting 不自动刷新、明确点击仅激活一次、localStorage 保留、其他窗口拒绝与失败可重试；真实 iPad 安装图标更新仍需真机验证。
 
 `speechSynthesis` 仅在明确用户操作后启用；保存成功后，实际渲染的会话/考试题目按任务身份朗读一次，刷新恢复不能绕过激活。选字/选词题使用与屏幕一致的安全题干与空格停顿；拼音题只读固定无答案操作说明，不读取目标字或词境。SpeechQueue 保留取消句柄，通过 owner、generation 和片段身份可观察真实播放状态，迟到的取消/结束事件不能覆盖新播放。共享轻量 SpeakerButton 只在自身内容播放时动画，完成、取消、失败或卸载后静止，支持重听与减少动态效果。学习自动序列与单条字/词/句按钮使用相同片段身份。HelpPopover 的关闭回调通过 ref 更新，不因内联回调重新安装生命周期或误取消朗读；保留 Escape、外部点击及焦点归还。失败不阻塞学习，暂停或离开停止播放；音效、背景音乐和朗读激活仍独立。自动化测试不能证明真实设备发声，也不能保证设备离线中文语音。
 
@@ -196,6 +200,8 @@ npm run build
 | `tests/domain.test.ts` | 题目、会话、跨天/午夜/回拨、纠错、奖励与恢复 |
 | `tests/growth.test.ts` | 段位、奖励限额、考试、成就与相关成长规则 |
 | `tests/cards.test.ts` | 卡目录与收藏相关契约 |
+| `tests/buildRelease.test.ts` | package 版本唯一来源、canonical worker／资产 hash、缺失或重复 marker 拒绝、图标尺寸／无透明／base 路径 |
+| `tests/pwaUpdate.test.ts`、`tests/serviceWorker.test.ts` | 等待／激活／失败状态、保存前置条件、其他窗口拒绝、发行缓存与资源回退 |
 | `tests/avatar.test.ts` | 头像裁剪及数据校验 |
 | `tests/hanzi.test.ts` | 笔顺数据与展示用契约 |
 | `tests/parentGate.test.ts` | 数学确认题 |

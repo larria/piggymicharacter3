@@ -119,8 +119,16 @@ a {
   overscroll-behavior-y:contain;
 }
 
+.version-control { color:#7d8d82; font-size:11px; font-weight:400; background:transparent; border:0; padding:5px 8px; border-radius:5px; cursor:pointer; line-height:1.5; }
+.version-control:hover { background:#edf1ed; color:#53685c; }
+.version-control:focus-visible { outline:2px solid #879f8a; outline-offset:3px; }
+.version-control:disabled { cursor:wait; }
+.version-detail { display:block; max-width:220px; }
+.mobile-brand { display:none; }
+@media(max-width:760px) { .mobile-brand { display:flex; flex-direction:column; align-items:flex-start; margin-bottom:16px; } .mobile-brand .brand-logo { width:150px; height:auto; } }
 .brand {
   display:flex;
+  flex-direction:column;
   align-items:center;
   flex-shrink:0;
 }
