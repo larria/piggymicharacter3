@@ -1,4 +1,5 @@
 .app-toast{position:fixed;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:120;display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100vw - 32px);padding:12px 18px;border:1px solid #dbe5dc;border-radius:18px;background:#fffdf7;box-shadow:0 8px 30px #294b4320;font-size:14px;line-height:1.5}.app-toast .ghost{flex-shrink:0;padding:4px}.tracing-reward,.tracing-reward>span{display:inline-flex;align-items:center;gap:6px}
+.learning-toast{position:relative;left:auto;bottom:auto;transform:none;width:fit-content;max-width:100%;margin:0 auto 16px;z-index:1}
 :root {
   font-family:'PingFang SC','Microsoft YaHei',system-ui,sans-serif;
   color:#294b43;

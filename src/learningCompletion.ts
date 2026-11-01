@@ -12,19 +12,31 @@ function sessionEvidence(state: State): { task: Task; log: Log }[] {
   });
 }
 
-/** A fourth-page success is earned by a real, independent learning pair, not queue position. */
-export function isIndependentlyLearnedWord(state: State, taskId: string): boolean {
+/** Shared proof from the two saved submissions, never from mastery or queue position. */
+function independentPairEvidence(state: State, taskId: string, kind: 'learn' | 'assessment'): { task: Task; log: Log } | undefined {
   const evidence = sessionEvidence(state);
   const result = evidence.find(item => item.task.id === taskId);
-  if (!result) return false;
+  if (!result) return undefined;
   const { task, log } = result;
-  if (task.kind !== 'learn' || task.questionKind !== 'word' || !task.pair ||
-      !log.correct || log.hinted || log.pairComplete !== true) return false;
+  if (task.kind !== kind || task.questionKind !== 'word' || !task.pair ||
+      !log.correct || log.hinted || log.pairComplete !== true) return undefined;
   const pinyin = evidence.find(item => item.task.id === `${task.pair}:a`);
-  if (!pinyin || pinyin.task.kind !== 'learn' || pinyin.task.questionKind !== 'pinyin' ||
-      pinyin.task.wordId !== task.wordId || !pinyin.log.correct || pinyin.log.hinted) return false;
+  if (!pinyin || pinyin.task.kind !== kind || pinyin.task.questionKind !== 'pinyin' ||
+      pinyin.task.wordId !== task.wordId || !pinyin.log.correct || pinyin.log.hinted) return undefined;
+  return result;
+}
+
+/** A fourth-page success is earned by a real, independent learning pair, not queue position. */
+export function isIndependentlyLearnedWord(state: State, taskId: string): boolean {
   // Historical mastery does not prove that this session taught a new word.
-  return log.advanced;
+  return independentPairEvidence(state, taskId, 'learn')?.log.advanced === true;
+}
+
+/** Only a confirmed preparation claim can turn an assessment pair into claim success. */
+export function isIndependentlyClaimedWord(state: State, taskId: string): boolean {
+  const result = independentPairEvidence(state, taskId, 'assessment');
+  const preparation = state.session?.preparation;
+  return !!result && preparation?.confirmed === true && preparation.claimedWordIds.includes(result.task.wordId);
 }
 
 export interface LearningRewardSummary {
@@ -34,6 +46,41 @@ export interface LearningRewardSummary {
   settledXp: number;
   pendingCoins: number;
   settledCoins: number;
+}
+
+export interface ClaimRewardSummary extends LearningRewardSummary {
+  /** Separate from the practice totals above; only explicitly linked achievements count. */
+  achievements: LearningRewardSummary;
+}
+
+function emptyRewardSummary(): LearningRewardSummary {
+  return { xp: 0, coins: 0, pendingXp: 0, settledXp: 0, pendingCoins: 0, settledCoins: 0 };
+}
+
+/** Actual ledger amounts for this claimed pair, including partial/failed pairs, never estimates. */
+export function claimRewardSummary(state: State, taskId: string): ClaimRewardSummary {
+  const total: ClaimRewardSummary = { ...emptyRewardSummary(), achievements: emptyRewardSummary() };
+  const session = state.session, task = session?.tasks.find(item => item.id === taskId);
+  if (!session || !task || task.kind !== 'assessment' || !task.pair ||
+      !session.preparation?.confirmed || !session.preparation.claimedWordIds.includes(task.wordId)) return total;
+  const identities = new Set(session.tasks.filter(item => item.kind === 'assessment' &&
+    item.pair === task.pair && item.wordId === task.wordId).map(item => item.id));
+  const submissions = new Set(sessionEvidence(state).filter(item => identities.has(item.task.id)).map(item => item.log.id));
+  for (const entry of state.rewardLedger) {
+    const practice = entry.source === 'practice' && entry.wordId === task.wordId &&
+      !!entry.taskId && identities.has(entry.taskId) && submissions.has(entry.key.replace(/^practice:/, ''));
+    const achievement = entry.source === 'achievement' &&
+      (entry.wordId === undefined || entry.wordId === task.wordId) &&
+      ((entry.pending?.sessionId === session.id && identities.has(entry.pending.sourceId)) ||
+        (entry.sessionId === session.id && !!entry.taskId && identities.has(entry.taskId)));
+    if (!practice && !achievement) continue;
+    const target = achievement ? total.achievements : total;
+    target.xp += entry.xp;
+    target.coins += entry.coins;
+    if (entry.pending) { target.pendingXp += entry.xp; target.pendingCoins += entry.coins; }
+    else { target.settledXp += entry.xp; target.settledCoins += entry.coins; }
+  }
+  return total;
 }
 
 /** Include actual capped ledger amounts; achievements and unrelated same-word work are excluded. */

@@ -26,7 +26,7 @@ export interface Session { xpVersion?: 2; flowVersion?: 2; id: string; date: str
 export interface Log { id: string; date: string; wordId: string; kind: TaskKind; correct: boolean; hinted: boolean; advanced: boolean; pairComplete?: boolean }
 export interface Avatar { cardId: number; dataUrl: string }
 export interface State { completedNarrations?:string[]; dailyPlans?: DailyPlan[]; avatar: Avatar | null; version: 2; xp:number; coins:number; unlockedWallCount:number; passedGates:number[]; rewardLedger:RewardEntry[]; achievements:Record<string,{date:string;baseline:boolean}>; equippedTitle:string|null; exam:ExamSession|null; revision: number; settings: Settings; progress: Record<string, Progress>; logs: Log[]; rewards: string[]; owned: number[]; session: Session | null }
-export interface Question { kind: 'character' | 'word' | 'pinyin'; prompt: string; options: string[]; answer: string; independent: boolean; cue?: string; maskedText: string; speechText: string; segments: { text: string; masked: boolean }[] }
+export interface Question { kind: 'character' | 'word' | 'pinyin'; prompt: string; options: string[]; answer: string; independent: boolean; cue?: string; presentation?: 'context' | 'reading-aid'; maskedText: string; speechText: string; segments: { text: string; masked: boolean }[] }
 export const INTERVALS = [1, 3, 7, 14, 30] as const;
 export function createState(): State { return { avatar:null, version: 2, xp:0, coins:0, unlockedWallCount:1, passedGates:[], rewardLedger:[], achievements:{}, equippedTitle:null, exam:null, revision: 0, settings: { dailyGoal: 30, newLimit: 20, weeklyGoal: 5, sound: true, music: false }, progress: {}, logs: [], rewards: [], owned: [], session: null }; }
 export function localDate(value: Date | string = new Date()): string { if (typeof value === 'string') { if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value + 'T12:00:00')) || new Date(value + 'T12:00:00').getDate() !== Number(value.slice(8))) throw new Error('日期无效'); return value; } if (!Number.isFinite(value.getTime())) throw new Error('日期无效'); return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`; }
@@ -197,8 +197,11 @@ export function makeQuestion(task: Task, words: Word[], rng: () => number = Math
  const cue = curated ? undefined : `读音线索：${target.pinyin}${isWord ? '（选择含这个读音的目标字的词语）' : ''}`;
  const candidates = curated ? (isWord ? curated.words : curated.characters) : [...new Set(words.filter(w => w.id !== target.id && w.pinyin !== target.pinyin).flatMap(w => isWord ? w.words.filter(x => !x.includes(target.char)) : [w.char]))];
  const shuffle = (items:string[]) => { for (let i=items.length-1;i>0;i--) { const j = Math.min(i,Math.max(0,Math.floor(rng()*(i+1)))); [items[i],items[j]]=[items[j],items[i]]; } return items; };
- const prompt = `${isWord ? '哪个词语能补全' : '选字补全'}「${maskedText}」？${cue ? ` ${cue}` : ''}`;
- return {kind:isWord ? 'word' : 'character',prompt,options:shuffle([answer,...shuffle([...new Set(candidates)].filter(x => x !== answer)).slice(0,3)]),answer,independent:!!curated,cue,maskedText,segments,speechText:prompt.replaceAll('□','空白')};
+ const readingAid = !curated && (sentence === answer || /^我会读词语[“「]/.test(sentence));
+ const prompt = readingAid
+  ? `读音辅助练习（不计独立掌握）：${isWord ? '选择含目标字的词语' : '选择目标字'}。目标字「${target.char}」，读音：${target.pinyin}。`
+  : `${isWord ? '哪个词语能补全' : '选字补全'}「${maskedText}」？${cue ? ` ${cue}` : ''}`;
+ return {kind:isWord ? 'word' : 'character',prompt,options:shuffle([answer,...shuffle([...new Set(candidates)].filter(x => x !== answer)).slice(0,3)]),answer,independent:!!curated,presentation:readingAid ? 'reading-aid' : 'context',cue,maskedText:readingAid ? prompt : maskedText,segments:readingAid ? [{text:prompt,masked:false}] : segments,speechText:prompt.replaceAll('□','空白')};
 }
 export function updateSettings(state: State, patch: Partial<Settings>): State { const settings = { ...state.settings, ...patch }; if (!Number.isInteger(settings.dailyGoal) || settings.dailyGoal < 1 || settings.dailyGoal > 30 || !Number.isInteger(settings.newLimit) || settings.newLimit < 0 || settings.newLimit > 20 || !Number.isInteger(settings.weeklyGoal) || settings.weeklyGoal < 1 || settings.weeklyGoal > 7 || typeof settings.sound !== 'boolean' || typeof settings.music !== 'boolean') throw new Error('设置超出允许范围'); return { ...state, settings }; }
 export const WALL_COSTS = [20,30,50,80,120,170,230,300,400] as const;

@@ -51,6 +51,35 @@ describe('observable speech snapshots',()=>{
  });
 });
 describe('audio coordination',()=>{
+ it('waits for narration and plays only the latest result, never clicks',()=>{
+  const speech=new SpeechQueue();const audio=new AudioCoordinator(speech);audio.activate();speech.speak('question','甲');
+  audio.playSfx('wrong');vi.advanceTimersByTime(300);audio.playSfx('correct');audio.playSfx('celebrate');audio.playSfx('click');
+  expect(FakeAudio.all).toHaveLength(0);spoken[0].onend?.();
+  expect(FakeAudio.all).toHaveLength(1);expect(FakeAudio.all[0].src).toContain('sfx_celebrate.mp3');expect(FakeAudio.all[0].paused).toBe(false);
+  audio.activate();expect(FakeAudio.all).toHaveLength(1);audio.dispose();
+ });
+ it('does not queue clicks during narration',()=>{
+  const speech=new SpeechQueue();const audio=new AudioCoordinator(speech);audio.activate();speech.speak('question','甲');audio.playSfx('click');spoken[0].onend?.();expect(FakeAudio.all).toHaveLength(0);audio.dispose();
+ });
+ it('expires pending feedback after 1500ms and refreshes only for newer results',()=>{
+  const speech=new SpeechQueue();const audio=new AudioCoordinator(speech);audio.activate();speech.speak('question','甲');audio.playSfx('wrong');
+  vi.advanceTimersByTime(1400);audio.playSfx('correct');vi.advanceTimersByTime(1400);spoken[0].onend?.();expect(FakeAudio.all[0].src).toContain('sfx_correct.mp3');
+  speech.speak('next','乙');audio.playSfx('wrong');vi.advanceTimersByTime(1500);spoken[1].onend?.();expect(FakeAudio.all).toHaveLength(1);audio.dispose();
+ });
+ it.each(['mute','hidden','scene','stop','dispose','question'] as const)('clears pending feedback on %s before speech cancellation can flush it',reason=>{
+  const speech=new SpeechQueue();const audio=new AudioCoordinator(speech);audio.activate();speech.speak('question','甲');audio.playSfx('correct');
+  if(reason==='mute')audio.configure({sound:false,music:false});
+  else if(reason==='hidden'){doc.hidden=true;visibility();doc.hidden=false;visibility()}
+  else if(reason==='scene')audio.setScene('exam');
+  else if(reason==='stop')audio.stop();
+  else if(reason==='dispose')audio.dispose();
+  else audio.clearPendingSfx();
+  speech.cancelAll();audio.configure({sound:true,music:false});audio.activate();vi.advanceTimersByTime(1600);expect(FakeAudio.all).toHaveLength(0);audio.dispose();
+ });
+ it('waits through sequence gaps rather than overlapping later utterances',()=>{
+  const speech=new SpeechQueue();const audio=new AudioCoordinator(speech);audio.activate();speech.activateFromGesture();speech.readLearning('question',{character:'山'});audio.playSfx('correct');
+  spoken[0].onend?.();vi.advanceTimersByTime(450);expect(FakeAudio.all).toHaveLength(0);spoken[1].onend?.();vi.advanceTimersByTime(450);expect(FakeAudio.all).toHaveLength(0);spoken[2].onend?.();expect(FakeAudio.all).toHaveLength(1);audio.dispose();
+ });
  it('does not cancel narration started by the gesture before a scene effect',()=>{const speech=new SpeechQueue();const audio=new AudioCoordinator(speech);audio.activate();speech.activateFromGesture();speech.readLearning('new-task',{character:'山'});const count=cancel.mock.calls.length;audio.setScene('learning');expect(cancel).toHaveBeenCalledTimes(count);spoken[0].onend?.();vi.advanceTimersByTime(450);expect(spoken).toHaveLength(2);audio.dispose()});
  it('defaults music off and throttles repeated clicks',()=>{const audio=new AudioCoordinator(new SpeechQueue());audio.activate();expect(FakeAudio.all).toHaveLength(0);audio.playSfx('click');audio.playSfx('click');expect(FakeAudio.all).toHaveLength(1);vi.advanceTimersByTime(120);audio.playSfx('click');expect(FakeAudio.all).toHaveLength(2);audio.dispose()});
  it('plays result once per scene entry and allows explicit retry after denial',async()=>{const audio=new AudioCoordinator(new SpeechQueue());audio.configure({music:true,sound:true});audio.setScene('result');audio.activate();const result=FakeAudio.all[0];await vi.advanceTimersByTimeAsync(0);result.paused=true;result.onended?.();audio.activate();audio.configure({music:true,sound:true});expect(result.play).toHaveBeenCalledTimes(1);audio.setScene('exam');audio.setScene('result');const retry=FakeAudio.all[1];await vi.advanceTimersByTimeAsync(0);retry.paused=true;retry.play.mockRejectedValueOnce(new Error('denied'));audio.activate();audio.activate();expect(retry.play).toHaveBeenCalledTimes(2);await vi.advanceTimersByTimeAsync(0);audio.activate();expect(retry.play).toHaveBeenCalledTimes(3);audio.dispose()});

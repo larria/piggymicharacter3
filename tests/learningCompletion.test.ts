@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { answerTask, completePractice, confirmPreparation, createState, currentTask, finishTeaching, recordLearningPage, startSelectedSession, type State } from '../src/domain';
+import { answerTask, completePractice, confirmPreparation, createState, currentTask, finishTeaching, recordLearningPage, setPreparationClaims, settlePendingRewards, startSelectedSession, type State } from '../src/domain';
 import { catalog } from '../src/data/catalog';
 import { validateState } from '../src/storage';
-import { isIndependentlyLearnedWord, learningRewardSummary, learningSessionSummary } from '../src/learningCompletion';
+import { claimRewardSummary, isIndependentlyClaimedWord, isIndependentlyLearnedWord, learningRewardSummary, learningSessionSummary } from '../src/learningCompletion';
 
 const date = '2026-10-26';
 function ready(): State {
@@ -15,6 +15,69 @@ function pair(): State {
   let s = answerTask(ready(), { correct: true, independent: true, submissionId: 'pinyin' }, date);
   return answerTask(s, { correct: true, independent: true, submissionId: 'word' }, date);
 }
+function claimedPair(): State {
+  let s = confirmPreparation(setPreparationClaims(startSelectedSession(createState(), catalog, ['手', '耳'], date), ['手']));
+  s = answerTask(s, { correct: true, submissionId: 'claim-pinyin' }, date);
+  const id = currentTask(s)!.id;
+  return answerTask(s, { correct: true, submissionId: 'claim-word' }, date, {
+    deferRewards: { sourceId: id, sessionId: s.session!.id, destination: 'next', narrationId: 'claim-next' },
+  });
+}
+
+describe('claim completion evidence and rewards', () => {
+  it('accepts saved preparation claims without requiring newly advanced mastery', () => {
+    const s = claimedPair(), id = s.session!.tasks[1].id;
+    s.logs[1].advanced = false;
+    expect(isIndependentlyClaimedWord(s, id)).toBe(true);
+    expect(isIndependentlyLearnedWord(s, id)).toBe(false);
+    expect(isIndependentlyClaimedWord(s, s.session!.tasks[0].id)).toBe(false);
+  });
+  it('rejects ordinary assessments, missing submissions, hints and incomplete pairs', () => {
+    const s = claimedPair(), id = s.session!.tasks[1].id;
+    const mutations: ((state: State) => void)[] = [
+      state => { delete state.session!.preparation; },
+      state => { state.session!.preparation!.confirmed = false; },
+      state => { state.session!.preparation!.claimedWordIds = []; },
+      state => { state.session!.cursor = 1; },
+      state => { state.session!.submissions[0] = 'historical'; },
+      state => { state.logs[0].hinted = true; },
+      state => { state.logs[0].correct = false; },
+      state => { state.logs[1].hinted = true; },
+      state => { state.logs[1].correct = false; },
+      state => { delete state.logs[1].pairComplete; },
+      state => { state.session!.tasks[0].wordId = '耳'; },
+    ];
+    for (const mutate of mutations) {
+      const changed = structuredClone(s); mutate(changed);
+      expect(isIndependentlyClaimedWord(changed, id)).toBe(false);
+    }
+  });
+  it('sums capped pair submissions separately from explicitly linked achievement rewards', () => {
+    const s = claimedPair(), id = s.session!.tasks[1].id;
+    const reward = s.rewardLedger.find(entry => entry.key === 'practice:claim-word')!;
+    reward.xp = 2; reward.coins = 0;
+    s.rewardLedger.push(
+      { key: 'practice:unrelated', date, source: 'practice', taskId: id, wordId: '手', xp: 99, coins: 99 },
+      { key: 'achievement:unrelated', date, source: 'achievement', xp: 50, coins: 50 },
+      { key: 'achievement:linked', date, source: 'achievement', xp: 3, coins: 20, pending: { ...reward.pending! } },
+    );
+    expect(claimRewardSummary(s, id)).toEqual({
+      xp: 7, coins: 1, pendingXp: 2, settledXp: 5, pendingCoins: 0, settledCoins: 1,
+      achievements: { xp: 3, coins: 20, pendingXp: 3, settledXp: 0, pendingCoins: 20, settledCoins: 0 },
+    });
+    expect(claimRewardSummary(s, s.session!.tasks[0].id)).toEqual(claimRewardSummary(s, id));
+    expect(claimRewardSummary(settlePendingRewards(s), id)).toMatchObject({ pendingXp: 0, settledXp: 7, achievements: { pendingXp: 0, settledCoins: 0 } });
+    s.session!.preparation!.claimedWordIds = [];
+    expect(claimRewardSummary(s, id)).toMatchObject({ xp: 0, coins: 0 });
+  });
+  it('keeps partial claimed-pair rewards without claiming completion', () => {
+    const s = claimedPair(), id = s.session!.tasks[1].id;
+    s.session!.cursor = 1; s.session!.submissions.pop();
+    expect(isIndependentlyClaimedWord(s, id)).toBe(false);
+    expect(claimRewardSummary(s, id)).toMatchObject({ xp: 5, coins: 1, pendingXp: 0 });
+  });
+});
+
 describe('learning completion evidence', () => {
   it('requires actual independently submitted learn word and its own pinyin pair', () => {
     const s = pair(), id = s.session!.tasks[1].id;

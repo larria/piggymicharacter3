@@ -6,7 +6,7 @@ export interface Practice {
  characters: string[]; words: string[];
  theme: '家庭' | '小学' | '篮球' | '魔方' | '生活';
 }
-export const PRACTICE_VERSION = 'life-reviewed-45-v2';
+export const PRACTICE_VERSION = 'life-reviewed-45-v3';
 export const practice: Practice[] = [
  {char:'爸',pinyin:'bà',word:'爸爸',sentence:'爸爸是我的父亲。',characterSentence:'我叫父亲一声爸爸。',characters:['妈','姐','弟'],words:['妈妈','姐姐','弟弟'],theme:'家庭'},
  {char:'妈',pinyin:'mā',word:'妈妈',sentence:'妈妈是我的母亲。',characterSentence:'我叫母亲一声妈妈。',characters:['爸','哥','妹'],words:['爸爸','哥哥','妹妹'],theme:'家庭'},
@@ -17,7 +17,7 @@ export const practice: Practice[] = [
  {char:'笔',pinyin:'bǐ',word:'铅笔',sentence:'我用铅笔写字，写错了可以用橡皮擦掉。',characterSentence:'毛笔的尖端有柔软的毛，可以蘸墨写字。',characters:['米','门','云'],words:['大米','木门','白云'],theme:'小学'},
  {char:'课',pinyin:'kè',word:'课本',sentence:'上语文课时，我们打开语文课本。',characterSentence:'上课铃响了，同学们坐好听讲。',characters:['球','水','饭'],words:['篮球','水杯','米饭'],theme:'小学'},
  {char:'篮',pinyin:'lán',word:'篮球',sentence:'篮球比赛时，投进篮筐就能得分。',characterSentence:'打篮球要把球投进高处的圆筐。',characters:['足','排','羽'],words:['足球','排球','羽毛球'],theme:'篮球'},
- {char:'球',pinyin:'qiú',word:'篮球',sentence:'篮球比赛时，投进篮筐就能得分。',characterSentence:'足球是用脚踢的圆形运动器材。',characters:['书','饭','水'],words:['书包','米饭','水杯'],theme:'篮球'},
+ {char:'球',pinyin:'qiú',word:'皮球',sentence:'充满气的皮球拍在地上，会弹起来。',characterSentence:'足球是用脚踢的圆形运动器材。',characters:['书','饭','水'],words:['书包','米饭','水杯'],theme:'篮球'},
  {char:'投',pinyin:'tóu',word:'投篮',sentence:'打篮球时，把球扔向篮筐叫投篮。',characterSentence:'我把篮球投进篮筐，得了两分。',characters:['读','吃','睡'],words:['读书','吃饭','睡觉'],theme:'篮球'},
  {char:'魔',pinyin:'mó',word:'魔方',sentence:'我转动魔方，把每一面还原成同一种颜色。',characterSentence:'三阶魔方的每一面有九个小色块。',characters:['书','水','饭'],words:['书包','水杯','米饭'],theme:'魔方'},
  {char:'方',pinyin:'fāng',word:'魔方',sentence:'魔方的每一面都是正方形。',characterSentence:'正方形有四条一样长的边和四个直角。',characters:['水','饭','树'],words:['水杯','米饭','树叶'],theme:'魔方'},
