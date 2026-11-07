@@ -1,0 +1,37 @@
+{
+  "naturalAssessment": {
+    "cursor": 10,
+    "completed": true,
+    "xp": 50,
+    "coins": 10,
+    "logs": 10,
+    "pending": []
+  },
+  "muteRefresh": {
+    "sound": true,
+    "music": true,
+    "muted": true
+  },
+  "purchase": {
+    "before": 110,
+    "after": 95,
+    "owned": [
+      6
+    ],
+    "achievement": {
+      "key": "achievement:collection-1",
+      "date": "2026-11-07",
+      "source": "achievement",
+      "xp": 0,
+      "coins": 5
+    },
+    "doubleClick": "only one card bought; second click selected underlying No.10 confirmation"
+  },
+  "introFix": {
+    "gateZeroRemoved": true,
+    "feedbackOpenActionCount": 1,
+    "feedbackClosedActionCount": 2,
+    "mainActionWorks": true
+  },
+  "simulation": "speechSynthesis.speak invokes browser onerror; all task input and navigation through real UI; no source imports"
+}

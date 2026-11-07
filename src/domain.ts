@@ -17,10 +17,10 @@ import { resolvePinyinContext } from './pinyin';
 export function giftCoins(state:State,amount:number):State {if(!Number.isSafeInteger(amount)||amount<=0||!Number.isSafeInteger(state.coins+amount+state.rewardLedger.filter(e=>e.pending).reduce((n,e)=>n+e.coins,0)))throw new Error('赠币数量无效或余额超出安全范围');return {...state,coins:state.coins+amount};}
 export interface Word { id: string; char: string; pinyin: string; words: string[]; sentences: string[] }
 export interface Progress { mastered?: boolean; stage: number; due: string; firstSeen: string; lastAdvanced: string | null; lastStudied: string; failures: number }
-export interface Settings { dailyGoal: number; newLimit: number; weeklyGoal: number; sound: boolean; music: boolean }
+export interface Settings { dailyGoal: number; newLimit: number; weeklyGoal: number; sound: boolean; music: boolean; muted?: boolean }
 export type TaskKind = 'assessment' | 'learn' | 'review' | 'correction';
 export interface Task { id: string; wordId: string; kind: TaskKind; questionKind: 'character' | 'word' | 'pinyin'; pair?: string; teachingOrigin?: string; retry?: 0 | 1; notBefore?: number }
-export interface TaskPractice { phase: 'teaching' | 'ready'; activeMs: number; completed: boolean; skipped: boolean; skipReason?: 'timeout' | 'load-error' }
+export interface TaskPractice { phase: 'teaching' | 'ready'; teachingStage?: 'intro' | 'trace'; activeMs: number; completed: boolean; skipped: boolean; skipReason?: 'timeout' | 'load-error' }
 export interface DailyPlan { date: string; newWordIds: string[]; reviewWordIds: string[] }
 export interface Session { xpVersion?: 2; flowVersion?: 2; id: string; date: string; tasks: Task[]; cursor: number; completed: boolean; submissions: string[]; assessmentPassed: string[]; learningRequired?: string[]; preparation?: { confirmed: boolean; claimedWordIds: string[] }; practice?: Record<string, TaskPractice> }
 export interface Log { id: string; date: string; wordId: string; kind: TaskKind; correct: boolean; hinted: boolean; advanced: boolean; pairComplete?: boolean }
@@ -28,7 +28,7 @@ export interface Avatar { cardId: number; dataUrl: string }
 export interface State { completedNarrations?:string[]; dailyPlans?: DailyPlan[]; avatar: Avatar | null; version: 2; xp:number; coins:number; unlockedWallCount:number; passedGates:number[]; rewardLedger:RewardEntry[]; achievements:Record<string,{date:string;baseline:boolean}>; equippedTitle:string|null; exam:ExamSession|null; revision: number; settings: Settings; progress: Record<string, Progress>; logs: Log[]; rewards: string[]; owned: number[]; session: Session | null }
 export interface Question { kind: 'character' | 'word' | 'pinyin'; prompt: string; options: string[]; answer: string; independent: boolean; cue?: string; presentation?: 'context' | 'reading-aid'; maskedText: string; speechText: string; segments: { text: string; masked: boolean }[] }
 export const INTERVALS = [1, 3, 7, 14, 30] as const;
-export function createState(): State { return { avatar:null, version: 2, xp:0, coins:0, unlockedWallCount:1, passedGates:[], rewardLedger:[], achievements:{}, equippedTitle:null, exam:null, revision: 0, settings: { dailyGoal: 30, newLimit: 20, weeklyGoal: 5, sound: true, music: false }, progress: {}, logs: [], rewards: [], owned: [], session: null }; }
+export function createState(): State { return { avatar:null, version: 2, xp:0, coins:0, unlockedWallCount:1, passedGates:[], rewardLedger:[], achievements:{}, equippedTitle:null, exam:null, revision: 0, settings: { dailyGoal: 5, newLimit: 5, weeklyGoal: 5, sound: true, music: false, muted: false }, progress: {}, logs: [], rewards: [], owned: [], session: null }; }
 export function localDate(value: Date | string = new Date()): string { if (typeof value === 'string') { if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value + 'T12:00:00')) || new Date(value + 'T12:00:00').getDate() !== Number(value.slice(8))) throw new Error('日期无效'); return value; } if (!Number.isFinite(value.getTime())) throw new Error('日期无效'); return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`; }
 export function addDays(date: string, days: number): string { const d = new Date(localDate(date) + 'T12:00:00'); d.setDate(d.getDate() + days); return localDate(d); }
 export function effectiveDate(state: State, value: Date | string = new Date()): string { return [localDate(value), ...(state.session ? [state.session.date] : []), ...state.rewardLedger.map(e=>e.date), ...(state.exam?[state.exam.date]:[]), ...state.logs.map(l => l.date), ...Object.values(state.progress).map(p => p.lastStudied)].sort().at(-1)!; }
@@ -78,6 +78,13 @@ export function ensureSessionPractice(state:State):State {
  const session=state.session;if(!session||session.completed)return state;
  const missing=session.tasks.slice(session.cursor).filter(t=>t.kind==='learn'&&!session.practice?.[t.id]);if(!missing.length)return state;
  const s=copy(state);s.session!.practice??={};for(const t of missing)s.session!.practice![t.id]={phase:'teaching',activeMs:0,completed:false,skipped:false};return s;
+}
+/** Persist entry into tracing before switching the presentation; omitted stages retain legacy intro behavior. */
+export function beginTracing(state:State,taskId=currentTask(state)?.id):State {
+ if(!taskId||currentTask(state)?.id!==taskId||(state.session?.preparation&&!state.session.preparation.confirmed))return state;
+ state=ensureSessionPractice(state);
+ const p=state.session?.practice?.[taskId];if(!p||p.phase!=='teaching'||p.teachingStage==='trace')return state;
+ const s=copy(state);s.session!.practice![taskId].teachingStage='trace';return s;
 }
 export function updatePracticeTime(state:State,taskId:string,deltaMs:number):State {
  state=ensureSessionPractice(state);
@@ -173,7 +180,7 @@ function answerPairTask(state:State,input:{correct:boolean;hinted?:boolean;indep
   for(const t of session.tasks.slice(session.cursor+1))if(t.pair===task.pair)delete session.practice?.[t.id];
   session.tasks=session.tasks.filter((t,i)=>i<=session.cursor||t.pair!==task.pair);
   // A failed claimed/ordinary pair gets exactly one teaching retry, never a new retry budget.
-  if(!task.retry){const origin=task.teachingOrigin;const retry=createTaskPair({id:`${task.pair}:teach`,wordId:task.wordId,kind:'learn',questionKind:'pinyin',retry:1,teachingOrigin:origin});session.tasks.splice(session.cursor+1,0,...retry);session.practice??={};const previous=origin?session.practice[origin]:undefined;for(const t of retry)session.practice[t.id]=previous?.phase==='ready'?{...previous,phase:t.questionKind==='word'?'ready':'teaching'}:{phase:t.questionKind==='word'?'ready':'teaching',activeMs:0,completed:t.questionKind==='word',skipped:false};}
+  if(!task.retry){const origin=task.teachingOrigin;const retry=createTaskPair({id:`${task.pair}:teach`,wordId:task.wordId,kind:'learn',questionKind:'pinyin',retry:1,teachingOrigin:origin});session.tasks.splice(session.cursor+1,0,...retry);session.practice??={};const previous=origin?session.practice[origin]:undefined;for(const t of retry)session.practice[t.id]=previous?.phase==='ready'?{...previous,phase:t.questionKind==='word'?'ready':'teaching',teachingStage:'intro'}:{phase:t.questionKind==='word'?'ready':'teaching',activeMs:0,completed:t.questionKind==='word',skipped:false};}
   if(hinted&&!p)s.progress[task.wordId]={stage:0,due:addDays(date,1),firstSeen:date,lastAdvanced:null,lastStudied:date,failures:0};
  }
  const origin=task.teachingOrigin??task.id,pageXp=usesPageXp(s,task),linkedTrace=pageXp?s.session!.tasks.some(t=>t.kind==='learn'&&t.questionKind==='pinyin'&&t.teachingOrigin===origin&&s.session!.practice?.[t.id]?.completed):s.rewardLedger.some(e=>e.source==='trace'&&e.taskId===origin);
@@ -203,7 +210,7 @@ export function makeQuestion(task: Task, words: Word[], rng: () => number = Math
   : `${isWord ? '哪个词语能补全' : '选字补全'}「${maskedText}」？${cue ? ` ${cue}` : ''}`;
  return {kind:isWord ? 'word' : 'character',prompt,options:shuffle([answer,...shuffle([...new Set(candidates)].filter(x => x !== answer)).slice(0,3)]),answer,independent:!!curated,presentation:readingAid ? 'reading-aid' : 'context',cue,maskedText:readingAid ? prompt : maskedText,segments:readingAid ? [{text:prompt,masked:false}] : segments,speechText:prompt.replaceAll('□','空白')};
 }
-export function updateSettings(state: State, patch: Partial<Settings>): State { const settings = { ...state.settings, ...patch }; if (!Number.isInteger(settings.dailyGoal) || settings.dailyGoal < 1 || settings.dailyGoal > 30 || !Number.isInteger(settings.newLimit) || settings.newLimit < 0 || settings.newLimit > 20 || !Number.isInteger(settings.weeklyGoal) || settings.weeklyGoal < 1 || settings.weeklyGoal > 7 || typeof settings.sound !== 'boolean' || typeof settings.music !== 'boolean') throw new Error('设置超出允许范围'); return { ...state, settings }; }
+export function updateSettings(state: State, patch: Partial<Settings>): State { const settings = { ...state.settings, ...patch }; if (!Number.isInteger(settings.dailyGoal) || settings.dailyGoal < 1 || settings.dailyGoal > 30 || !Number.isInteger(settings.newLimit) || settings.newLimit < 0 || settings.newLimit > 20 || !Number.isInteger(settings.weeklyGoal) || settings.weeklyGoal < 1 || settings.weeklyGoal > 7 || typeof settings.sound !== 'boolean' || typeof settings.music !== 'boolean' || (settings.muted !== undefined && typeof settings.muted !== 'boolean')) throw new Error('设置超出允许范围'); return { ...state, settings }; }
 export const WALL_COSTS = [20,30,50,80,120,170,230,300,400] as const;
 export const MAX_WALLS = 10;
 export function unlockNextWall(state: State): State { const count=state.unlockedWallCount;if(!Number.isInteger(count)||count<1||count>MAX_WALLS)throw new Error('收藏墙数量无效');if(count===MAX_WALLS)return state;const cost=WALL_COSTS[count-1];if(state.coins<cost)return state;return {...state,coins:state.coins-cost,unlockedWallCount:count+1}; }

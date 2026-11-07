@@ -1,0 +1,63 @@
+{
+  "verdict": "PASS for two final targeted fixes",
+  "origin": "http://localhost:5174",
+  "isolation": "nonpersistent isolated Chrome context; only synthetic test data",
+  "speechSimulation": "browser speechSynthesis.speak onerror, not source function calls",
+  "intro": {
+    "open": {
+      "text": "0\n/10\n退出并保存\n认识汉字\n爸\n爸 · bà\n爸\n爸\n\n爸\n爸是我的父亲。\n\n朗读暂未完成，请慢慢读一读。\n+1\n开始跟写",
+      "count": 1
+    },
+    "closed": {
+      "text": "0\n/10\n退出并保存\n认识汉字\n爸\n爸 · bà\n爸\n爸\n\n爸\n爸是我的父亲。\n\n开始跟写",
+      "count": 1
+    },
+    "enteredTrace": true
+  },
+  "purchase": {
+    "before": 100,
+    "doubleClick": {
+      "text": "今日练习\n成长档案\n卡片收藏\n爸爸空间\n初来乍到\n85\n\n把喜欢，慢慢收集\n\n我的卡片小屋\n\n每一次认真学习，都离下一张收藏更近一点。\n\n卡片商店\n我的收藏墙 · 1\n\n每张 \n20 · 把喜欢的画面带回小屋\n\n咪猪头的每一小步，都值得珍惜。",
+      "confirmCount": 0,
+      "state": {
+        "coins": 85,
+        "owned": [
+          6
+        ],
+        "ledger": [
+          {
+            "key": "learning-page:[\"2026-11-07:session:0\",\"2026-11-07:爸:learn:a\",\"intro\"]",
+            "date": "2026-11-07",
+            "source": "learning-page",
+            "sessionId": "2026-11-07:session:0",
+            "teachingOrigin": "2026-11-07:爸:learn:a",
+            "taskId": "2026-11-07:爸:learn:a",
+            "wordId": "爸",
+            "page": "intro",
+            "outcome": "failure",
+            "targetXp": 1,
+            "xp": 1,
+            "coins": 0
+          },
+          {
+            "key": "achievement:collection-1",
+            "date": "2026-11-07",
+            "source": "achievement",
+            "xp": 0,
+            "coins": 5
+          }
+        ]
+      }
+    },
+    "interpretation": "one 20 coin purchase plus first-collection achievement 5; no No10 confirmation after dblclick",
+    "normalSelect": "今日练习\n成长档案\n卡片收藏\n爸爸空间\n初来乍到\n85\n\n把喜欢，慢慢收集\n\n我的卡片小屋\n\n每一次认真学习，都离下一张收藏更近一点。\n\n卡片商店\n我的收藏墙 · 1\n\n每张 \n20 · 把喜欢的画面带回小屋\n\nNo. 10\n20 · 确认收藏\n再想想\n咪猪头的每一小步，都值得珍惜。",
+    "afterNormalPurchase": {
+      "coins": 65,
+      "owned": [
+        6,
+        9
+      ]
+    }
+  },
+  "constraints": "no tests/typecheck/source modification/internal import"
+}

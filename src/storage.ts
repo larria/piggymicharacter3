@@ -54,7 +54,7 @@ export function validateState(value:unknown,catalog?:Word[]):State {
    }
   }
   if(session.preparation!==undefined){const p=session.preparation;if(!object(p)||typeof p.confirmed!=='boolean'||!Array.isArray(p.claimedWordIds)||!p.claimedWordIds.every(text)||!unique(p.claimedWordIds)||p.claimedWordIds.some(id=>!(session.tasks as any[]).some((t:any)=>t.wordId===id))||(!p.confirmed&&(session.cursor!==0||session.completed||(session.tasks as any[]).some((t:any)=>t.kind==='assessment'))))return fail();}
-  if(session.practice!==undefined){if(!object(session.practice)||(session.tasks as any[]).slice(Number(session.cursor)).some(t=>t.kind==='learn'&&!Object.prototype.hasOwnProperty.call(session.practice,t.id)))return fail();for(const [id,p] of Object.entries(session.practice)){if(['__proto__','constructor','prototype'].includes(id)||!(session.tasks as any[]).some((t:any)=>t.id===id&&t.kind==='learn')||!object(p)||!['teaching','ready'].includes(String(p.phase))||!integer(p.activeMs)||typeof p.completed!=='boolean'||typeof p.skipped!=='boolean'||(p.completed&&p.skipped)||(p.phase==='ready'&&!p.completed&&!p.skipped)||(p.skipped?(!['timeout','load-error'].includes(String(p.skipReason))||(p.skipReason==='timeout'&&p.activeMs<180000)):p.skipReason!==undefined))return fail();}}
+  if(session.practice!==undefined){if(!object(session.practice)||(session.tasks as any[]).slice(Number(session.cursor)).some(t=>t.kind==='learn'&&!Object.prototype.hasOwnProperty.call(session.practice,t.id)))return fail();for(const [id,p] of Object.entries(session.practice)){if(['__proto__','constructor','prototype'].includes(id)||!(session.tasks as any[]).some((t:any)=>t.id===id&&t.kind==='learn')||!object(p)||!['teaching','ready'].includes(String(p.phase))||(p.teachingStage!==undefined&&p.teachingStage!=='intro'&&p.teachingStage!=='trace')||!integer(p.activeMs)||typeof p.completed!=='boolean'||typeof p.skipped!=='boolean'||(p.completed&&p.skipped)||(p.phase==='ready'&&!p.completed&&!p.skipped)||(p.skipped?(!['timeout','load-error'].includes(String(p.skipReason))||(p.skipReason==='timeout'&&p.activeMs<180000)):p.skipReason!==undefined))return fail();}}
  }
  if(value.dailyPlans!==undefined){if(!Array.isArray(value.dailyPlans)||!unique(value.dailyPlans.map(p=>object(p)?p.date:null)))return fail();for(const p of value.dailyPlans){if(!object(p)||!date(p.date)||!Array.isArray(p.newWordIds)||!Array.isArray(p.reviewWordIds))return fail();const ids=[...p.newWordIds,...p.reviewWordIds];if(!unique(ids)||ids.some(id=>!text(id)||['__proto__','constructor','prototype'].includes(id)||(catalog&&!catalog.some(w=>w.id===id))))return fail();}}
  const gates=value.passedGates.slice().sort();if(gates.some((n:number,i:number)=>n!==i+1))return fail();if(gates.length&&value.xp<RANKS.slice(0,gates.length).reduce((n,r)=>n+r.stars*r.step,0))return fail();
@@ -82,6 +82,16 @@ function defaultStorage():StorageLike{if(typeof localStorage==='undefined')throw
 function parsed(raw:string):any{if(raw.length>10000000)throw new Error('备份过大');try{return JSON.parse(raw);}catch{throw new Error('文件不是有效 JSON');}}
 export function migrateV1(value:unknown,catalog?:Word[]):State{const old=validateLegacy(value,catalog);const s={...createState(),settings:old.settings,progress:old.progress,logs:old.logs};settleAchievements(s,[...s.logs.map(l=>l.date),...Object.values(s.progress).map(p=>p.lastStudied)].sort().at(-1)??localDate(),true);return s;}
 export function getMigrationBackup(storage:StorageLike=defaultStorage()):string|null{return storage.getItem(MIGRATION_BACKUP_KEY);}
+/** Read-only salvage, deliberately not a validated/importable application backup. */
+export function exportRawRescue(storage?:StorageLike):string {
+ const entries:Record<string,{raw:string|null;error?:string}>={};
+ let unavailable:unknown;try{storage??=defaultStorage();}catch(error){unavailable=error;}
+ for(const key of [STORAGE_KEY,WALL_KEY,LEGACY_KEY,MIGRATION_BACKUP_KEY,RESTORE_TRANSACTION_KEY]){
+  try{if(!storage)throw unavailable;entries[key]={raw:storage.getItem(key)};}
+  catch(error){entries[key]={raw:null,error:error instanceof Error?error.message:String(error)};}
+ }
+ return JSON.stringify({format:'mizhupig-raw-rescue',version:1,notice:'原始救援数据，可能损坏或不完整；不是可直接导入的标准备份',entries},null,2);
+}
 function recoverRestore(storage:StorageLike):void {
  const raw=storage.getItem(RESTORE_TRANSACTION_KEY);if(raw===null||raw==='null')return;
  const tx=parsed(raw);if(!object(tx)||tx.version!==1||!object(tx.state)||!object(tx.wall))throw new Error('恢复事务记录无效，请保留本地数据并导出备份');

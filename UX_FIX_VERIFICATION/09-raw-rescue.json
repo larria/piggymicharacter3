@@ -1,0 +1,22 @@
+{
+  "format": "mizhupig-raw-rescue",
+  "version": 1,
+  "notice": "原始救援数据，可能损坏或不完整；不是可直接导入的标准备份",
+  "entries": {
+    "mizhupig.growth.v2": {
+      "raw": "{BROKEN_UX_VERIFICATION"
+    },
+    "mizhupig.wall.v1": {
+      "raw": null
+    },
+    "mizhupig.expedition.v1": {
+      "raw": null
+    },
+    "mizhupig.pre-v2-backup": {
+      "raw": null
+    },
+    "mizhupig.restore-transaction.v1": {
+      "raw": null
+    }
+  }
+}

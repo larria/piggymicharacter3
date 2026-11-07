@@ -12,6 +12,15 @@ describe('preparation words',()=>{
   expect(html.match(/class="choice"/g)).toHaveLength(2);
   expect(html.match(/aria-pressed="true"/g)).toHaveLength(1);
  });
+ it('shows real selection counts, initial arrangement and assisted remedial learning',()=>{
+  const html=renderToStaticMarkup(<PreparationGrid wordIds={['a','b','c']} claimedWordIds={['a','b','outside','a']} assistedWordIds={['b']} character={id=>id} onChange={()=>{}}/>);
+  const text=html.replace(/<[^>]*>/g,'');
+  expect(text).toContain('已选 2 字 / 总 3 字');
+  expect(text).toContain('2 字先验证（每字拼音、词语两题）；1 字先学习、跟写');
+  expect(text).toContain('已选的 1 个辅助字不能独立验证，即使答对也需要后续补学');
+  const empty=renderToStaticMarkup(<PreparationGrid wordIds={['a']} claimedWordIds={[]} character={id=>id} onChange={()=>{}}/>).replace(/<[^>]*>/g,'');
+  expect(empty).toContain('已选 0 字 / 总 1 字');expect(empty).toContain('0 字先验证');expect(empty).toContain('1 字先学习');
+ });
  it('toggles one claim without duplicates and clears all occurrences',()=>{
   expect(togglePreparationWord(['b'],'a')).toEqual(['b','a']);
   expect(togglePreparationWord(['b','b','a'],'b')).toEqual(['a']);

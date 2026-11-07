@@ -1,0 +1,414 @@
+{
+  "avatar": null,
+  "version": 2,
+  "xp": 50,
+  "coins": 10,
+  "unlockedWallCount": 1,
+  "passedGates": [],
+  "rewardLedger": [
+    {
+      "taskId": "2026-11-07:爸:learn:a",
+      "key": "practice:2026-11-07:爸:learn:a:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "爸",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:爸:learn:b",
+      "key": "practice:2026-11-07:爸:learn:b:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "爸",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:妈:learn:a",
+      "key": "practice:2026-11-07:妈:learn:a:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "妈",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:妈:learn:b",
+      "key": "practice:2026-11-07:妈:learn:b:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "妈",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:爷:learn:a",
+      "key": "practice:2026-11-07:爷:learn:a:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "爷",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:爷:learn:b",
+      "key": "practice:2026-11-07:爷:learn:b:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "爷",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:外:learn:a",
+      "key": "practice:2026-11-07:外:learn:a:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "外",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:外:learn:b",
+      "key": "practice:2026-11-07:外:learn:b:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "外",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:牌:learn:a",
+      "key": "practice:2026-11-07:牌:learn:a:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "牌",
+      "xp": 5,
+      "coins": 1
+    },
+    {
+      "taskId": "2026-11-07:牌:learn:b",
+      "key": "practice:2026-11-07:牌:learn:b:submit",
+      "date": "2026-11-07",
+      "source": "practice",
+      "wordId": "牌",
+      "xp": 5,
+      "coins": 1
+    }
+  ],
+  "achievements": {},
+  "equippedTitle": null,
+  "exam": null,
+  "revision": 23,
+  "settings": {
+    "dailyGoal": 5,
+    "newLimit": 5,
+    "weeklyGoal": 5,
+    "sound": true,
+    "music": false,
+    "muted": false
+  },
+  "progress": {
+    "爸": {
+      "stage": 0,
+      "due": "2026-11-08",
+      "firstSeen": "2026-11-07",
+      "lastAdvanced": "2026-11-07",
+      "lastStudied": "2026-11-07",
+      "failures": 0
+    },
+    "妈": {
+      "stage": 0,
+      "due": "2026-11-08",
+      "firstSeen": "2026-11-07",
+      "lastAdvanced": "2026-11-07",
+      "lastStudied": "2026-11-07",
+      "failures": 0
+    },
+    "爷": {
+      "stage": 0,
+      "due": "2026-11-08",
+      "firstSeen": "2026-11-07",
+      "lastAdvanced": "2026-11-07",
+      "lastStudied": "2026-11-07",
+      "failures": 0
+    },
+    "外": {
+      "stage": 0,
+      "due": "2026-11-08",
+      "firstSeen": "2026-11-07",
+      "lastAdvanced": "2026-11-07",
+      "lastStudied": "2026-11-07",
+      "failures": 0
+    },
+    "牌": {
+      "stage": 0,
+      "due": "2026-11-08",
+      "firstSeen": "2026-11-07",
+      "lastAdvanced": "2026-11-07",
+      "lastStudied": "2026-11-07",
+      "failures": 0
+    }
+  },
+  "logs": [
+    {
+      "id": "2026-11-07:爸:learn:a:submit",
+      "date": "2026-11-07",
+      "wordId": "爸",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    },
+    {
+      "id": "2026-11-07:爸:learn:b:submit",
+      "date": "2026-11-07",
+      "wordId": "爸",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": true,
+      "pairComplete": true
+    },
+    {
+      "id": "2026-11-07:妈:learn:a:submit",
+      "date": "2026-11-07",
+      "wordId": "妈",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    },
+    {
+      "id": "2026-11-07:妈:learn:b:submit",
+      "date": "2026-11-07",
+      "wordId": "妈",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": true,
+      "pairComplete": true
+    },
+    {
+      "id": "2026-11-07:爷:learn:a:submit",
+      "date": "2026-11-07",
+      "wordId": "爷",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    },
+    {
+      "id": "2026-11-07:爷:learn:b:submit",
+      "date": "2026-11-07",
+      "wordId": "爷",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": true,
+      "pairComplete": true
+    },
+    {
+      "id": "2026-11-07:外:learn:a:submit",
+      "date": "2026-11-07",
+      "wordId": "外",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    },
+    {
+      "id": "2026-11-07:外:learn:b:submit",
+      "date": "2026-11-07",
+      "wordId": "外",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": true,
+      "pairComplete": true
+    },
+    {
+      "id": "2026-11-07:牌:learn:a:submit",
+      "date": "2026-11-07",
+      "wordId": "牌",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    },
+    {
+      "id": "2026-11-07:牌:learn:b:submit",
+      "date": "2026-11-07",
+      "wordId": "牌",
+      "kind": "assessment",
+      "correct": true,
+      "hinted": false,
+      "advanced": true,
+      "pairComplete": true
+    }
+  ],
+  "rewards": [
+    "word:2026-11-07:爸",
+    "word:2026-11-07:妈",
+    "word:2026-11-07:爷",
+    "word:2026-11-07:外",
+    "word:2026-11-07:牌"
+  ],
+  "owned": [],
+  "session": {
+    "xpVersion": 2,
+    "flowVersion": 2,
+    "id": "2026-11-07:session:0",
+    "date": "2026-11-07",
+    "tasks": [
+      {
+        "id": "2026-11-07:爸:learn:a",
+        "wordId": "爸",
+        "kind": "assessment",
+        "questionKind": "pinyin",
+        "pair": "2026-11-07:爸:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:爸:learn:b",
+        "wordId": "爸",
+        "kind": "assessment",
+        "questionKind": "word",
+        "pair": "2026-11-07:爸:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:妈:learn:a",
+        "wordId": "妈",
+        "kind": "assessment",
+        "questionKind": "pinyin",
+        "pair": "2026-11-07:妈:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:妈:learn:b",
+        "wordId": "妈",
+        "kind": "assessment",
+        "questionKind": "word",
+        "pair": "2026-11-07:妈:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:爷:learn:a",
+        "wordId": "爷",
+        "kind": "assessment",
+        "questionKind": "pinyin",
+        "pair": "2026-11-07:爷:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:爷:learn:b",
+        "wordId": "爷",
+        "kind": "assessment",
+        "questionKind": "word",
+        "pair": "2026-11-07:爷:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:外:learn:a",
+        "wordId": "外",
+        "kind": "assessment",
+        "questionKind": "pinyin",
+        "pair": "2026-11-07:外:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:外:learn:b",
+        "wordId": "外",
+        "kind": "assessment",
+        "questionKind": "word",
+        "pair": "2026-11-07:外:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:牌:learn:a",
+        "wordId": "牌",
+        "kind": "assessment",
+        "questionKind": "pinyin",
+        "pair": "2026-11-07:牌:learn",
+        "retry": 0
+      },
+      {
+        "id": "2026-11-07:牌:learn:b",
+        "wordId": "牌",
+        "kind": "assessment",
+        "questionKind": "word",
+        "pair": "2026-11-07:牌:learn",
+        "retry": 0
+      }
+    ],
+    "cursor": 10,
+    "completed": true,
+    "submissions": [
+      "2026-11-07:爸:learn:a:submit",
+      "2026-11-07:爸:learn:b:submit",
+      "2026-11-07:妈:learn:a:submit",
+      "2026-11-07:妈:learn:b:submit",
+      "2026-11-07:爷:learn:a:submit",
+      "2026-11-07:爷:learn:b:submit",
+      "2026-11-07:外:learn:a:submit",
+      "2026-11-07:外:learn:b:submit",
+      "2026-11-07:牌:learn:a:submit",
+      "2026-11-07:牌:learn:b:submit"
+    ],
+    "assessmentPassed": [
+      "2026-11-07:爸:learn:a",
+      "2026-11-07:爸:learn:b",
+      "2026-11-07:妈:learn:a",
+      "2026-11-07:妈:learn:b",
+      "2026-11-07:爷:learn:a",
+      "2026-11-07:爷:learn:b",
+      "2026-11-07:外:learn:a",
+      "2026-11-07:外:learn:b",
+      "2026-11-07:牌:learn:a",
+      "2026-11-07:牌:learn:b"
+    ],
+    "practice": {},
+    "preparation": {
+      "confirmed": true,
+      "claimedWordIds": [
+        "爸",
+        "妈",
+        "爷",
+        "外",
+        "牌"
+      ]
+    }
+  },
+  "dailyPlans": [
+    {
+      "date": "2026-11-07",
+      "newWordIds": [
+        "爸",
+        "妈",
+        "爷",
+        "外",
+        "牌"
+      ],
+      "reviewWordIds": []
+    }
+  ],
+  "completedNarrations": [
+    "2026-11-07:session:0|2026-11-07:爸:learn:a|quiz",
+    "2026-11-07:session:0|2026-11-07:爸:learn:b|quiz",
+    "2026-11-07:session:0|2026-11-07:妈:learn:a|quiz",
+    "2026-11-07:session:0|2026-11-07:妈:learn:b|quiz",
+    "2026-11-07:session:0|2026-11-07:爷:learn:a|quiz",
+    "2026-11-07:session:0|2026-11-07:爷:learn:b|quiz",
+    "2026-11-07:session:0|2026-11-07:外:learn:a|quiz",
+    "2026-11-07:session:0|2026-11-07:外:learn:b|quiz",
+    "2026-11-07:session:0|2026-11-07:牌:learn:a|quiz",
+    "2026-11-07:session:0|2026-11-07:牌:learn:b|quiz"
+  ]
+}

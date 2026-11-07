@@ -1,19 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { recordLearningPage, rewardQuota, grantReward, giftCoins, addDays, acknowledgeNarration, deferRewardEntitlements, settlePendingRewards, ensureSessionPractice, completePractice, confirmPreparation, finishTeaching, setPreparationClaims, skipPractice, updatePracticeTime, answerTask, buildQueue, createState, currentTask, INTERVALS, localDate, makeQuestion, markKnown, redeemCard, startSession, startPractice, startSelectedSession, sessionSummary, stats, updateSettings, type State, type Word } from '../src/domain';
+import { beginTracing, recordLearningPage, rewardQuota, grantReward, giftCoins, addDays, acknowledgeNarration, deferRewardEntitlements, settlePendingRewards, ensureSessionPractice, completePractice, confirmPreparation, finishTeaching, setPreparationClaims, skipPractice, updatePracticeTime, answerTask, buildQueue, createState, currentTask, INTERVALS, localDate, makeQuestion, markKnown, redeemCard, startSession, startPractice, startSelectedSession, sessionSummary, stats, updateSettings, type State, type Word } from '../src/domain';
 import { catalog } from '../src/data/catalog';
 import { practice } from '../src/data/practice';
-import { exportBackup, importBackup, loadState, restoreBackup, saveState, STORAGE_KEY, type StorageLike } from '../src/storage';
+import { exportRawRescue, LEGACY_KEY, WALL_KEY, MIGRATION_BACKUP_KEY, RESTORE_TRANSACTION_KEY, migrateV1, exportBackup, importBackup, loadState, restoreBackup, saveState, STORAGE_KEY, type StorageLike } from '../src/storage';
 const words: Word[] = ['山','水','火','木','土'].map((char,i) => ({ id: String(i),char,pinyin: ['shān','shuǐ','huǒ','mù','tǔ'][i],words:[`${char}中`],sentences:[`这里有${char}。`] }));
 const answer = (s: State, date: string, correct = true, hinted = false): State => { s=confirmPreparation(s);const t=currentTask(s);if(t?.kind==='learn')s=finishTeaching(completePractice(s,t.id,date),t.id);return answerTask(s,{correct,hinted,submissionId:`${s.session!.id}:${s.logs.length}`},date); };
 const selected = (state:State, ids:string[],date:string) => confirmPreparation(setPreparationClaims(startSelectedSession(state,words,ids,date),ids));
 function first(date = '2026-10-21') { let s = createState(); s.settings = {...s.settings,dailyGoal:1,newLimit:1}; s=answer(answer(startSession(s,words,date),date),date);s.settings.newLimit=0;return s; }
 function memory(): StorageLike { const data = new Map<string,string>(); return {getItem:k => data.get(k) ?? null,setItem:(k,v) => {data.set(k,v);} }; }
 describe('settings and resumable learning presentation', () => {
- it('defaults to 30 daily, 20 new and five weekly days; validates twenty new', () => {
-  expect(createState().settings).toMatchObject({dailyGoal:30,newLimit:20,weeklyGoal:5});
+ it('defaults to five daily/new and five weekly days; still validates twenty new', () => {
+  expect(createState().settings).toMatchObject({dailyGoal:5,newLimit:5,weeklyGoal:5,muted:false});
   expect(updateSettings(createState(),{newLimit:20}).settings.newLimit).toBe(20);
   for (const newLimit of [-1,21,1.5,NaN]) expect(() => updateSettings(createState(),{newLimit})).toThrow();
-  expect(buildQueue(createState(),catalog,'2026-10-21')).toHaveLength(20);
+  expect(buildQueue(createState(),catalog,'2026-10-21')).toHaveLength(5);
+  expect(startSession(createState(),catalog,'2026-10-21').session!.tasks).toHaveLength(10);
  });
  it('preserves saved old settings and session, including required teaching markers', () => {
   let s = startSession(updateSettings(createState(),{dailyGoal:8,newLimit:3,weeklyGoal:3}),words,'2026-10-21');
@@ -59,6 +60,47 @@ describe('fair practice and selected sessions', () => {
  it('two questions on one other word do not qualify for delayed correction', () => { let s = selected(createState(),['0','1'],'2026-10-21'); s = answer(s,'2026-10-21',false); expect(s.session!.tasks.some(t=>t.kind==='correction')).toBe(false); expect(currentTask(s)).toMatchObject({wordId:'0',kind:'learn'}); });
  it('failed teaching cannot repeat forever', () => { let s = selected(createState(),['0'],'2026-10-21'); s=answer(s,'2026-10-21',false); s=answer(s,'2026-10-21',false); expect(s.session!.completed).toBe(true); });
 });
+describe('persisted teaching stage, mute and raw rescue', () => {
+ it('persists unfinished tracing and time, guards entry and resets retry to intro', () => {
+  let s=startSelectedSession(createState(),words,['0'],'2026-10-21');const id=currentTask(s)!.id;
+  expect(beginTracing(s,id)).toBe(s);s=confirmPreparation(s);
+  expect(beginTracing(s,'missing')).toBe(s);expect(s.session!.practice![id].teachingStage).toBeUndefined();
+  s=beginTracing(updatePracticeTime(s,id,3000),id);expect(beginTracing(s,id)).toBe(s);
+  const store=memory();s=saveState(s,store);s=loadState(store,words);
+  expect(s.session!.practice![id]).toMatchObject({teachingStage:'trace',activeMs:3000,completed:false});
+  expect(importBackup(exportBackup(s),words)).toEqual(s);
+  s=answerTask(finishTeaching(completePractice(s,id,'2026-10-21')),{correct:false,submissionId:'stage-retry'},'2026-10-21');
+  expect(s.session!.practice![currentTask(s)!.id]).toMatchObject({teachingStage:'intro',activeMs:3000,completed:true});
+  s=beginTracing(s);expect(s.session!.practice![currentTask(s)!.id].teachingStage).toBe('trace');
+  for(const teachingStage of ['quiz',null,1,{},['trace']]){
+   const corrupt=structuredClone(s);corrupt.session!.practice![currentTask(s)!.id].teachingStage=teachingStage as any;
+   expect(()=>importBackup(JSON.stringify(corrupt),words)).toThrow();
+  }
+ });
+ it('preserves independent audio preferences and old settings through mute and migration', () => {
+  const s=updateSettings(createState(),{sound:false,music:true});
+  const muted=updateSettings(s,{muted:true});expect(muted.settings).toMatchObject({sound:false,music:true,muted:true});
+  expect(importBackup(exportBackup(muted),words)).toEqual(muted);
+  expect(updateSettings(muted,{muted:false}).settings).toMatchObject({sound:false,music:true,muted:false});
+  const old=updateSettings(s,{dailyGoal:30,newLimit:20});delete old.settings.muted;
+  expect(importBackup(exportBackup(old),words).settings).toEqual(old.settings);
+  expect(migrateV1({...old,version:1,shells:0},words).settings).toEqual(old.settings);
+  for(const muted of ['true',null,0,{}])expect(()=>importBackup(JSON.stringify({...s,settings:{...s.settings,muted}}),words)).toThrow();
+ });
+ it('rescues every raw key independently without parsing, recovery or writes', () => {
+  const values=new Map([[STORAGE_KEY,'{broken'],[LEGACY_KEY,'legacy bytes'],[MIGRATION_BACKUP_KEY,'backup bytes'],[RESTORE_TRANSACTION_KEY,'{unfinished']]);
+  const reads:string[]=[];const storage:StorageLike={getItem:key=>{reads.push(key);if(key===WALL_KEY)throw new Error('wall blocked');return values.get(key)??null;},setItem:()=>{throw new Error('must never write');}};
+  const raw=exportRawRescue(storage),rescue=JSON.parse(raw);
+  expect(rescue.format).toBe('mizhupig-raw-rescue');expect(rescue.version).toBe(1);
+  expect(new Set(reads)).toEqual(new Set([STORAGE_KEY,WALL_KEY,LEGACY_KEY,MIGRATION_BACKUP_KEY,RESTORE_TRANSACTION_KEY]));
+  for(const [key,value] of values)expect(rescue.entries[key]).toEqual({raw:value});
+  expect(rescue.entries[WALL_KEY]).toEqual({raw:null,error:'wall blocked'});
+  expect(JSON.parse(exportRawRescue(memory())).entries[STORAGE_KEY]).toEqual({raw:null});
+  expect(()=>importBackup(raw,words)).toThrow();expect(()=>restoreBackup(raw,createState(),memory(),words)).toThrow();
+  const blocked=JSON.parse(exportRawRescue({getItem:()=>{throw 'blocked';},setItem:()=>{throw 'write';}}));
+  expect(Object.values(blocked.entries)).toEqual(Array(5).fill({raw:null,error:'blocked'}));
+ });
+});
 describe('storage and backup', () => {
  it('round-trips a resumable session and preserves honest evidence', () => { const s = answer(startSession(createState(),words,'2026-10-21'),'2026-10-21'); const imported = importBackup(exportBackup(s),words); expect(imported).toEqual(s); expect(startSession(imported,words,'2026-10-22')).toBe(imported); });
  it('rejects malformed dates, versions, duplicate IDs and unknown catalog words', () => { const s = first(); for (const corrupt of [{...s,version:3},{...s,logs:[...s.logs,...s.logs]},{...s,rewards:['x','x']},{...s,owned:[0,0]},{...s,settings:{...s.settings,sound:'yes'}}]) expect(() => importBackup(JSON.stringify(corrupt),words)).toThrow(); s.progress['0'].due = '2026-02-30'; expect(() => importBackup(JSON.stringify(s))).toThrow(); expect(() => importBackup(exportBackup(first()),[])).toThrow(); });
@@ -67,7 +109,7 @@ describe('storage and backup', () => {
 
 describe('batch plan and linked trace rewards',()=>{
  it('reserves 16 new and 14 earliest reviews; low caps shorten with a majority',()=>{
-  const pool=Array.from({length:60},(_,i)=>({...words[0],id:String(i)}));const s=createState();for(const w of pool.slice(20))s.progress[w.id]={stage:0,due:'2026-10-20',firstSeen:'2026-10-19',lastStudied:'2026-10-19',lastAdvanced:'2026-10-19',failures:0};
+  const pool=Array.from({length:60},(_,i)=>({...words[0],id:String(i)}));const s=updateSettings(createState(),{dailyGoal:30,newLimit:20});for(const w of pool.slice(20))s.progress[w.id]={stage:0,due:'2026-10-20',firstSeen:'2026-10-19',lastStudied:'2026-10-19',lastAdvanced:'2026-10-19',failures:0};
   const q=buildQueue(s,pool,'2026-10-21');expect(q.filter(t=>t.kind==='learn')).toHaveLength(16);expect(q.filter(t=>t.kind==='review')).toHaveLength(14);
   s.settings.newLimit=3;expect(buildQueue(s,pool,'2026-10-21').map(t=>t.kind)).toEqual(['learn','learn','learn','review','review']);
   const active=startSession(s,pool,'2026-10-21');expect(startSession(active,pool,'2026-10-21')).toBe(active);expect(buildQueue(active,pool,'2026-10-21')).toHaveLength(0);

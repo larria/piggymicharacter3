@@ -9,8 +9,10 @@ export function preparationWordIds(tasks:readonly {kind:string;wordId:string}[])
 export function togglePreparationWord(ids:readonly string[],wordId:string):string[]{
   return ids.includes(wordId)?ids.filter(id=>id!==wordId):[...ids,wordId];
 }
-export function PreparationGrid({wordIds,claimedWordIds,character,onChange}:{wordIds:string[];claimedWordIds:string[];character:(id:string)=>string|undefined;onChange:(ids:string[])=>void}){
-  return <><div className="button-row"><button className="secondary" onClick={()=>onChange(wordIds)}>全选</button><button className="secondary" onClick={()=>onChange([])}>清除</button></div><div className="preparation-grid">{wordIds.map(id=><button key={id} className="choice" aria-pressed={claimedWordIds.includes(id)} onClick={()=>onChange(togglePreparationWord(claimedWordIds,id))}>{character(id)}<small>我认识</small></button>)}</div></>;
+export function PreparationGrid({wordIds,claimedWordIds,assistedWordIds=[],character,onChange}:{wordIds:string[];claimedWordIds:string[];assistedWordIds?:readonly string[];character:(id:string)=>string|undefined;onChange:(ids:string[])=>void}){
+  const selected=wordIds.filter(id=>claimedWordIds.includes(id));
+  const assisted=selected.filter(id=>assistedWordIds.includes(id));
+  return <><div className="preparation-summary" role="status" aria-live="polite"><p>已选 {selected.length} 字 / 总 {wordIds.length} 字</p><p>初始安排：{selected.length} 字先验证（每字拼音、词语两题）；{wordIds.length-selected.length} 字先学习、跟写，再完成两题。</p><p>验证未通过或借助提示的字，随后需要补学。{assisted.length>0?`已选的 ${assisted.length} 个辅助字不能独立验证，即使答对也需要后续补学。`:'遇到不能独立验证的辅助字，即使答对也需要后续补学。'}</p></div><div className="button-row"><button className="secondary" onClick={()=>onChange(wordIds)}>全选</button><button className="secondary" onClick={()=>onChange([])}>清除</button></div><div className="preparation-grid">{wordIds.map(id=><button key={id} className="choice" aria-pressed={claimedWordIds.includes(id)} onClick={()=>onChange(togglePreparationWord(claimedWordIds,id))}>{character(id)}<small>我认识</small></button>)}</div></>;
 }
 export const pinyinTones=[{tone:1,label:'ˉ'},{tone:2,label:'ˊ'},{tone:3,label:'ˇ'},{tone:4,label:'ˋ'},{tone:0,label:'轻声'}] as const;
 export const pinyinKeyRows=['qwertyuiop','asdfghjkl','zxcübnm'] as const;

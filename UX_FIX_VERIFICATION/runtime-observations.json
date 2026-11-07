@@ -1,0 +1,32 @@
+{
+  "origin": "http://localhost:5174",
+  "isolation": "fresh nonpersistent Playwright context; initial localStorage {}",
+  "initial": "5 new words, 10 base questions",
+  "preparation": "all selected 5 verification/0 teaching; cleared 0 verification/5 teaching",
+  "speech": "native headless narration remained gated; simulated speechSynthesis.speak onerror produced 10-second countdown then enabled tracing",
+  "trace": {
+    "stage": "trace",
+    "activeMsAtPausedReload": 6310,
+    "reload": "same word tracing, stroke demo restarted at stroke 1"
+  },
+  "mute": {
+    "before": {
+      "sound": true,
+      "music": true,
+      "muted": false
+    },
+    "muted": {
+      "sound": true,
+      "music": true,
+      "muted": true
+    },
+    "restored": {
+      "sound": true,
+      "music": true,
+      "muted": false
+    }
+  },
+  "card": "clicked card 7; No. 7 displayed; shop/wall switch clears confirmation; balance remains 500",
+  "corruption": "malformed main JSON; complete export disabled; start blocked and raw unchanged; downloaded rescue contains exact malformed raw",
+  "constraints": "no tests/typecheck/source changes; existing user browser not touched"
+}

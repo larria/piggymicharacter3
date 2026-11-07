@@ -37,6 +37,12 @@ describe('learning feedback presentation',()=>{
   expect(css).not.toContain('border:3px');
   expect(css).not.toContain('top:8px');
  });
+ it('reserves a 44px touch target and matching small-screen space for close',()=>{
+  const css=source('../src/components/learning-feedback.css');
+  expect(css).toContain('flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px');
+  expect(css).toContain('.learning-feedback-status{flex-basis:calc(100% - 54px)}');
+  expect(css).not.toContain('width:32px;height:32px');
+ });
  it('keeps the destination available after dismissal and hides rewards',()=>{
   const html=renderToStaticMarkup(<LearningFeedback {...props} closed/>);
   expect(html).toContain('学习下一个字');expect(html).not.toContain('+5');
