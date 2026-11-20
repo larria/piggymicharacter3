@@ -13,7 +13,22 @@ export function setAvatar(state: State, avatar: Avatar | null): State {
  return {...state, avatar: avatar === null ? null : {...avatar}};
 }
 import { practiceByCharacter } from './data/practice';
-import { resolvePinyinContext } from './pinyin';
+import { resolvePinyinContext, normalizePinyin, buildPinyinAnswer, type PinyinTone } from './pinyin';
+export interface PinyinAnswerAudit { raw: string; canonical: string | null; expected: string; selectedTone: PinyinTone | null; errorCategory: 'spelling' | 'syllable' | 'tone' | 'unknown' | 'hinted' | null }
+export const PINYIN_AUDIT_MAX_LENGTH = 64;
+/** Retain only bounded answer text, never a prompt or surrounding learner data. */
+export function buildPinyinAnswerAudit(input: { raw: string; expected: string; selectedTone?: PinyinTone | null; hinted?: boolean }): PinyinAnswerAudit {
+ const raw=input.raw.slice(0,PINYIN_AUDIT_MAX_LENGTH), expected=input.expected.slice(0,PINYIN_AUDIT_MAX_LENGTH);
+ const selectedTone=input.selectedTone!==undefined&&input.selectedTone!==null&&Number.isInteger(input.selectedTone)&&input.selectedTone>=0&&input.selectedTone<=4?input.selectedTone:null;
+ const canonical=input.raw.length>PINYIN_AUDIT_MAX_LENGTH?null:input.selectedTone===undefined?canonicalPinyin(raw):buildPinyinAnswer(raw,selectedTone);
+ const actual=canonical===null?null:normalizePinyin(canonical), target=normalizePinyin(expected);
+ const errorCategory=input.hinted?'hinted':raw==='__unknown__'||!target?'unknown':!actual?'spelling':actual.syllable!==target.syllable?'syllable':actual.tone!==target.tone?'tone':null;
+ return {raw,canonical,expected,selectedTone,errorCategory};
+}
+function savedPinyinAudit(a:PinyinAnswerAudit,hinted:boolean):PinyinAnswerAudit {
+ return {raw:a.raw.slice(0,PINYIN_AUDIT_MAX_LENGTH),canonical:a.canonical?.slice(0,PINYIN_AUDIT_MAX_LENGTH)??null,expected:a.expected.slice(0,PINYIN_AUDIT_MAX_LENGTH),selectedTone:a.selectedTone,errorCategory:hinted?'hinted':a.errorCategory};
+}
+function canonicalPinyin(raw:string):string|null { const parsed=normalizePinyin(raw);return parsed?`${parsed.syllable}${parsed.tone}`:null; }
 export function giftCoins(state:State,amount:number):State {if(!Number.isSafeInteger(amount)||amount<=0||!Number.isSafeInteger(state.coins+amount+state.rewardLedger.filter(e=>e.pending).reduce((n,e)=>n+e.coins,0)))throw new Error('赠币数量无效或余额超出安全范围');return {...state,coins:state.coins+amount};}
 export interface Word { id: string; char: string; pinyin: string; words: string[]; sentences: string[] }
 export interface Progress { mastered?: boolean; stage: number; due: string; firstSeen: string; lastAdvanced: string | null; lastStudied: string; failures: number }
@@ -23,7 +38,7 @@ export interface Task { id: string; wordId: string; kind: TaskKind; questionKind
 export interface TaskPractice { phase: 'teaching' | 'ready'; teachingStage?: 'intro' | 'trace'; activeMs: number; completed: boolean; skipped: boolean; skipReason?: 'timeout' | 'load-error' }
 export interface DailyPlan { date: string; newWordIds: string[]; reviewWordIds: string[] }
 export interface Session { xpVersion?: 2; flowVersion?: 2; id: string; date: string; tasks: Task[]; cursor: number; completed: boolean; submissions: string[]; assessmentPassed: string[]; learningRequired?: string[]; preparation?: { confirmed: boolean; claimedWordIds: string[] }; practice?: Record<string, TaskPractice> }
-export interface Log { id: string; date: string; wordId: string; kind: TaskKind; correct: boolean; hinted: boolean; advanced: boolean; pairComplete?: boolean }
+export interface Log { id: string; date: string; wordId: string; kind: TaskKind; correct: boolean; hinted: boolean; advanced: boolean; pairComplete?: boolean; questionKind?: Question['kind']; pinyinAnswer?: PinyinAnswerAudit }
 export interface Avatar { cardId: number; dataUrl: string }
 export interface State { completedNarrations?:string[]; dailyPlans?: DailyPlan[]; avatar: Avatar | null; version: 2; xp:number; coins:number; unlockedWallCount:number; passedGates:number[]; rewardLedger:RewardEntry[]; achievements:Record<string,{date:string;baseline:boolean}>; equippedTitle:string|null; exam:ExamSession|null; revision: number; settings: Settings; progress: Record<string, Progress>; logs: Log[]; rewards: string[]; owned: number[]; session: Session | null }
 export interface Question { kind: 'character' | 'word' | 'pinyin'; prompt: string; options: string[]; answer: string; independent: boolean; cue?: string; presentation?: 'context' | 'reading-aid'; maskedText: string; speechText: string; segments: { text: string; masked: boolean }[] }
@@ -147,7 +162,7 @@ export function sessionSummary(state: State) {
 export function currentTask(state: State): Task | null { const s = state.session; return s && !s.completed ? s.tasks[s.cursor] ?? null : null; }
 export function markKnown(state: State, known: boolean): State { if(state.session?.preparation&&!state.session.preparation.confirmed&&known&&!state.session.learningRequired?.includes(currentTask(state)?.id??''))return confirmPreparation(setPreparationClaims(state,[currentTask(state)!.wordId])); const task = currentTask(state); if (!task || task.kind !== 'learn' || !known || state.session?.learningRequired?.includes(task.id)) return state; const s = copy(state); const session = s.session!; const pair = session.flowVersion===2?task.pair!:task.id; if(session.flowVersion===2){session.tasks.splice(session.cursor,2,...createTaskPair({id:pair,wordId:task.wordId,kind:'assessment',questionKind:'pinyin'}));delete session.practice?.[`${pair}:a`];delete session.practice?.[`${pair}:b`];return s;}delete session.practice?.[task.id]; session.tasks[session.cursor] = { ...task, kind: 'assessment', questionKind:'pinyin', pair, id: `${pair}:a` }; session.tasks.splice(session.cursor + 1, 0, { ...task, kind: 'assessment', pair, questionKind: 'word', id: `${pair}:b` }); return s; }
 
-export function answerTask(state: State, input: { correct: boolean; hinted?: boolean; independent?: boolean; submissionId: string }, value: Date | string = new Date(), options:RewardOptions={}): State { if(state.session?.flowVersion===2)return answerPairTask(state,input,value,options); const task = currentTask(state); if (state.session?.preparation && !state.session.preparation.confirmed) return state; if(task?.kind==='learn'&&state.session?.practice&&state.session.practice[task.id]?.phase!=='ready') return state; if (!task || !input.submissionId || state.logs.some(l => l.id === input.submissionId)) return state; const s = copy(state); const session = s.session!; const date = effectiveDate(s, value); const hinted = !!input.hinted || input.independent === false; let p = s.progress[task.wordId]; let advanced = false; const valid = input.correct && !hinted && task.kind !== 'correction';
+export function answerTask(state: State, input: { correct: boolean; hinted?: boolean; independent?: boolean; pinyinAnswer?: PinyinAnswerAudit; submissionId: string }, value: Date | string = new Date(), options:RewardOptions={}): State { if(state.session?.flowVersion===2)return answerPairTask(state,input,value,options); const task = currentTask(state); if (state.session?.preparation && !state.session.preparation.confirmed) return state; if(task?.kind==='learn'&&state.session?.practice&&state.session.practice[task.id]?.phase!=='ready') return state; if (!task || !input.submissionId || state.logs.some(l => l.id === input.submissionId)) return state; const s = copy(state); const session = s.session!; const date = effectiveDate(s, value); const hinted = !!input.hinted || input.independent === false; let p = s.progress[task.wordId]; let advanced = false; const valid = input.correct && !hinted && task.kind !== 'correction';
  if (task.kind === 'assessment' && task.pair && valid) session.assessmentPassed.push(task.id);
  const pairValid = task.kind !== 'assessment' || (task.questionKind === 'word' && session.assessmentPassed.includes(`${task.pair}:a`) && valid);
  if (!input.correct) { p = p ?? { stage: 0, due: addDays(date,1), firstSeen: date, lastAdvanced: null, lastStudied: date, failures: 0 }; p.mastered=false; p.stage = Math.max(0, p.stage - 1); p.due = addDays(date, 1); p.lastStudied = date; p.failures++; s.progress[task.wordId] = p;
@@ -161,8 +176,8 @@ export function answerTask(state: State, input: { correct: boolean; hinted?: boo
  const linkedTrace=s.rewardLedger.some(e=>e.source==='trace'&&e.taskId===task.id);
  if(valid) grantReward(s,{taskId:task.id,key:`practice:${input.submissionId}`,date,source:'practice',wordId:task.wordId,xp:linkedTrace?3:5,coins:1}); else if(input.correct&&!linkedTrace) grantReward(s,{key:`effort:${date}:${task.wordId}`,date,source:'effort',wordId:task.wordId,xp:1,coins:0});
  if(session.practice)for(const t of session.tasks)if(t.kind==='learn'&&!session.practice[t.id])session.practice[t.id]={phase:'teaching',activeMs:0,completed:false,skipped:false};
- s.logs.push({ id: input.submissionId, date, wordId: task.wordId, kind: task.kind, correct: input.correct, hinted, advanced }); session.submissions.push(input.submissionId); session.cursor++; session.completed = session.cursor >= session.tasks.length; settleAchievements(s,date); return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s; }
-function answerPairTask(state:State,input:{correct:boolean;hinted?:boolean;independent?:boolean;submissionId:string},value:Date|string,options:RewardOptions):State {
+ s.logs.push({ id: input.submissionId, date, wordId: task.wordId, kind: task.kind, questionKind:task.questionKind, ...(task.questionKind==='pinyin'&&input.pinyinAnswer?{pinyinAnswer:savedPinyinAudit(input.pinyinAnswer,hinted)}:{}), correct: input.correct, hinted, advanced }); session.submissions.push(input.submissionId); session.cursor++; session.completed = session.cursor >= session.tasks.length; settleAchievements(s,date); return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s; }
+function answerPairTask(state:State,input:{correct:boolean;hinted?:boolean;independent?:boolean;pinyinAnswer?:PinyinAnswerAudit;submissionId:string},value:Date|string,options:RewardOptions):State {
  const task=currentTask(state),old=state.session!;
  if(!task||!input.submissionId||state.logs.some(l=>l.id===input.submissionId)||(old.preparation&&!old.preparation.confirmed)||(task.kind==='learn'&&old.practice?.[task.id]?.phase!=='ready'))return state;
  const s=copy(state),session=s.session!,date=effectiveDate(s,value),hinted=!!input.hinted||input.independent===false;
@@ -187,7 +202,7 @@ function answerPairTask(state:State,input:{correct:boolean;hinted?:boolean;indep
  if(pageXp)awardPage(s,task,task.questionKind==='pinyin'?'pinyin':'word',valid?'success':'failure',value);
  if(valid&&(task.kind==='assessment'||complete))grantReward(s,{taskId:linkedTrace?origin:task.id,key:`practice:${input.submissionId}`,date,source:'practice',wordId:task.wordId,xp:pageXp?0:linkedTrace?3:5,coins:1});
  else if(input.correct&&!valid&&!linkedTrace)grantReward(s,{key:`effort:${date}:${task.wordId}`,date,source:'effort',wordId:task.wordId,xp:pageXp?0:1,coins:0});
- s.logs.push({id:input.submissionId,date,wordId:task.wordId,kind:task.kind,correct:input.correct,hinted,advanced,pairComplete:complete});session.submissions.push(input.submissionId);session.cursor++;session.completed=session.cursor>=session.tasks.length;settleAchievements(s,date);return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s;
+ s.logs.push({id:input.submissionId,date,wordId:task.wordId,kind:task.kind,questionKind:task.questionKind,...(task.questionKind==='pinyin'&&input.pinyinAnswer?{pinyinAnswer:savedPinyinAudit(input.pinyinAnswer,hinted)}:{}),correct:input.correct,hinted,advanced,pairComplete:complete});session.submissions.push(input.submissionId);session.cursor++;session.completed=session.cursor>=session.tasks.length;settleAchievements(s,date);return options.deferRewards?deferRewardEntitlements(state,s,options.deferRewards):s;
 }
 export function makeQuestion(task: Task, words: Word[], rng: () => number = Math.random): Question {
  const target = words.find(w => w.id === task.wordId); if (!target) throw new Error('字库中找不到该字');

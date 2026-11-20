@@ -1,5 +1,5 @@
 import {describe,it,expect} from 'vitest';
-import {normalizePinyin,buildPinyinAnswer,type PinyinTone,matchesPinyin,parseCoinGift,pinyinContext,resolvePinyinContext,getVerifiedPinyinContext,verifiedPinyinContexts} from '../src/pinyin';
+import {normalizePinyin,isValidPinyinSpelling,matchesPinyinSearch,classifyPinyinAnswer,normalizePinyinSpelling,formatPinyinAnswer,buildPinyinAnswer,type PinyinTone,matchesPinyin,parseCoinGift,pinyinContext,resolvePinyinContext,getVerifiedPinyinContext,verifiedPinyinContexts} from '../src/pinyin';
 import {createState,startSession,startSelectedSession,markKnown,currentTask,makeQuestion,answerTask,giftCoins,redeemCard} from '../src/domain';
 import {catalog} from '../src/data/catalog';
 import {exportBackup,importBackup,saveState,STORAGE_KEY,type StorageLike} from '../src/storage';
@@ -15,6 +15,50 @@ describe('explicit pinyin tone answers',()=>{
  it('requires selection, including explicit neutral zero',()=>{expect(buildPinyinAnswer('zhe',null)).toBeNull();expect(buildPinyinAnswer('zhe',undefined as unknown as PinyinTone)).toBeNull();expect(buildPinyinAnswer('zhe',0)).toBe('zhe0');for(const tone of [-1,5,1.5,NaN])expect(buildPinyinAnswer('ma',tone as PinyinTone)).toBeNull()});
  it('accepts spelling aliases and combining diaeresis',()=>{for(const input of ['lü','lv','lu:',' LU: ','lü']){expect(buildPinyinAnswer(input,4)).toBe('lü4');expect(matchesPinyin(buildPinyinAnswer(input,4)!,'lǜ')).toBe(true)}});
  it('rejects blank, invalid, multiple syllables and typed tones',()=>{for(const input of ['', ' ', 'ni hao','nihao','ke!','u::','foo','ma0','ma1','ma5','1ma','mā','má','mǎ','mà','mā','má','lǜ','lu:4','maˉ'])expect(buildPinyinAnswer(input,1),input).toBeNull()});
+});
+describe('umlaut orthography and tone display',()=>{
+ it('canonicalizes every j/q/x/y umlaut final and input alias for all tones',()=>{
+  for(const initial of ['j','q','x','y'])for(const final of ['u','ue','uan','un'])for(const tone of [0,1,2,3,4] as const){
+   const standard=initial+final;
+   for(const alias of ['ü','v','u:','ü']){
+    const raw=initial+alias+final.slice(1);
+    expect(normalizePinyinSpelling(raw)).toBe(standard);
+    expect(buildPinyinAnswer(raw,tone)).toBe(standard+tone);
+    expect(matchesPinyin(raw+tone,formatPinyinAnswer(standard,tone))).toBe(true);
+    expect(formatPinyinAnswer(raw,tone)).toBe(formatPinyinAnswer(standard,tone));
+   }
+  }
+ });
+ it('keeps n/l dotted and plain u distinct, including tone and aliases',()=>{
+  for(const initial of ['n','l'])for(const tone of [0,1,2,3,4] as const){
+   for(const alias of ['ü','v','u:','ü'])expect(matchesPinyin(initial+alias+tone,formatPinyinAnswer(initial+'ü',tone))).toBe(true);
+   expect(matchesPinyin(initial+'u'+tone,initial+'ü'+tone)).toBe(false);
+   expect(formatPinyinAnswer(initial+'ü',tone)).not.toBe(formatPinyinAnswer(initial+'u',tone));
+   expect(buildPinyinAnswer(initial+'üe',tone)).toBe(initial+'üe'+tone);
+  }
+ });
+ it('places tones by a/e priority, ou and last vowel in iu/ui',()=>{
+  for(const [raw,tone,display] of [['yüe',4,'yuè'],['lü',4,'lǜ'],['nü',3,'nǚ'],['liu',2,'liú'],['gui',4,'guì'],['shui',3,'shuǐ'],['ou',3,'ǒu'],['jüan',3,'juǎn'],['xü',1,'xū'],['m',2,'ḿ'],['ng',2,'ńg']] as const){
+   expect(formatPinyinAnswer(raw,tone)).toBe(display);
+   expect(matchesPinyin(buildPinyinAnswer(raw,tone)!,display)).toBe(true);
+  }
+ });
+ it('displays partial and invalid input without making it a valid answer',()=>{
+  expect(formatPinyinAnswer('yü',null)).toBe('yu');expect(formatPinyinAnswer('yüe',null)).toBe('yue');
+  for(const raw of ['bü','düe','yüü','nue','lue','u::','jü!'])expect(buildPinyinAnswer(raw,4),raw).toBeNull();
+  expect(formatPinyinAnswer('',4)).toBe('');expect(formatPinyinAnswer('yü!',4)).toBe('yu!');
+ });
+ it('accepts decomposed tone/diaeresis in either Unicode order',()=>{
+  for(const raw of ['yüè','yüè','yve4','yu:e4','jǚ','jǔ̈','jǚ'])expect(normalizePinyin(raw),raw).not.toBeNull();
+  expect(matchesPinyin('jǔ̈','jǔ')).toBe(true);
+ });
+});
+describe('canonical display strict spelling and forgiving search',()=>{
+ it('replaces existing tones without stacking',()=>{expect(formatPinyinAnswer('ke4',2)).toBe('ké');expect(formatPinyinAnswer('kè',0)).toBe('ke');expect(formatPinyinAnswer('kè',null)).toBe('kè');expect(formatPinyinAnswer('lǔ̈',4)).toBe('lǜ')});
+ it('rejects misplaced marks and aliases only in strict validation',()=>{for(const raw of ['lǜ','liú','shuǐ','ḿ','ńg','ma0'])expect(isValidPinyinSpelling(raw),raw).toBe(true);for(const raw of ['líu','shǔi','jǚ','lv4','LU:4','kè4','lü̈'])expect(isValidPinyinSpelling(raw),raw).toBe(false);expect(normalizePinyin('líu')).toEqual({syllable:'liu',tone:2})});
+ it('round trips every catalog reading canonically',()=>{for(const word of catalog){expect(isValidPinyinSpelling(word.pinyin),word.char+' '+word.pinyin).toBe(true);const parsed=normalizePinyin(word.pinyin)!;const built=buildPinyinAnswer(parsed.syllable,parsed.tone as PinyinTone)!;expect(normalizePinyin(formatPinyinAnswer(built,null))).toEqual(parsed)}});
+ it('searches Chinese substrings and reviewed alternative readings with aliases',()=>{for(const query of ['lv','LÜ','lu:','lǜ'])expect(matchesPinyinSearch({char:'绿',pinyin:'lǜ'},query)).toBe(true);expect(matchesPinyinSearch({char:'绿',pinyin:'lǜ'},'lu')).toBe(false);expect(matchesPinyinSearch({char:'居',pinyin:'jū'},'jv')).toBe(true);expect(matchesPinyinSearch({char:'乐',pinyin:'lè'},'yue')).toBe(true);expect(matchesPinyinSearch({char:'妈妈',pinyin:'mā'},'妈')).toBe(true)});
+ it('classifies malformed syllable and tone errors independently',()=>{expect(classifyPinyinAnswer('kè4','kè')).toBe('spelling');expect(classifyPinyinAnswer('ma4','kè')).toBe('syllable');expect(classifyPinyinAnswer('ke3','kè')).toBe('tone');expect(classifyPinyinAnswer('ke4','kè')).toBeNull();expect(classifyPinyinAnswer('ke4','invalid')).toBe('unknown')});
 });
 describe('single syllable pinyin',()=>{
  it('normalizes tones, aliases and unicode',()=>{for(const v of ['kè','ke4',' KE4 ','kè'])expect(matchesPinyin(v,'kè')).toBe(true);for(const v of ['lǜ','lü4','lv4','lu:4','LU:4'])expect(matchesPinyin(v,'lǜ')).toBe(true);for(const v of ['zhe','zhe0','zhe5'])expect(matchesPinyin(v,'zhe')).toBe(true)});

@@ -6,7 +6,8 @@ export interface Practice {
  characters: string[]; words: string[];
  theme: '家庭' | '小学' | '篮球' | '魔方' | '生活';
 }
-export const PRACTICE_VERSION = 'life-reviewed-45-v3';
+// New questions use this version; persisted exam question snapshots keep their original bankVersion.
+export const PRACTICE_VERSION = 'life-reviewed-45-v4';
 export const practice: Practice[] = [
  {char:'爸',pinyin:'bà',word:'爸爸',sentence:'爸爸是我的父亲。',characterSentence:'我叫父亲一声爸爸。',characters:['妈','姐','弟'],words:['妈妈','姐姐','弟弟'],theme:'家庭'},
  {char:'妈',pinyin:'mā',word:'妈妈',sentence:'妈妈是我的母亲。',characterSentence:'我叫母亲一声妈妈。',characters:['爸','哥','妹'],words:['爸爸','哥哥','妹妹'],theme:'家庭'},
@@ -36,7 +37,7 @@ export const practice: Practice[] = [
  {char:'木',pinyin:'mù',word:'木头',sentence:'木头是从树干或树枝得到的材料。',characterSentence:'木桌是用树木的材料做成的桌子。',characters:['耳','米','月'],words:['玻璃','铁块','塑料'],theme:'生活'},
  {char:'火',pinyin:'huǒ',word:'火苗',sentence:'蜡烛点燃后，烛芯上冒出火苗。',characterSentence:'发生火灾时，要远离燃烧的地方并求救。',characters:['米','木','耳'],words:['冰块','稻谷','雨滴'],theme:'生活'},
  {char:'土',pinyin:'tǔ',word:'泥土',sentence:'蚯蚓在松软的泥土里钻来钻去。',characterSentence:'土壤能让植物扎根，吸收水分。',characters:['手','耳','牛'],words:['玻璃','火苗','钢板'],theme:'生活'},
- {char:'大',pinyin:'dà',word:'大象',sentence:'大象有长鼻子和粗壮的四条腿。',characterSentence:'同样的杯子，大杯比小杯装得多。',characters:['耳','田','雨'],words:['小鸟','金鱼','蚂蚁'],theme:'生活'},
+ {char:'大',pinyin:'dà',word:'大象',sentence:'大象有长鼻子和粗壮的四条腿。',characterSentence:'大象用长鼻子卷起食物送进嘴里。',characters:['耳','田','雨'],words:['小鸟','金鱼','蚂蚁'],theme:'生活'},
  {char:'小',pinyin:'xiǎo',word:'小麦',sentence:'小麦的籽粒磨成面粉，可以做面条。',characterSentence:'同样的衣服，小号比大号尺寸更小。',characters:['火','耳','田'],words:['石头','玻璃','棉花'],theme:'生活'},
  {char:'上',pinyin:'shàng',word:'上楼',sentence:'我从一楼走到二楼，这叫上楼。',characterSentence:'上坡时，我从低处向高处走。',characters:['耳','米','牛'],words:['下楼','睡觉','洗手'],theme:'生活'},
  {char:'下',pinyin:'xià',word:'下楼',sentence:'我从二楼走到一楼，这叫下楼。',characterSentence:'下坡时，我从高处向低处走。',characters:['耳','米','牛'],words:['上楼','睡觉','洗手'],theme:'生活'},

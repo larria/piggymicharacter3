@@ -1,0 +1,182 @@
+[
+  {
+    "wrongTone": {
+      "id": "audit:a:submit",
+      "date": "2026-11-20",
+      "wordId": "月",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "yue",
+        "canonical": "yue3",
+        "expected": "yuè",
+        "selectedTone": 3,
+        "errorCategory": "tone"
+      },
+      "correct": false,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "parent": "2026-11-20 · 月 · 待回补 · 拼音：yue → yue3 · 预期 yuè · 声调不匹配",
+    "equation": "直角三角形的两条直角边分别为 5 和 8，斜边的平方是多少？"
+  },
+  {
+    "surface": "parent",
+    "query": "qu",
+    "values": [
+      "去",
+      "泉",
+      "全",
+      "群",
+      "却",
+      "取",
+      "趣",
+      "曲",
+      "区",
+      "裙",
+      "雀"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "lv",
+    "values": [
+      "绿",
+      "旅"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "lü",
+    "values": [
+      "绿",
+      "旅"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "lu:",
+    "values": [
+      "绿",
+      "旅"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "lu",
+    "values": [
+      "炉",
+      "落",
+      "路",
+      "萝",
+      "陆",
+      "论",
+      "轮",
+      "鹿",
+      "露",
+      "乱"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "nv",
+    "values": [
+      "女"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "nü",
+    "values": [
+      "女"
+    ]
+  },
+  {
+    "surface": "parent",
+    "query": "nu",
+    "values": [
+      "暖"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "qu",
+    "values": [
+      "去未学习",
+      "泉未学习",
+      "全未学习",
+      "群未学习",
+      "却未学习",
+      "取未学习",
+      "趣未学习",
+      "曲未学习",
+      "区未学习",
+      "裙未学习",
+      "雀未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "lv",
+    "values": [
+      "绿未学习",
+      "旅未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "lü",
+    "values": [
+      "绿未学习",
+      "旅未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "lu:",
+    "values": [
+      "绿未学习",
+      "旅未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "lu",
+    "values": [
+      "炉未学习",
+      "落未学习",
+      "路未学习",
+      "萝未学习",
+      "陆未学习",
+      "论未学习",
+      "轮未学习",
+      "鹿未学习",
+      "露未学习",
+      "乱未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "nv",
+    "values": [
+      "女未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "nü",
+    "values": [
+      "女未学习"
+    ]
+  },
+  {
+    "surface": "growth",
+    "query": "nu",
+    "values": [
+      "暖未学习"
+    ]
+  }
+]

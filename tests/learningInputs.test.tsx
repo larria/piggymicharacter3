@@ -49,6 +49,14 @@ describe('compact pinyin answer',()=>{
   all.find(node=>node.props['aria-label']==='四声 ˋ')!.props.onClick();expect(onTone).toHaveBeenCalledWith(4);
   form.props.onSubmit({});expect(onSubmit).toHaveBeenCalledOnce();
  });
+ it('shows canonical spelling and accents while Backspace preserves raw spelling history',()=>{
+  for(const [raw,tone,display,erased] of [['yüe',null,'yue','yü'],['yüe',4,'yuè','yü'],['yü',null,'yu','y'],['nü',3,'nǚ','n'],['lü',4,'lǜ','l'],['lu:',4,'lǜ','l'],['lü',4,'lǜ','l']] as const){
+   const onChange=vi.fn();const form=PinyinAnswer({...props,value:raw,tone,onChange});
+   expect(renderToStaticMarkup(<PinyinAnswer {...props} value={raw} tone={tone}/>)).toContain(`class="pinyin-answer-syllable">${display}</span>`);
+   nodes(form).find(node=>node.props['aria-label']==='删除最后一个拼音字母')!.props.onClick();
+   expect(onChange).toHaveBeenLastCalledWith(erased);
+  }
+ });
  it('scopes physical shortcuts to form and suppresses composition modifiers and repeated submit',()=>{
   const onChange=vi.fn(),onTone=vi.fn(),requestSubmit=vi.fn(),preventDefault=vi.fn();const form=PinyinAnswer({...props,value:'l',onChange,onTone});
   const event={key:'v',nativeEvent:{},target:{tagName:'FORM',closest:()=>null},currentTarget:{requestSubmit},preventDefault};
@@ -66,6 +74,18 @@ describe('compact pinyin answer',()=>{
   for(const node of all.filter(node=>node.type==='button'&&node.props.onClick))node.props.onClick();
   form.props.onKeyDown({key:'a',nativeEvent:{},preventDefault});form.props.onSubmit({preventDefault});
   expect(onChange).not.toHaveBeenCalled();expect(onTone).not.toHaveBeenCalled();expect(onSubmit).not.toHaveBeenCalled();expect(preventDefault).toHaveBeenCalledOnce();
+ });
+ it('supports colon keyboard paste and the complete composition lifecycle',()=>{
+  const onChange=vi.fn(),onSubmit=vi.fn(),onCompositionStart=vi.fn(),onCompositionEnd=vi.fn(),preventDefault=vi.fn();
+  const form=PinyinAnswer({...props,value:'lu',onChange,onSubmit,onCompositionStart,onCompositionEnd});
+  const status={textContent:''},currentTarget={dataset:{} as Record<string,string>,querySelector:()=>status};
+  form.props.onKeyDown({key:':',nativeEvent:{},target:{closest:()=>null,tagName:'FORM'},currentTarget,preventDefault});expect(onChange).toHaveBeenLastCalledWith('lu:');
+  const paste=(text:string)=>form.props.onPaste({preventDefault,currentTarget,clipboardData:{getData:()=>text}});
+  paste('LU:');expect(onChange).toHaveBeenLastCalledWith('lü');expect(status.textContent).toBe('');
+  paste('你好');expect(onChange).toHaveBeenLastCalledWith('');expect(status.textContent).toContain('不带声调');form.props.onSubmit({currentTarget,preventDefault});expect(onSubmit).not.toHaveBeenCalled();
+  form.props.onCompositionStart({currentTarget});expect(onCompositionStart).toHaveBeenCalledOnce();form.props.onSubmit({currentTarget,preventDefault});expect(onSubmit).not.toHaveBeenCalled();
+  form.props.onCompositionEnd({currentTarget,data:'yve'});expect(onChange).toHaveBeenLastCalledWith('yue');expect(onCompositionEnd).toHaveBeenCalledOnce();form.props.onSubmit({currentTarget,preventDefault});expect(onSubmit).toHaveBeenCalledOnce();
+  for(const raw of ['mā','ma4','ni hao']){paste(raw);expect(onChange).toHaveBeenLastCalledWith('')}
  });
  it('selects neutral only when explicitly chosen',()=>{
   const html=renderToStaticMarkup(<PinyinAnswer {...props} tone={0}/>);

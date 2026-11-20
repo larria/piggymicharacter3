@@ -1,0 +1,378 @@
+[
+  {
+    "char": "月",
+    "input": "yue",
+    "tone": 4,
+    "before": "正在认领「月」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「月亮」中「月」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "yuè\n四声 ˋ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「月亮」中「月」的拼音，并选择声调\nyuè\n四声 ˋ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-月:a:submit",
+      "date": "2026-11-20",
+      "wordId": "月",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "yue",
+        "canonical": "yue4",
+        "expected": "yuè",
+        "selectedTone": 4,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "女",
+    "input": "nu:",
+    "tone": 3,
+    "before": "正在认领「女」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「女」的拼音并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "nǚ\n三声 ˇ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「女」的拼音并选择声调\nnǚ\n三声 ˇ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-女:a:submit",
+      "date": "2026-11-20",
+      "wordId": "女",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "nu:",
+        "canonical": "nü3",
+        "expected": "nǚ",
+        "selectedTone": 3,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "绿",
+    "input": "lv",
+    "tone": 4,
+    "before": "正在认领「绿」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「绿」的拼音并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "lǜ\n四声 ˋ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「绿」的拼音并选择声调\nlǜ\n四声 ˋ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-绿:a:submit",
+      "date": "2026-11-20",
+      "wordId": "绿",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "lü",
+        "canonical": "lü4",
+        "expected": "lǜ",
+        "selectedTone": 4,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "居",
+    "input": "ju",
+    "tone": 1,
+    "before": "正在认领「居」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「居」的拼音并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "jū\n一声 ˉ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「居」的拼音并选择声调\njū\n一声 ˉ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-居:a:submit",
+      "date": "2026-11-20",
+      "wordId": "居",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "ju",
+        "canonical": "ju1",
+        "expected": "jū",
+        "selectedTone": 1,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "去",
+    "input": "qu",
+    "tone": 4,
+    "before": "正在认领「去」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「去」的拼音并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "qù\n四声 ˋ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「去」的拼音并选择声调\nqù\n四声 ˋ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-去:a:submit",
+      "date": "2026-11-20",
+      "wordId": "去",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "qu",
+        "canonical": "qu4",
+        "expected": "qù",
+        "selectedTone": 4,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "学",
+    "input": "xue",
+    "tone": 2,
+    "before": "正在认领「学」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「学」的拼音并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "xué\n二声 ˊ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「学」的拼音并选择声调\nxué\n二声 ˊ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-学:a:submit",
+      "date": "2026-11-20",
+      "wordId": "学",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "xue",
+        "canonical": "xue2",
+        "expected": "xué",
+        "selectedTone": 2,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "鱼",
+    "input": "yu",
+    "tone": 2,
+    "before": "正在认领「鱼」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「金鱼」中「鱼」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "yú\n二声 ˊ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「金鱼」中「鱼」的拼音，并选择声调\nyú\n二声 ˊ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-鱼:a:submit",
+      "date": "2026-11-20",
+      "wordId": "鱼",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "yu",
+        "canonical": "yu2",
+        "expected": "yú",
+        "selectedTone": 2,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "曲",
+    "input": "qu",
+    "tone": 3,
+    "before": "正在认领「曲」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「歌曲」中「曲」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "qǔ\n三声 ˇ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「歌曲」中「曲」的拼音，并选择声调\nqǔ\n三声 ˇ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-曲:a:submit",
+      "date": "2026-11-20",
+      "wordId": "曲",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "qu",
+        "canonical": "qu3",
+        "expected": "qǔ",
+        "selectedTone": 3,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "闷",
+    "input": "men",
+    "tone": 4,
+    "before": "正在认领「闷」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「闷闷不乐」中「闷」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "mèn\n四声 ˋ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「闷闷不乐」中「闷」的拼音，并选择声调\nmèn\n四声 ˋ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-闷:a:submit",
+      "date": "2026-11-20",
+      "wordId": "闷",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "men",
+        "canonical": "men4",
+        "expected": "mèn",
+        "selectedTone": 4,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "假",
+    "input": "jia",
+    "tone": 3,
+    "before": "正在认领「假」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「假山」中「假」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "jiǎ\n三声 ˇ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「假山」中「假」的拼音，并选择声调\njiǎ\n三声 ˇ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-假:a:submit",
+      "date": "2026-11-20",
+      "wordId": "假",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "jia",
+        "canonical": "jia3",
+        "expected": "jiǎ",
+        "selectedTone": 3,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "哗",
+    "input": "hua",
+    "tone": 2,
+    "before": "正在认领「哗」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「喧哗」中「哗」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "huá\n二声 ˊ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「喧哗」中「哗」的拼音，并选择声调\nhuá\n二声 ˊ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-哗:a:submit",
+      "date": "2026-11-20",
+      "wordId": "哗",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "hua",
+        "canonical": "hua2",
+        "expected": "huá",
+        "selectedTone": 2,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "子",
+    "input": "zi",
+    "tone": 3,
+    "before": "正在认领「子」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「子女」中「子」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "zǐ\n三声 ˇ",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「子女」中「子」的拼音，并选择声调\nzǐ\n三声 ˇ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-子:a:submit",
+      "date": "2026-11-20",
+      "wordId": "子",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "zi",
+        "canonical": "zi3",
+        "expected": "zǐ",
+        "selectedTone": 3,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "char": "啦",
+    "input": "la",
+    "tone": 0,
+    "before": "正在认领「啦」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「好啦」中「啦」的拼音，并选择声调\n待输入拼音\n未选择声调\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "display": "la\n轻声 轻声",
+    "after": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「好啦」中「啦」的拼音，并选择声调\nla\n轻声 轻声\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-啦:a:submit",
+      "date": "2026-11-20",
+      "wordId": "啦",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "la",
+        "canonical": "la0",
+        "expected": "la",
+        "selectedTone": 0,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "probe": "invalid-paste",
+    "text": "正在认领「绿」，先试拼音和词语。\n0\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「绿」的拼音并选择声调\n待输入拼音\n四声 ˋ\n\n请输入单个不带声调的拼音；ü 可用 v 或 u:\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来",
+    "storage": []
+  },
+  {
+    "probe": "valid-paste",
+    "display": "lǜ\n四声 ˋ"
+  },
+  {
+    "probe": "composition-submit-block",
+    "logs": []
+  },
+  {
+    "probe": "composition-end-valid",
+    "text": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「绿」的拼音并选择声调\nlǜ\n四声 ˋ\n\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+    "log": {
+      "id": "browser-绿:a:submit",
+      "date": "2026-11-20",
+      "wordId": "绿",
+      "kind": "assessment",
+      "questionKind": "pinyin",
+      "pinyinAnswer": {
+        "raw": "lü",
+        "canonical": "lü4",
+        "expected": "lǜ",
+        "selectedTone": 4,
+        "errorCategory": null
+      },
+      "correct": true,
+      "hinted": false,
+      "advanced": false,
+      "pairComplete": false
+    }
+  },
+  {
+    "fatal": "locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('button', { name: '爸爸空间', exact: true })\n\n    at /Users/larkin_1/Downloads/piggymicharacter3/UX_PINYIN_VERIFICATION/current-20261120-browser-173125/regression.cjs:9:243"
+  }
+]

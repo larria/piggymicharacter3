@@ -1,0 +1,225 @@
+{
+  "method": "Actual Vite page in independent playwright-core system Chrome context. Each case seeds a valid simulated flowVersion 2 assessment session, no progress or logs, real catalog characters. speechSynthesis deliberately undefined; seeded session automatically resumes directly into quiz on reload, so entry narration/self-reading fallback was not needed in these observed cases. No native speech verified.",
+  "observations": [
+    {
+      "case": "月 y+ü+e",
+      "display": "yue"
+    },
+    {
+      "case": "月 tone 4",
+      "display": "yuè"
+    },
+    {
+      "case": "moon backspace e",
+      "display": "yù"
+    },
+    {
+      "case": "04-moon",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「月亮」中「月」的拼音，并选择声调\nyuè\n四声 ˋ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:月:a:submit",
+          "date": "2026-11-20",
+          "wordId": "月",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "05-nu-dots untoned",
+      "display": "nü"
+    },
+    {
+      "case": "05-nu-dots toned",
+      "display": "nǚ"
+    },
+    {
+      "case": "05-nu-dots",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「女」的拼音并选择声调\nnǚ\n三声 ˇ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:女:a:submit",
+          "date": "2026-11-20",
+          "wordId": "女",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "06-nu-plain untoned",
+      "display": "nu"
+    },
+    {
+      "case": "06-nu-plain toned",
+      "display": "nǔ"
+    },
+    {
+      "case": "06-nu-plain",
+      "body": "1\n/3\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「女」的拼音并选择声调\nnǔ\n三声 ˇ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n没关系，慢慢来。\n\n女 的正确读音是 nǚ。\n\n继续练习",
+      "logs": [
+        {
+          "id": "verification:女:a:submit",
+          "date": "2026-11-20",
+          "wordId": "女",
+          "kind": "assessment",
+          "correct": false,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "07-lu-dots untoned",
+      "display": "lü"
+    },
+    {
+      "case": "07-lu-dots toned",
+      "display": "lǜ"
+    },
+    {
+      "case": "07-lu-dots",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「绿」的拼音并选择声调\nlǜ\n四声 ˋ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:绿:a:submit",
+          "date": "2026-11-20",
+          "wordId": "绿",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "08-lu-plain untoned",
+      "display": "lu"
+    },
+    {
+      "case": "08-lu-plain toned",
+      "display": "lù"
+    },
+    {
+      "case": "08-lu-plain",
+      "body": "1\n/3\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「绿」的拼音并选择声调\nlù\n四声 ˋ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n没关系，慢慢来。\n\n绿 的正确读音是 lǜ。\n\n继续练习",
+      "logs": [
+        {
+          "id": "verification:绿:a:submit",
+          "date": "2026-11-20",
+          "wordId": "绿",
+          "kind": "assessment",
+          "correct": false,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "09-ju untoned",
+      "display": "ju"
+    },
+    {
+      "case": "09-ju toned",
+      "display": "jū"
+    },
+    {
+      "case": "09-ju",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「居」的拼音并选择声调\njū\n一声 ˉ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:居:a:submit",
+          "date": "2026-11-20",
+          "wordId": "居",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "10-qu untoned",
+      "display": "qu"
+    },
+    {
+      "case": "10-qu toned",
+      "display": "qù"
+    },
+    {
+      "case": "10-qu",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「去」的拼音并选择声调\nqù\n四声 ˋ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:去:a:submit",
+          "date": "2026-11-20",
+          "wordId": "去",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "11-xue untoned",
+      "display": "xue"
+    },
+    {
+      "case": "11-xue toned",
+      "display": "xué"
+    },
+    {
+      "case": "11-xue",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「学」的拼音并选择声调\nxué\n二声 ˊ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:学:a:submit",
+          "date": "2026-11-20",
+          "wordId": "学",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    },
+    {
+      "case": "12-yu untoned",
+      "display": "yu"
+    },
+    {
+      "case": "12-yu toned",
+      "display": "yú"
+    },
+    {
+      "case": "12-yu",
+      "body": "1\n/2\n退出并保存\n快速验证 · 两道不同的题\n完整拼音与声调\n请写出「金鱼」中「鱼」的拼音，并选择声调\nyú\n二声 ˊ\n拼音键盘：输入字母，选择声调后确认；实体键盘 1–4 选声调，0 或 5 选轻声\nq\nw\ne\nr\nt\ny\nu\ni\no\np\na\ns\nd\nf\ng\nh\nj\nk\nl\nz\nx\nc\nü\nb\nn\nm\nˉ\nˊ\nˇ\nˋ\n轻声\n退格\n确认拼音\n需要一点提示\n我暂时想不起来\n拼音答对啦！\n\n真棒！马上继续。",
+      "logs": [
+        {
+          "id": "verification:鱼:a:submit",
+          "date": "2026-11-20",
+          "wordId": "鱼",
+          "kind": "assessment",
+          "correct": true,
+          "hinted": false,
+          "advanced": false,
+          "pairComplete": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { beginTracing, recordLearningPage, rewardQuota, grantReward, giftCoins, addDays, acknowledgeNarration, deferRewardEntitlements, settlePendingRewards, ensureSessionPractice, completePractice, confirmPreparation, finishTeaching, setPreparationClaims, skipPractice, updatePracticeTime, answerTask, buildQueue, createState, currentTask, INTERVALS, localDate, makeQuestion, markKnown, redeemCard, startSession, startPractice, startSelectedSession, sessionSummary, stats, updateSettings, type State, type Word } from '../src/domain';
+import { buildPinyinAnswerAudit, answerExam, startExam, beginTracing, recordLearningPage, rewardQuota, grantReward, giftCoins, addDays, acknowledgeNarration, deferRewardEntitlements, settlePendingRewards, ensureSessionPractice, completePractice, confirmPreparation, finishTeaching, setPreparationClaims, skipPractice, updatePracticeTime, answerTask, buildQueue, createState, currentTask, INTERVALS, localDate, makeQuestion, markKnown, redeemCard, startSession, startPractice, startSelectedSession, sessionSummary, stats, updateSettings, type State, type Word } from '../src/domain';
 import { catalog } from '../src/data/catalog';
 import { practice } from '../src/data/practice';
 import { exportRawRescue, LEGACY_KEY, WALL_KEY, MIGRATION_BACKUP_KEY, RESTORE_TRANSACTION_KEY, migrateV1, exportBackup, importBackup, loadState, restoreBackup, saveState, STORAGE_KEY, type StorageLike } from '../src/storage';
@@ -228,4 +228,49 @@ describe('review correctness regressions',()=>{
   grantReward(s,{key:'old',date,source:'practice',wordId:'1',xp:5,coins:1});expect(importBackup(exportBackup(s),words)).toEqual(s);
   const legacy=fresh();delete legacy.session!.xpVersion;const result=completePractice(legacy,currentTask(legacy)!.id,date);expect(result.xp).toBe(2);expect(result.rewardLedger[0].source).toBe('trace');expect(importBackup(exportBackup(result),words)).toEqual(result);
  });
+ });
+
+ describe('bounded optional answer audit',()=>{
+  it('classifies canonical aliases, spelling, syllable, tone and hints',()=>{
+   expect(buildPinyinAnswerAudit({raw:'u:',expected:'yú',selectedTone:2}).errorCategory).toBe('spelling');
+   expect(buildPinyinAnswerAudit({raw:'lv',expected:'lǜ',selectedTone:4})).toMatchObject({raw:'lv',canonical:'lü4',errorCategory:null});
+   expect(buildPinyinAnswerAudit({raw:'__unknown__',expected:'lǜ',selectedTone:null}).errorCategory).toBe('unknown');
+   expect(buildPinyinAnswerAudit({raw:'lu',expected:'lǜ',selectedTone:4}).errorCategory).toBe('syllable');
+   expect(buildPinyinAnswerAudit({raw:'lv',expected:'lǜ',selectedTone:3}).errorCategory).toBe('tone');
+   expect(buildPinyinAnswerAudit({raw:'lv',expected:'lǜ',selectedTone:4,hinted:true}).errorCategory).toBe('hinted');
+   expect(buildPinyinAnswerAudit({raw:'a'.repeat(100),expected:'ā',selectedTone:1})).toMatchObject({raw:'a'.repeat(64),canonical:null,errorCategory:'spelling'});
+  });
+  it('stores current task kind in both legacy and paired paths without changing rewards',()=>{
+   for(const legacy of [false,true]){
+    let s=selected(createState(),['0'],'2026-10-21');
+    if(legacy){delete s.session!.flowVersion;delete s.session!.xpVersion;delete s.session!.practice;s.session!.tasks=[{id:'old',wordId:'0',kind:'review',questionKind:'pinyin'}];}
+    else s=finishTeaching(completePractice(s,currentTask(s)!.id,'2026-10-21'),currentTask(s)!.id);
+    const audit=buildPinyinAnswerAudit({raw:'shan',expected:'shān',selectedTone:2});
+    const plain=answerTask(s,{correct:false,submissionId:'audit'},'2026-10-21');
+    const audited=answerTask(s,{correct:false,submissionId:'audit',pinyinAnswer:audit},'2026-10-21');
+    expect(audited.logs.at(-1)).toMatchObject({questionKind:'pinyin',pinyinAnswer:audit});
+    expect(audited.rewardLedger).toEqual(plain.rewardLedger);
+    expect(audited.progress).toEqual(plain.progress);
+    audit.raw='changed';expect(audited.logs.at(-1)!.pinyinAnswer!.raw).toBe('shan');
+   }
+  });
+  it('round trips old logs and optional audits through save and backup, rejecting malformed fields',()=>{
+   const s=createState();s.logs=[{id:'old',date:'2026-10-21',wordId:'0',kind:'review',correct:false,hinted:false,advanced:false}];
+   expect(importBackup(exportBackup(s),words)).toEqual(s);
+   s.logs.push({...s.logs[0],id:'new',questionKind:'pinyin',pinyinAnswer:buildPinyinAnswerAudit({raw:'shan',expected:'shān',selectedTone:2})});
+   const store=memory(),saved=saveState(s,store);expect(loadState(store,words)).toEqual(saved);expect(importBackup(exportBackup(saved),words)).toEqual(saved);
+   for(const patch of [{raw:'a'.repeat(65)},{canonical:'a'.repeat(65)},{expected:''},{selectedTone:5},{errorCategory:'other'},{extra:'private'}]){
+    const bad=JSON.parse(JSON.stringify(s));Object.assign(bad.logs[1].pinyinAnswer,patch);expect(()=>importBackup(JSON.stringify(bad),words)).toThrow();
+   }
+   const bad=JSON.parse(JSON.stringify(s));bad.logs[1].questionKind='word';expect(()=>importBackup(JSON.stringify(bad),words)).toThrow();
+  });
+  it('audits exam kinds from saved questions while preserving old snapshots',()=>{
+   let s=createState();for(const w of catalog.slice(0,60))s.progress[w.id]={stage:1,due:'2026-10-22',firstSeen:'2026-10-21',lastStudied:'2026-10-21',lastAdvanced:'2026-10-21',failures:0};
+   s=startExam(s,catalog,'quiz','2026-10-21',()=>0.5);const snapshot=JSON.parse(JSON.stringify(s.exam));
+   const q=s.exam!.questions[0];s=answerExam(s,{answer:q.answer,submissionId:'exam-audit'},'2026-10-21');
+   expect(s.exam!.answers[0].questionKind).toBe(q.kind);expect(s.logs[0].questionKind).toBe(q.kind);
+   expect(s.exam!.questions).toEqual(snapshot.questions);
+   delete s.exam!.answers[0].questionKind;delete s.logs[0].questionKind;
+   expect(importBackup(exportBackup(s),catalog).exam).toEqual(s.exam);
+  });
  });

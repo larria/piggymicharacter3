@@ -24,16 +24,39 @@ ca cai can cang cao ce cen ceng ci cong cou cu cuan cui cun cuo
 sa sai san sang sao se sen seng si song sou su suan sui sun suo
 yi ya yan yang yao ye yin ying yo yong you yu yue yuan yun
 wa wai wan wang wei wen weng wo wu`.split(/\s+/));
+/** Standard accent position, shared by display and strict dictionary validation. */
+export function pinyinTonePosition(syllable: string): number {
+ if(syllable.includes('a'))return syllable.indexOf('a');
+ if(syllable.includes('e'))return syllable.indexOf('e');
+ if(syllable.includes('ou'))return syllable.indexOf('o');
+ const lastVowel=Math.max(...Array.from(syllable).map((c,i)=>/[iouü]/.test(c)?i:-1));
+ return lastVowel>=0 ? lastVowel : syllable.search(/[mn]/);
+}
 export function normalizePinyin(input: string): Pinyin | null {
  let text=input.trim().toLowerCase().normalize('NFD').replace(/u:/g,'ü').replace(/v/g,'ü');
  let tone=0, marks=0;
  const digit=text.match(/[0-5]$/); if(digit){tone=Number(digit[0])%5;marks++;text=text.slice(0,-1);}
  let syllable='';
  for(const c of text){const index=['̄','́','̌','̀'].indexOf(c);if(index>=0){if(!/[aeiouünm]$/.test(syllable))return null;tone=index+1;marks++;}else if(c==='̈'){if(!syllable.endsWith('u'))return null;syllable=syllable.slice(0,-1)+'ü';}else if(/[a-z]/.test(c))syllable+=c;else return null;}
+ syllable=normalizePinyinSpelling(syllable);
  if(marks>1||!syllables.has(syllable))return null;
  return {syllable,tone};
 }
 export type PinyinTone = 0 | 1 | 2 | 3 | 4;
+/** ü loses its dots only after j/q/x/y; n/l remain distinct from plain u. */
+export function normalizePinyinSpelling(input: string): string {
+ return input.toLowerCase().normalize('NFC').replace(/u:/g,'ü').replace(/v/g,'ü').replace(/^([jqxy])ü/,'$1u');
+}
+/** Display partial input without rewriting the raw keystrokes used by Backspace. */
+export function formatPinyinAnswer(input: string, tone: PinyinTone | null): string {
+ const parsed=normalizePinyin(input);
+ const syllable=parsed?.syllable ?? normalizePinyinSpelling(input);
+ const displayTone=tone ?? parsed?.tone ?? 0;
+ if(displayTone===0||!parsed)return syllable;
+ const position=pinyinTonePosition(syllable);
+ if(position<0)return syllable;
+ return (syllable.slice(0,position+1)+['','̄','́','̌','̀'][displayTone]+syllable.slice(position+1)).normalize('NFC');
+}
 /** Build an answer only from an untoned single syllable and an explicit tone choice. */
 export function buildPinyinAnswer(input: string, selectedTone: PinyinTone | null): string | null {
  if(selectedTone === null || !Number.isInteger(selectedTone) || selectedTone < 0 || selectedTone > 4)return null;
@@ -42,6 +65,30 @@ export function buildPinyinAnswer(input: string, selectedTone: PinyinTone | null
  if(!/^[a-z̈:]+$/.test(text))return null;
  const parsed=normalizePinyin(text);
  return parsed && parsed.tone===0 ? `${parsed.syllable}${selectedTone}` : null;
+}
+/** Dictionary spelling: canonical dots and accent placement, not permissive answer aliases. */
+export function isValidPinyinSpelling(input: string): boolean {
+ const parsed=normalizePinyin(input);
+ if(!parsed)return false;
+ const text=input.normalize('NFC');
+ return text===formatPinyinAnswer(parsed.syllable,parsed.tone as PinyinTone) || text===`${parsed.syllable}${parsed.tone}` || (parsed.tone===0 && text===`${parsed.syllable}5`);
+}
+/** Forgiving substring search only; never use this to judge an answer. */
+export function matchesPinyinSearch(word: {char:string;pinyin:string}, query: string): boolean {
+ const raw=query.trim().toLowerCase();
+ if(!raw || word.char.includes(raw))return true;
+ const normalize=(value:string)=>normalizePinyinSpelling(value.normalize('NFD').replace(/[̄́̌̀]/g,'').replace(/[0-5]/g,'').normalize('NFC'));
+ if(!/^[a-zü̈̄́̌̀:0-5]+$/u.test(raw.normalize('NFD')))return false;
+ const needle=normalize(raw);
+ return !!needle && [word.pinyin,...verifiedPinyinContexts.filter(context=>context.char===word.char).map(context=>context.pinyin)].some(reading=>normalize(reading).includes(needle));
+}
+export type PinyinErrorKind = 'spelling' | 'syllable' | 'tone' | 'unknown';
+export function classifyPinyinAnswer(input: string, expected: string): PinyinErrorKind | null {
+ const answer=normalizePinyin(input), target=normalizePinyin(expected);
+ if(!target)return 'unknown';
+ if(!answer)return 'spelling';
+ if(answer.syllable!==target.syllable)return 'syllable';
+ return answer.tone===target.tone ? null : 'tone';
 }
 export function matchesPinyin(input:string, expected:string):boolean {const a=normalizePinyin(input),b=normalizePinyin(expected);return !!a&&!!b&&a.syllable===b.syllable&&a.tone===b.tone;}
 export interface PinyinContext { char: string; word: string; pinyin: string }
@@ -86,7 +133,7 @@ export const verifiedPinyinContexts: readonly PinyinContext[] = Object.freeze([
  ['盛','盛开','shèng'],['盛','盛饭','chéng'],['铺','铺开','pū'],['铺','店铺','pù'],
  ['卷','卷起','juǎn'],['卷','试卷','juàn'],['恶','恶心','ě'],['恶','恶劣','è'],['恶','厌恶','wù'],
  ['哪','哪里','nǎ'],['哪','哪吒','né'],
- ['了','好了','le'],['了','了解','liǎo'],['大','大人','dà'],['大','大夫','dài'],
+ ['了','好了','le'],['了','了解','liǎo'],['大','大象','dà'],['大','大夫','dài'],
  ['更','更加','gèng'],['更','更改','gēng'],
  ['兴','高兴','xìng'],['兴','兴奋','xīng'],['泊','停泊','bó'],['泊','湖泊','pō'],
  ['将','将来','jiāng'],['将','将领','jiàng'],['当','当心','dāng'],['当','上当','dàng'],
@@ -99,6 +146,11 @@ export const verifiedPinyinContexts: readonly PinyinContext[] = Object.freeze([
  ['冲','冲水','chōng'],['冲','冲着','chòng'],['鲜','新鲜','xiān'],['鲜','鲜有','xiǎn'],
  ['燕','燕子','yàn'],['燕','燕山','yān'],['扁','扁平','biǎn'],['扁','扁舟','piān'],
  ['熟','熟悉','shú'],['熟','饭熟了','shóu'],
+ // Finite selected teaching contexts, not a claim that every imported example was audited.
+ ['曲','歌曲','qǔ'],['曲','曲线','qū'],['闷','闷闷不乐','mèn'],['闷','闷热','mēn'],
+ ['假','假山','jiǎ'],['假','假期','jià'],['哗','喧哗','huá'],['哗','哗啦','huā'],
+ ['子','子女','zǐ'],['啦','好啦','la'],['漂','漂流','piāo'],['挑','挑选','tiāo'],
+ ['炸','油炸','zhá'],['杆','旗杆','gān'],
 ].map(([char,word,pinyin]) => Object.freeze({char,word,pinyin})));
 export function getVerifiedPinyinContext(char: string, pinyin: string): PinyinContext | null {
  return verifiedPinyinContexts.find(context => context.char === char && matchesPinyin(pinyin, context.pinyin)) ?? null;
