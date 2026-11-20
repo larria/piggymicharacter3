@@ -1,4 +1,4 @@
-const RELEASE='02361f313a43553dc2cd26bab37a818dfce49dd93edea773e3eb140a2902037b';
+const RELEASE='76d775f92c7dee434ad634ca3bcf86c0372f2dad3677c32c1c11e0b37056fe66';
 const PREFIX=`piggy-learning-${encodeURIComponent(self.registration.scope)}-`;
 const CACHE=PREFIX+RELEASE;
 const META=PREFIX+'lineage';
